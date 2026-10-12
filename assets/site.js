@@ -232,8 +232,15 @@ document.addEventListener('visibilitychange', () => {
   if (document.hidden) outcomeCards.forEach((card) => card.querySelector('[data-outcome-video]').pause());
 });
 
+function comparisonNode(scope, selector) {
+  const direct=scope?.querySelector(selector);
+  if(direct)return direct;
+  const origin=scope?.id;
+  return origin?document.querySelector(`[data-floating-origin="${origin}"] ${selector}`):null;
+}
+
 function updateModelPreview(scope, model) {
-  const panel=scope.querySelector('[data-model-preview]');
+  const panel=comparisonNode(scope,'[data-model-preview]');
   if(!panel)return;
   const player=panel.querySelector('[data-preview-video]');
   const title=panel.querySelector('[data-preview-title]');
@@ -268,10 +275,19 @@ function updateModelPreview(scope, model) {
 
 const CURATED_PUBLIC_MODELS=new Set(['cosmos 3','cosmos-3 nano','ctrl-world','dreamdojo','ge-sim 2.0','irasim','jointcontrolvideo','oscar']);
 const CURRENT_LEADERBOARD_MODELS=new Set(['cosmos 3','cosmos-3 nano','ctrl-world','dreamdojo','ge-sim 2.0','irasim']);
+const CURATED_MODEL_RESOURCES={
+  'ge-sim 2.0':{paper_url:'https://arxiv.org/abs/2605.27491',github_url:'https://github.com/AgibotTech/GE-Sim-V2',huggingface_url:'https://huggingface.co/agibot-world/Genie-Envisioner-Sim-v2.0'},
+  'cosmos 3':{paper_url:'https://arxiv.org/abs/2606.02800',github_url:'https://github.com/NVIDIA/cosmos',huggingface_url:'https://huggingface.co/collections/nvidia/cosmos3'},
+  'cosmos-3 nano':{paper_url:'https://arxiv.org/abs/2606.02800',github_url:'https://github.com/NVIDIA/cosmos',huggingface_url:'https://huggingface.co/collections/nvidia/cosmos3'},
+  'dreamdojo':{paper_url:'https://arxiv.org/abs/2602.06949',github_url:'https://github.com/NVIDIA/DreamDojo',huggingface_url:'https://huggingface.co/nvidia/DreamDojo'},
+  'ctrl-world':{paper_url:'https://arxiv.org/abs/2510.10125',github_url:'https://github.com/Robert-gyj/Ctrl-World',huggingface_url:'https://huggingface.co/yjguo/Ctrl-World'},
+  'irasim':{paper_url:'https://arxiv.org/abs/2406.14540v1',github_url:'https://github.com/bytedance/IRASim',huggingface_url:'https://huggingface.co/datasets/fangqi/IRASim'}
+};
 function normalizeCuratedModelStatus(model){
   const name=String(model.model_name||'').toLowerCase();
   if(CURATED_PUBLIC_MODELS.has(name)){model.certified=true;model.model_public=true;}
   if(CURRENT_LEADERBOARD_MODELS.has(name))model.updated_at='2026-10-16';
+  if(CURATED_MODEL_RESOURCES[name])Object.assign(model,CURATED_MODEL_RESOURCES[name]);
   return model;
 }
 
@@ -282,8 +298,8 @@ function publicResourceUrl(value){
 
 function appendLeaderboardResources(row,model){
   const cell=document.createElement('td');cell.className='board-resources';
-  const resources=[['Code',model.github_url],['Weights',model.huggingface_url],['Paper',model.paper_url]]
-    .map(([label,value])=>[label,publicResourceUrl(value)]).filter(([,url])=>url);
+  const resources=[['Paper',model.paper_url],['Code',model.github_url],['Weights',model.huggingface_url]]
+    .map(([label,value])=>[label,publicResourceUrl(value)]).filter(([,url])=>url).slice(0,3);
   if(resources.length){
     const list=document.createElement('span');list.className='board-resource-list';
     resources.forEach(([label,url])=>{const link=document.createElement('a');link.href=url;link.target='_blank';link.rel='noopener noreferrer';link.textContent=label;link.setAttribute('aria-label',label+' resource for '+model.model_name+' (opens in a new tab)');list.append(link);});
@@ -328,6 +344,101 @@ function initializeFilterButtons(root) {
   });
 }
 
+function initializeLeaderboardSortMenu(select) {
+  if (!select || select.dataset.sortEnhanced === 'true') return;
+  select.dataset.sortEnhanced = 'true';
+  select.classList.add('leaderboard-sort-native');
+  select.hidden = true;
+  select.setAttribute('aria-hidden','true');
+  select.tabIndex = -1;
+
+  const control = document.createElement('div');
+  control.className = 'leaderboard-sort-control';
+  const trigger = document.createElement('button');
+  trigger.type = 'button';
+  trigger.className = 'leaderboard-sort-trigger';
+  trigger.setAttribute('aria-haspopup','listbox');
+  trigger.setAttribute('aria-expanded','false');
+  const value = document.createElement('span');
+  value.className = 'leaderboard-sort-value';
+  const chevron = document.createElement('span');
+  chevron.className = 'leaderboard-sort-chevron';
+  chevron.setAttribute('aria-hidden','true');
+  trigger.append(value,chevron);
+
+  const menu = document.createElement('div');
+  menu.className = 'leaderboard-sort-menu';
+  menu.setAttribute('role','listbox');
+  menu.setAttribute('aria-label',select.getAttribute('aria-label') || 'Rank by metric');
+  menu.hidden = true;
+  const options = [...select.options].map(option=>{
+    const item = document.createElement('button');
+    item.type = 'button';
+    item.className = 'leaderboard-sort-option';
+    item.dataset.value = option.value;
+    item.setAttribute('role','option');
+    const mark = document.createElement('span');
+    mark.className = 'leaderboard-sort-mark';
+    mark.setAttribute('aria-hidden','true');
+    const label = document.createElement('span');
+    label.textContent = option.textContent;
+    item.append(mark,label);
+    menu.append(item);
+    return item;
+  });
+  control.append(trigger,menu);
+  select.insertAdjacentElement('afterend',control);
+
+  const sync = () => {
+    const selected = select.options[select.selectedIndex];
+    value.textContent = selected?.textContent || '';
+    options.forEach((item,index)=>{
+      const active = index === select.selectedIndex;
+      item.classList.toggle('is-selected',active);
+      item.setAttribute('aria-selected',String(active));
+    });
+  };
+  const close = (restoreFocus=false) => {
+    menu.hidden = true;
+    control.classList.remove('is-open');
+    trigger.setAttribute('aria-expanded','false');
+    if (restoreFocus) trigger.focus();
+  };
+  const open = (focusSelected=false) => {
+    menu.hidden = false;
+    control.classList.add('is-open');
+    trigger.setAttribute('aria-expanded','true');
+    if (focusSelected) (options[select.selectedIndex] || options[0])?.focus();
+  };
+  const choose = item => {
+    if (!item) return;
+    select.value = item.dataset.value;
+    select.dispatchEvent(new Event('change',{bubbles:true}));
+    sync();close(true);
+  };
+  trigger.addEventListener('click',()=>menu.hidden?open(false):close(false));
+  trigger.addEventListener('keydown',event=>{
+    if (!['ArrowDown','ArrowUp'].includes(event.key)) return;
+    event.preventDefault();open(true);
+  });
+  options.forEach((item,index)=>{
+    item.addEventListener('click',()=>choose(item));
+    item.addEventListener('keydown',event=>{
+      if (event.key === 'Escape') { event.preventDefault();close(true);return; }
+      if (event.key === 'Enter' || event.key === ' ') { event.preventDefault();choose(item);return; }
+      if (!['ArrowDown','ArrowUp','Home','End'].includes(event.key)) return;
+      event.preventDefault();
+      const next = event.key==='Home'?0:event.key==='End'?options.length-1:
+        (index+(event.key==='ArrowDown'?1:-1)+options.length)%options.length;
+      options[next]?.focus();
+    });
+  });
+  select.addEventListener('change',sync);
+  document.addEventListener('pointerdown',event=>{if(!control.contains(event.target))close(false);});
+  if (window.MutationObserver) new MutationObserver(sync).observe(select,{subtree:true,childList:true,characterData:true});
+  sync();
+}
+
 // Public leaderboard: isolated duration/platform selections, no private account fields.
 function initializeBoard(board, entries) {
   entries.forEach(normalizeCuratedModelStatus);
@@ -342,8 +453,8 @@ function initializeBoard(board, entries) {
   const hasResources=Boolean(board.querySelector('.col-resources'));
   const hasUpdated=Boolean(board.querySelector('.col-updated'));
   const axes = fullLayout
-    ? [['Interaction Spatial','Alignment'],['Multi-View Action','Coherence'],['Multi-View','Score'],['Single-View','Score'],['Physical State','Correctness'],['Key Interaction','Area Fidelity']]
-    : [['Physical State','Correctness'],['Key Interaction','Area Fidelity'],['Interaction Spatial','Alignment'],['Multi-View Action','Coherence']];
+    ? [['ISA'],['MVAC'],['MV Score'],['SV','Score'],['PSC'],['KIAF']]
+    : [['PSC'],['KIAF'],['ISA'],['MVAC']];
   const svg = board.querySelector('[data-radar-chart]');
   const body = board.querySelector('[data-board-rows]');
   const regime = board.dataset.boardDuration || '30s';
@@ -357,12 +468,12 @@ function initializeBoard(board, entries) {
   const cell = (tag, text) => { const node = document.createElement(tag); node.textContent = text; return node; };
   const point = (axis, value) => {
     const angle = (fullLayout?0:-Math.PI/2) + axis*Math.PI*2/axes.length;
-    const radius=fullLayout?184:154;
+    const radius=fullLayout?225:154;
     return [300+Math.cos(angle)*radius*value/100, 237+Math.sin(angle)*radius*value/100];
   };
   function focus(id) {
     focused = id;
-    board.querySelectorAll('[data-radar-series]').forEach(group => {
+    svg.querySelectorAll('[data-radar-series]').forEach(group => {
       group.classList.toggle('is-selected',group.dataset.radarSeries===id);
       group.classList.toggle('is-muted',id!==null && group.dataset.radarSeries!==id);
     });
@@ -370,12 +481,13 @@ function initializeBoard(board, entries) {
       const selected = row.dataset.modelRow===id;
       row.classList.toggle('is-selected',selected);
       row.classList.toggle('is-muted',id!==null && !selected);
-      row.querySelector('button').setAttribute('aria-pressed',String(selected));
+      row.querySelector('button')?.setAttribute('aria-pressed',String(selected));
     });
     const active = [...svg.querySelectorAll('[data-radar-series]')].find(g=>g.dataset.radarSeries===id);
     if (active) svg.append(active);
     const name = current.find(m=>String(m.id)===id)?.model_name;
-    updateModelPreview(board,current.find(m=>String(m.id)===id)||null);
+    const selectedModel=current.find(m=>String(m.id)===id)||null;
+    updateModelPreview(board,selectedModel||current.find(m=>m.preview)||null);
     board.querySelector('[data-board-status]').textContent = platforms[platform]+' · '+regimes[regime]+' · '+(name?'Highlighting '+name:'All models shown equally.');
   }
   function chart() {
@@ -383,22 +495,28 @@ function initializeBoard(board, entries) {
     // Leave enough horizontal breathing room for the full axis labels at the
     // larger homepage type size. The previous crop clipped the leading "M"
     // from Multi-View Action Coherence in both leaderboard presentations.
-    svg.setAttribute('viewBox',axes.length===4?'-105 -20 810 540':'10 -15 580 515');
+    svg.setAttribute('viewBox',axes.length===4?'-105 -20 810 540':'0 -10 600 510');
     svg.append(shape('title',{id:regime==='full'?'long-radar-title':'radar-title'},platforms[platform]+' · '+regimes[regime]+' Metric Comparison'));
     const chartNote=current.some(model=>model.demo)
       ? 'Illustrative entries are explicitly labeled as Demo.'
       : 'Scores shown here are verified held-out test-set retest results.';
     svg.append(shape('desc',{id:regime==='full'?'long-radar-description':'radar-description'},axes.length+' metrics on a 0–100 scale. Unavailable MVAC is plotted at zero only for display. '+chartNote));
-    [100,80,60,40,20].forEach(level=>svg.append(shape('polygon',{points:axes.map((_,i)=>point(i,level).join(',')).join(' '),class:level===100?'radar-grid is-outer':'radar-grid'})));
+    [100,90,80,70,60,50,40,30,20,10].forEach(level=>{
+      const gridClass=level===100?'radar-grid is-outer':'radar-grid';
+      svg.append(fullLayout
+        ? shape('circle',{cx:300,cy:237,r:225*level/100,class:gridClass})
+        : shape('polygon',{points:axes.map((_,i)=>point(i,level).join(',')).join(' '),class:gridClass}));
+    });
     axes.forEach((lines,i)=>{
       const [x,y]=point(i,100);
       svg.append(shape('line',{x1:300,y1:237,x2:x,y2:y,class:'radar-axis'}));
-      const [lx,ly]=point(i,axes.length===4?118:118);
-      const label=shape('text',{x:lx,y:ly-6,'text-anchor':Math.abs(lx-300)<1?'middle':lx>300?'start':'end',class:'radar-axis-label'});
+      const fullLabelPositions=[[590,237,'end'],[455,485,'middle'],[145,485,'middle'],[10,231,'start'],[145,18,'middle'],[455,18,'middle']];
+      const [lx,ly,fullAnchor]=fullLayout?fullLabelPositions[i]:[...point(i,118),null];
+      const label=shape('text',{x:lx,y:ly-6,'text-anchor':fullLayout?fullAnchor:Math.abs(lx-300)<1?'middle':lx>300?'start':'end',class:'radar-axis-label'});
       lines.forEach((line,j)=>label.append(shape('tspan',{x:lx,dy:j?23:0},line))); svg.append(label);
     });
-    [0,20,40,60,80,100].forEach(level=>svg.append(shape('text',fullLayout
-      ? {x:300+170*level/100,y:228,'text-anchor':'middle',class:'radar-level'}
+    [0,10,20,30,40,50,60,70,80,90,100].forEach(level=>svg.append(shape('text',fullLayout
+      ? {x:300+196*level/100,y:228,'text-anchor':'middle',class:'radar-level'}
       : {x:307,y:241-142*level/100,class:'radar-level'},String(level))));
     current.forEach(model=>{
       const group=shape('g',{class:'radar-series-group','data-radar-series':String(model.id)});
@@ -450,11 +568,17 @@ function initializeBoard(board, entries) {
       if(displayRank)row.classList.toggle('rank-'+displayRank,true);
       const rank=cell('td','');const badge=cell('span',displayRank===null?'—':String(displayRank).padStart(2,'0'));badge.setAttribute('class','board-rank');rank.append(badge);if(fullLayout)appendRankTrophy(rank,displayRank);row.append(rank);
       const th=document.createElement('th');th.scope='row';
-      const button=document.createElement('button');button.type='button';button.dataset.radarModel=String(model.id);
-      button.setAttribute('aria-pressed','false');button.setAttribute('aria-label','Highlight '+model.model_name+'. Click again to show all models.');
-      const dot=document.createElement('i');dot.style.background=model.color;
-      const label=cell('span',model.model_name);
-      button.append(dot,label);th.append(button);row.append(th);
+      let button=null;
+      if(fullLayout){
+        button=document.createElement('button');button.type='button';button.dataset.radarModel=String(model.id);
+        button.setAttribute('aria-pressed','false');button.setAttribute('aria-label','Highlight '+model.model_name+'. Click again to show all models.');
+        const dot=document.createElement('i');dot.style.background=model.color;
+        const label=cell('span',model.model_name);
+        button.append(dot,label);th.append(button);
+      }else{
+        const label=cell('span',model.model_name);label.classList.add('board-model-name');th.append(label);
+      }
+      row.append(th);
       if(hasView){const viewCell=cell('td',model.view_mode==='multi'?'MV':'SV');viewCell.classList.add('board-view');viewCell.title=model.view_mode==='multi'?'Multi-View':'Single-View';row.append(viewCell);}
       if(hasContributor){const contributorCell=cell('td',contributor(model));contributorCell.classList.add('board-contributor');row.append(contributorCell);}
       tableValues(model).forEach(v=>{
@@ -465,7 +589,18 @@ function initializeBoard(board, entries) {
       if(hasCertification)appendLeaderboardCertification(row,model);
       if(hasResources)appendLeaderboardResources(row,model);
       if(hasUpdated){const updated=cell('td',leaderboardUpdatedLabel(model));updated.classList.add('board-updated');row.append(updated);}
-      button.addEventListener('click',()=>focus(focused===String(model.id)?null:String(model.id)));body.append(row);
+      if(fullLayout){
+        const modelId=String(model.id),toggleRow=()=>focus(focused===modelId?null:modelId);
+        row.classList.add('is-interactive');row.tabIndex=0;
+        row.setAttribute('aria-label','Highlight '+model.model_name+' radar profile');
+        button.addEventListener('click',toggleRow);
+        row.addEventListener('click',event=>{if(event.target.closest('a,button'))return;toggleRow();});
+        row.addEventListener('keydown',event=>{
+          if(event.target.closest('a,button')||!['Enter',' '].includes(event.key))return;
+          event.preventDefault();toggleRow();
+        });
+      }
+      body.append(row);
     });
     // Competition ranks at displayed precision: ties share rank, nulls never rank.
     const columnLabels=['Single-View Score','Multi-View Score','Physical State Correctness','Key Interaction Area Fidelity','Interaction Spatial Alignment','Multi-View Action Coherence'];
@@ -488,8 +623,9 @@ function initializeBoard(board, entries) {
     board.querySelector('[data-board-empty]').hidden=current.length!==0;
     const demoBadge=board.querySelector('[data-board-demo]');
     if(demoBadge)demoBadge.hidden=platform==='human_hands' || !current.some(m=>m.demo);
-    board.querySelector('.board-radar').classList.toggle('is-empty',!current.length);
-    board.querySelector('[data-board-disclaimer]').textContent = current.some(m=>m.demo)
+    comparisonNode(board,'.board-radar')?.classList.toggle('is-empty',!current.length);
+    const disclaimer=board.querySelector('[data-board-disclaimer]');
+    if(disclaimer)disclaimer.textContent = current.some(m=>m.demo)
       ? 'Demo scores are illustrative, not benchmark measurements. Platform availability follows existing result artifacts; view labels describe evaluated outputs, not every capability of a model.'
       : current.length ? 'Verified held-out test-set retest results. Unavailable metrics are shown as dashes in the table and plotted at zero on the radar only.'
       : 'No verified model-result artifacts have been confirmed for this selection. Models are not included solely because the paper lists a planned experiment.';
@@ -499,7 +635,9 @@ function initializeBoard(board, entries) {
   board.querySelectorAll('[data-board-platform]').forEach(b=>b.addEventListener('click',()=>{platform=b.dataset.boardPlatform;render();}));
   board.querySelector('[data-certification-filter]')?.addEventListener('change',event=>{certification=event.target.value;render();});
   board.querySelector('[data-public-filter]')?.addEventListener('change',event=>{publicStatus=event.target.value;render();});
-  board.querySelector('[data-sort-metric]')?.addEventListener('change',event=>{sortMetric=event.target.value;render();});
+  const sortSelect=board.querySelector('[data-sort-metric]');
+  sortSelect?.addEventListener('change',event=>{sortMetric=event.target.value;render();});
+  initializeLeaderboardSortMenu(sortSelect);
   initializeFilterButtons(board);
   render();
 }
@@ -518,28 +656,28 @@ function initializePolicy(models){
   const n=document.createElementNS('http://www.w3.org/2000/svg',tag);
   Object.entries(attrs).forEach(([k,v])=>n.setAttribute(k,String(v)));if(text)n.textContent=text;return n;
  };
- const svg=node('svg',{viewBox:'-80 -30 760 540',role:'img','aria-labelledby':'policy-chart-title policy-chart-desc'});
+ const svg=node('svg',{viewBox:'0 -10 600 510',role:'img','aria-labelledby':'policy-chart-title policy-chart-desc'});
  svg.append(node('title',{id:'policy-chart-title'},'Policy-Rollout Results Radar'));
  svg.append(node('desc',{id:'policy-chart-desc'},'Six leaderboard metrics on a 0–100 scale. Unsupported metrics are shown as dashes in the table and as zero on the radar only.'));
  const policyAxes=[
-  {key:'ia',lines:['Interaction Spatial','Alignment'],name:'Interaction Spatial Alignment'},
-  {key:'mvc',lines:['Multi-View Action','Coherence'],name:'Multi-View Action Coherence'},
-  {key:'multiview_score',lines:['Multi-View','Score'],name:'Multi-View Score'},
-  {key:'single_score',lines:['Single-View','Score'],name:'Single-View Score'},
-  {key:'po',lines:['Physical State','Correctness'],name:'Physical State Correctness'},
-  {key:'kro',lines:['Key Interaction','Area Fidelity'],name:'Key Interaction Area Fidelity'},
+  {key:'ia',lines:['ISA'],name:'Interaction Spatial Alignment'},
+  {key:'mvc',lines:['MVAC'],name:'Multi-View Action Coherence'},
+  {key:'multiview_score',lines:['MV Score'],name:'Multi-View Score'},
+  {key:'single_score',lines:['SV','Score'],name:'Single-View Score'},
+  {key:'po',lines:['PSC'],name:'Physical State Correctness'},
+  {key:'kro',lines:['KIAF'],name:'Key Interaction Area Fidelity'},
  ];
  const keys=policyAxes.map(axis=>axis.key);
- const point=(axis,value)=>{const angle=axis*2*Math.PI/keys.length;return [300+Math.cos(angle)*154*value/100,237+Math.sin(angle)*154*value/100];};
- [100,80,60,40,20].forEach(level=>svg.append(node('polygon',{points:keys.map((_,i)=>point(i,level).join(',')).join(' '),class:'policy-radar-grid'})));
+ const point=(axis,value)=>{const angle=axis*2*Math.PI/keys.length;return [300+Math.cos(angle)*225*value/100,237+Math.sin(angle)*225*value/100];};
+ [100,90,80,70,60,50,40,30,20,10].forEach(level=>svg.append(node('circle',{cx:300,cy:237,r:225*level/100,class:'policy-radar-grid'})));
  policyAxes.forEach((axis,i)=>{
-  const [x,y]=point(i,100),[lx,ly]=point(i,125);
+  const [x,y]=point(i,100),[lx,ly,anchor]=[[590,237,'end'],[455,485,'middle'],[145,485,'middle'],[10,231,'start'],[145,18,'middle'],[455,18,'middle']][i];
   svg.append(node('line',{x1:300,y1:237,x2:x,y2:y,class:'policy-grid'}));
-  const label=node('text',{x:lx,y:ly-7,'text-anchor':Math.abs(lx-300)<8?'middle':lx>300?'start':'end',class:'policy-axis'});
+  const label=node('text',{x:lx,y:ly-7,'text-anchor':anchor,class:'policy-axis'});
   axis.lines.forEach((line,j)=>label.append(node('tspan',{x:lx,dy:j?21:0},line)));
   svg.append(label);
  });
- [0,20,40,60,80,100].forEach(v=>svg.append(node('text',{x:300+142*v/100,y:228,'text-anchor':'middle',class:'policy-tick'},String(v))));
+ [0,10,20,30,40,50,60,70,80,90,100].forEach(v=>svg.append(node('text',{x:300+196*v/100,y:228,'text-anchor':'middle',class:'policy-tick'},String(v))));
  const groups=models.map((m,i)=>{
   const group=node('g',{'data-policy-series':String(i)});
   group.append(node('polygon',{points:keys.map((k,axis)=>point(axis,m[k]===null?0:m[k]).join(',')).join(' '),fill:m.color,stroke:m.color,class:'policy-radar-series'}));
@@ -562,7 +700,7 @@ function initializePolicy(models){
    r.classList.toggle('is-selected',selected===rowIndex);
    r.querySelector('button').setAttribute('aria-pressed',String(selected===rowIndex));
   });
-  updateModelPreview(document.getElementById('policy-track'),selected===null?null:models[selected]);
+  updateModelPreview(document.getElementById('policy-track'),selected===null?(models.find(model=>model.preview)||null):models[selected]);
  }
  const certificationFilter=document.querySelector('[data-policy-certification-filter]');
  const publicFilter=document.querySelector('[data-policy-public-filter]');
@@ -575,6 +713,7 @@ function initializePolicy(models){
   const rankValues=visible.map(model=>model[sortMetric]).filter(value=>value!==null).map(value=>Number(value.toFixed(2)));
   visible.forEach(m=>{
    const modelIndex=models.indexOf(m),row=document.createElement('tr');row.dataset.policyIndex=String(modelIndex);
+   row.classList.add('is-interactive');row.tabIndex=0;row.setAttribute('aria-label','Highlight '+m.model_name+' radar profile');
    const value=m[sortMetric],rank=value===null?null:1+rankValues.filter(other=>other>Number(value.toFixed(2))).length;
    const rankCell=document.createElement('td'),badge=document.createElement('span');badge.className='board-rank';badge.textContent=rank===null?'—':String(rank).padStart(2,'0');rankCell.append(badge);appendRankTrophy(rankCell,rank);row.append(rankCell);
    if(rank)row.classList.add('rank-'+rank);
@@ -582,7 +721,8 @@ function initializePolicy(models){
    const button=document.createElement('button');button.type='button';button.setAttribute('aria-pressed','false');button.setAttribute('aria-label','Highlight '+m.model_name+' radar profile');
    const swatch=document.createElement('i');swatch.style.background=m.color;
    const label=document.createElement('span');label.textContent=m.model_name;
-   button.append(swatch,label);button.addEventListener('click',()=>focus(modelIndex));th.append(button);row.append(th);
+   const toggleRow=()=>focus(modelIndex);
+   button.append(swatch,label);button.addEventListener('click',toggleRow);th.append(button);row.append(th);
    const viewCell=document.createElement('td');viewCell.className='board-view';viewCell.textContent=m.view_mode==='multi'||m.multi_view?'MV':'SV';viewCell.title=viewCell.textContent==='MV'?'Multi-View':'Single-View';row.append(viewCell);
    const contributorCell=document.createElement('td');contributorCell.className='board-contributor';contributorCell.textContent=contributor(m);row.append(contributorCell);
    ['single_score','multiview_score','po','kro','ia','mvc'].forEach(k=>{
@@ -597,14 +737,20 @@ function initializePolicy(models){
    appendLeaderboardCertification(row,m);
    appendLeaderboardResources(row,m);
    const updatedCell=document.createElement('td');updatedCell.className='board-updated';updatedCell.textContent=leaderboardUpdatedLabel(m);row.append(updatedCell);
+   row.addEventListener('click',event=>{if(event.target.closest('a,button'))return;toggleRow();});
+   row.addEventListener('keydown',event=>{
+    if(event.target.closest('a,button')||!['Enter',' '].includes(event.key))return;
+    event.preventDefault();toggleRow();
+   });
    rows.append(row);
   });
   models.forEach((model,index)=>{groups[index].style.display=visible.includes(model)?'':'none';});
-  selected=null;groups.forEach(group=>group.setAttribute('opacity','1'));updateModelPreview(document.getElementById('policy-track'),null);
+  selected=null;groups.forEach(group=>group.setAttribute('opacity','1'));updateModelPreview(document.getElementById('policy-track'),visible.find(model=>model.preview)||null);
  }
  certificationFilter?.addEventListener('change',event=>{certification=event.target.value;renderPolicyRows();});
  publicFilter?.addEventListener('change',event=>{publicStatus=event.target.value;renderPolicyRows();});
  sortFilter?.addEventListener('change',event=>{sortMetric=event.target.value;renderPolicyRows();});
+ initializeLeaderboardSortMenu(sortFilter);
  initializeFilterButtons(document.getElementById('policy-track'));
  renderPolicyRows();
 }
@@ -671,11 +817,89 @@ function policyModels(entries){
  }));
 }
 
+function initializeLeaderboardHighlights(entries){
+ const feed=document.querySelector('[data-leaderboard-highlights]');
+ if(!feed)return;
+ const configurations=[
+  ['30s','agibot_g2','Main Track','AgiBot G2','main'],
+  ['30s','yam','Main Track','YAM','main'],
+  ['30s','human_hands','Main Track','Human Hand','main'],
+  ['policy','agibot_g2','Policy Track','AgiBot G2','policy'],
+  ['full','agibot_g2','Long-Horizon Track','AgiBot G2','long'],
+  ['full','yam','Long-Horizon Track','YAM','long'],
+  ['full','human_hands','Long-Horizon Track','Human Hand','long']
+ ];
+ const score=model=>model.single_score??model.score;
+ const leaders=configurations.map(([regime,platform,track,platformLabel,tone])=>{
+  const model=entries.filter(entry=>entry.regime===regime&&entry.platform===platform&&Number.isFinite(score(entry)))
+   .sort((a,b)=>score(b)-score(a)||a.model_name.localeCompare(b.model_name))[0];
+  return model?{model,track,platformLabel,tone,score:score(model)}:null;
+ });
+ // Keep the embedded seven-card snapshot when an offline/API fallback does
+ // not contain every public platform yet.
+ if(leaders.some(leader=>leader===null))return;
+ const make=(tag,className,text)=>{const node=document.createElement(tag);if(className)node.className=className;if(text!==undefined)node.textContent=text;return node;};
+ feed.replaceChildren();
+ leaders.forEach((leader,index)=>{
+  const article=make('article','leaderboard-news-item is-'+leader.tone);
+  article.style.setProperty('--leader-score',Math.max(0,Math.min(100,leader.score))+'%');
+  article.setAttribute('aria-label',leader.track+' — '+leader.platformLabel+' leader');
+  const rank=make('p','leaderboard-leader-index',String(index+1).padStart(2,'0'));
+  const copy=make('div','leaderboard-leader-copy');
+  const meta=make('p','leaderboard-news-meta');
+  const dot=make('i');dot.setAttribute('aria-hidden','true');
+  meta.append(dot,make('span','',leader.track),make('em','',leader.platformLabel));
+  const name=make('h2','',leader.model.model_name);
+  const team=make('p','leaderboard-leader-team');
+  team.append(make('span','','Team'),make('strong','',CURATED_PUBLIC_MODELS.has(String(leader.model.model_name||'').toLowerCase())?'WorldOracle Team':(leader.model.contributor||leader.model.organization||leader.model.team_name||'—')));
+  copy.append(meta,name,team);
+  const scoreBox=make('p','leaderboard-leader-score');
+  scoreBox.append(make('span','','SV Score'),make('b','',leader.score.toFixed(2)));
+  article.append(rank,copy,scoreBox);feed.append(article);
+ });
+}
+
 async function initializePublicLeaderboards(){
  const loaded=await loadPublicLeaderboard();
+ initializeLeaderboardHighlights(loaded.entries);
  document.querySelectorAll('.benchmark-board').forEach(board=>initializeBoard(board,loaded.entries));
  const embeddedPolicy=JSON.parse(document.getElementById('policy-results-data')?.textContent||'[]');
  initializePolicy(loaded.source==='api'?policyModels(loaded.entries):embeddedPolicy);
+ initializeFloatingComparison();
+}
+
+function initializeFloatingComparison(){
+ const mount=document.querySelector('[data-floating-comparison]');
+ if(!mount)return;
+ const desktop=window.matchMedia('(min-width:1321px)');
+ const items=[
+  ['leaderboard','.board-insight'],
+  ['policy-track','.policy-insight'],
+  ['long-horizon','.board-insight']
+ ].map(([id,selector])=>{
+  const panel=document.getElementById(id),insight=panel?.querySelector(selector);
+  if(!panel||!insight)return null;
+  insight.dataset.floatingOrigin=id;
+  return{panel,insight,parent:insight.parentNode,next:insight.nextSibling};
+ }).filter(Boolean);
+ const restore=item=>{
+  if(item.insight.parentNode!==item.parent)item.parent.insertBefore(item.insight,item.next);
+ };
+ const sync=()=>{
+  items.forEach(restore);
+  if(!desktop.matches){mount.hidden=true;delete mount.dataset.activeTrack;return;}
+  const active=items.find(item=>!item.panel.hidden);
+  if(!active){mount.hidden=true;delete mount.dataset.activeTrack;return;}
+  mount.append(active.insight);
+  mount.dataset.activeTrack=active.panel.dataset.trackPanel||'';
+  mount.hidden=false;
+ };
+ const observer=new MutationObserver(sync);
+ items.forEach(item=>observer.observe(item.panel,{attributes:true,attributeFilter:['hidden']}));
+ if(desktop.addEventListener)desktop.addEventListener('change',sync);
+ else desktop.addListener(sync);
+ window.addEventListener('hashchange',()=>window.requestAnimationFrame(sync));
+ sync();
 }
 
 initializePublicLeaderboards();
