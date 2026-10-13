@@ -294,7 +294,7 @@ function updateModelPreview(scope, model) {
     title.textContent='Select a model to compare';
     const defaultEpisode=scope.dataset.trackPanel==='policy'?'ep000008':'ep000000';
     meta.textContent='hangtowel · '+defaultEpisode+' · top_head';
-    empty.hidden=false;empty.textContent='Click any model row to show the same benchmark episode beside its scores.';
+    empty.hidden=false;empty.textContent='Click any model row to show the example.';
     return;
   }
   title.textContent=model.model_name;
