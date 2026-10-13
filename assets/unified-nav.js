@@ -122,6 +122,7 @@
           { key: 'profile', label: 'Profile' }
         ]
       : [
+          { key: 'project', label: 'Project Page' },
           { key: 'leaderboard', label: 'Leaderboard' },
           { key: 'guide', label: 'Submission Guide' },
           { key: 'login', label: 'Sign In' }
