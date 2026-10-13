@@ -48,7 +48,21 @@
     $('[data-team]').textContent = account.team?.team_name || 'Registration Pending';
     $('[data-model]').textContent = account.team?.model_name || account.email;
     const note = $('[data-account-state]');
-    note.textContent = account.can_submit ? 'Formal evaluations use a rolling seven-day quota: 2 per Track and 6 total.' : account.submission_reason;
+    note.textContent = account.can_submit ? "Each weekly cycle starts from this account's first formal submission. Every Track receives 2 submissions, with 6 total across all Tracks." : account.submission_reason;
+    const quota = $('[data-quota-overview]');
+    if (quota && account.quota) {
+      const limits = account.quota;
+      const reset = limits.resets_at
+        ? new Intl.DateTimeFormat(undefined, {dateStyle:'medium', timeStyle:'short'}).format(new Date(limits.resets_at * 1000))
+        : 'The first formal submission starts the seven-day cycle.';
+      $('[data-quota-reset]', quota).textContent = limits.resets_at ? `Resets ${reset}` : reset;
+      Object.entries(limits.remaining_tracks || {}).forEach(([key, value]) => {
+        const node = quota.querySelector(`[data-quota-track="${key}"]`);
+        if (node) node.textContent = `${value} / ${limits.track_limit}`;
+      });
+      $('[data-quota-total]', quota).textContent = `${limits.remaining_total} / ${limits.total_limit}`;
+      quota.hidden = false;
+    }
     const create = $('[data-new-submission]'); create.hidden = !account.can_submit;
     create.addEventListener('click', async () => {
       create.disabled = true;
@@ -61,8 +75,11 @@
       const meta = item.metadata, run = item.run;
       const editable = ['draft','needs_changes'].includes(item.status);
       const href = editable ? `../edit/?id=${item.id}&step=1` : `../view/?id=${item.id}`;
-      const stage = run ? `${escape(run.stage_label)} · ${run.progress}%` : statuses[item.status] || item.status;
-      return `<article class="submission-item"><div><span class="badge ${escape(item.status)}">${escape(statuses[item.status] || item.status)}</span><h2><a href="${href}">${escape(meta.model_name || 'Untitled Draft')}</a></h2><p class="muted">${escape(tracks[meta.benchmark_track] || 'Track not selected')} · ${escape(platforms[meta.embodiment] || 'Platform not selected')}</p><code>${escape(item.id.slice(0,8))}</code></div><div class="submission-actions"><a class="button" href="${href}">${editable ? 'Continue Draft' : 'View Submission'} →</a>${item.status === 'draft' ? `<button type="button" data-delete="${item.id}">Delete Draft</button>` : ''}<div class="submission-result"><span>Current Stage</span><strong>${stage}</strong></div></div></article>`;
+      const current = item.current_stage || {key:item.status, label:statuses[item.status] || item.status, progress:null};
+      const progress = current.key === 'evaluating'
+        ? `<progress max="100" value="${Number(current.progress) || 0}" aria-label="Overall evaluation progress">${Number(current.progress) || 0}%</progress><small>${Number(current.progress) || 0}%</small>`
+        : '';
+      return `<article class="submission-item"><div><span class="badge ${escape(item.status)}">${escape(statuses[item.status] || item.status)}</span><h2><a href="${href}">${escape(meta.model_name || 'Untitled Draft')}</a></h2><p class="muted">${escape(tracks[meta.benchmark_track] || 'Track not selected')} · ${escape(platforms[meta.embodiment] || 'Platform not selected')}</p><code>${escape(item.id.slice(0,8))}</code></div><div class="submission-actions"><a class="button" href="${href}">${editable ? 'Continue Draft' : 'View Submission'} →</a>${item.status === 'draft' ? `<button type="button" data-delete="${item.id}">Delete Draft</button>` : ''}<div class="submission-result"><span>Current Stage</span><strong>${escape(current.label)}</strong>${progress}</div></div></article>`;
     }).join('');
     list.querySelectorAll('[data-delete]').forEach(button => button.addEventListener('click', async () => {
       if (!confirm('Delete this draft? Its audit record and uploaded materials may be retained privately.')) return;
