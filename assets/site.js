@@ -242,17 +242,49 @@ function comparisonNode(scope, selector) {
   return origin?document.querySelector(`[data-floating-origin="${origin}"] ${selector}`):null;
 }
 
+function updateComparisonHeading(scope, trackName, platformName, model) {
+  const heading=comparisonNode(scope,'[data-comparison-heading]');
+  if(!heading)return;
+  heading.querySelector('[data-comparison-track]').textContent=trackName;
+  heading.querySelector('[data-comparison-platform]').textContent=platformName;
+  heading.querySelector('[data-comparison-context]').textContent=trackName+', '+platformName;
+  const empty=heading.querySelector('[data-comparison-empty]');
+  const selection=heading.querySelector('[data-comparison-selection]');
+  empty.hidden=Boolean(model);
+  selection.hidden=!model;
+  if(model)heading.querySelector('[data-comparison-model]').textContent=model.model_name;
+}
+
 function updateModelPreview(scope, model) {
   const panel=comparisonNode(scope,'[data-model-preview]');
   if(!panel)return;
   const player=panel.querySelector('[data-preview-video]');
+  const scrubber=panel.querySelector('[data-preview-scrubber]');
+  const source=panel.querySelector('[data-preview-source]');
   const title=panel.querySelector('[data-preview-title]');
   const meta=panel.querySelector('[data-preview-meta]');
   const empty=panel.querySelector('[data-preview-empty]');
+  if(scrubber&&!scrubber.dataset.previewBound){
+    const sync=()=>{
+      const progress=Number.isFinite(player.duration)&&player.duration>0?player.currentTime/player.duration:0;
+      scrubber.value=String(Math.round(progress*1000));
+      scrubber.style.setProperty('--preview-progress',(progress*100)+'%');
+    };
+    scrubber.addEventListener('input',()=>{
+      if(Number.isFinite(player.duration)&&player.duration>0)player.currentTime=player.duration*Number(scrubber.value)/1000;
+      scrubber.style.setProperty('--preview-progress',(Number(scrubber.value)/10)+'%');
+    });
+    player.addEventListener('loadedmetadata',sync);
+    player.addEventListener('durationchange',sync);
+    player.addEventListener('timeupdate',sync);
+    scrubber.dataset.previewBound='true';
+  }
   player.pause();
   if(!model){
     panel.classList.remove('is-placeholder');
     player.hidden=true;player.removeAttribute('src');player.load();
+    if(scrubber){scrubber.hidden=true;scrubber.value='0';scrubber.style.setProperty('--preview-progress','0%');}
+    if(source)source.hidden=true;
     title.textContent='Select a model to compare';
     const defaultEpisode=scope.dataset.trackPanel==='policy'?'ep000008':'ep000000';
     meta.textContent='hangtowel · '+defaultEpisode+' · top_head';
@@ -263,6 +295,8 @@ function updateModelPreview(scope, model) {
   if(!model.preview){
     panel.classList.remove('is-placeholder');
     player.hidden=true;player.removeAttribute('src');player.load();
+    if(scrubber){scrubber.hidden=true;scrubber.value='0';scrubber.style.setProperty('--preview-progress','0%');}
+    if(source)source.hidden=true;
     meta.textContent='Comparison episode unavailable';
     empty.hidden=false;empty.textContent=model.demo?'This illustrative result does not have a submitted episode.':'No public comparison video is available for this legacy result.';
     return;
@@ -272,6 +306,8 @@ function updateModelPreview(scope, model) {
     model.preview.task+' · '+model.preview.episode_id+' · '+model.preview.view+
     (model.preview.placeholder?' · placeholder only':'');
   empty.hidden=true;player.hidden=false;
+  if(scrubber)scrubber.hidden=false;
+  if(source)source.hidden=false;
   if(player.getAttribute('src')!==model.preview.url){player.src=model.preview.url;player.load();}
   player.play().catch(()=>{});
 }
@@ -488,10 +524,11 @@ function initializeBoard(board, entries) {
     });
     const active = [...svg.querySelectorAll('[data-radar-series]')].find(g=>g.dataset.radarSeries===id);
     if (active) svg.append(active);
-    const name = current.find(m=>String(m.id)===id)?.model_name;
     const selectedModel=current.find(m=>String(m.id)===id)||null;
-    updateModelPreview(board,selectedModel||current.find(m=>m.preview)||null);
-    board.querySelector('[data-board-status]').textContent = platforms[platform]+' · '+regimes[regime]+' · '+(name?'Highlighting '+name:'All models shown equally.');
+    const trackName=regime==='full'?'Long-Horizon Track':'Main Track';
+    updateComparisonHeading(board,trackName,platforms[platform],selectedModel);
+    updateModelPreview(board,selectedModel);
+    board.querySelector('[data-board-status]').textContent = platforms[platform]+' · '+regimes[regime]+' · '+(selectedModel?'Highlighting '+selectedModel.model_name:'All models shown equally.');
   }
   function chart() {
     svg.replaceChildren();
@@ -703,7 +740,9 @@ function initializePolicy(models){
    r.classList.toggle('is-selected',selected===rowIndex);
    r.querySelector('button').setAttribute('aria-pressed',String(selected===rowIndex));
   });
-  updateModelPreview(document.getElementById('policy-track'),selected===null?(models.find(model=>model.preview)||null):models[selected]);
+  const selectedModel=selected===null?null:models[selected];
+  updateComparisonHeading(document.getElementById('policy-track'),'Policy Track','AgiBot G2',selectedModel);
+  updateModelPreview(document.getElementById('policy-track'),selectedModel);
  }
  const certificationFilter=document.querySelector('[data-policy-certification-filter]');
  const publicFilter=document.querySelector('[data-policy-public-filter]');
@@ -748,7 +787,9 @@ function initializePolicy(models){
    rows.append(row);
   });
   models.forEach((model,index)=>{groups[index].style.display=visible.includes(model)?'':'none';});
-  selected=null;groups.forEach(group=>group.setAttribute('opacity','1'));updateModelPreview(document.getElementById('policy-track'),visible.find(model=>model.preview)||null);
+  selected=null;groups.forEach(group=>group.setAttribute('opacity','1'));
+  updateComparisonHeading(document.getElementById('policy-track'),'Policy Track','AgiBot G2',null);
+  updateModelPreview(document.getElementById('policy-track'),null);
  }
  certificationFilter?.addEventListener('change',event=>{certification=event.target.value;renderPolicyRows();});
  publicFilter?.addEventListener('change',event=>{publicStatus=event.target.value;renderPolicyRows();});
