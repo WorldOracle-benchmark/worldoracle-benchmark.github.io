@@ -51,6 +51,8 @@ body > main { view-transition-name: page-content; }
 .brand-logo { width: 30px; height: 30px; flex: 0 0 30px; object-fit: contain; filter: drop-shadow(0 3px 7px rgba(4,54,110,.16)); }
 .footer .brand-logo { width: 32px; height: 32px; flex-basis: 32px; }
 .desktop-nav { display: flex; align-items: stretch; align-self: stretch; gap: 26px; color: #77807e; font: 500 11px/1 var(--mono); letter-spacing: .04em; }
+.desktop-nav { visibility: hidden; }
+html.unified-nav-ready .desktop-nav { visibility: visible; }
 .desktop-nav a, .mobile-menu a { --nav-color: var(--accent-dark); --nav-tint: #e8f7f5; }
 .desktop-nav a[href="#framework"], .mobile-menu a[href="#framework"] { --nav-color: #416fc4; --nav-tint: #edf2fb; }
 .desktop-nav a[href="#metrics"], .mobile-menu a[href="#metrics"] { --nav-color: #a64b64; --nav-tint: #faeef2; }

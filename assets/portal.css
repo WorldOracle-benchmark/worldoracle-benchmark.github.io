@@ -106,6 +106,7 @@ body{padding-top:66px}
 .site-header .brand:hover{text-decoration:none}.site-header .brand>span:last-child>span{color:#909997;font-weight:400}
 .site-header .brand-mark{width:21px;height:21px;display:grid;grid-template-columns:repeat(3,1fr);align-items:end;gap:2px}.site-header .brand-mark i{display:block;background:#13b8a6}.site-header .brand-mark i:nth-child(1){height:45%}.site-header .brand-mark i:nth-child(2){height:100%}.site-header .brand-mark i:nth-child(3){height:70%}
 .site-header .desktop-nav{display:flex;align-items:stretch;align-self:stretch;gap:26px;color:#77807e;font:500 11px/1 var(--sans);letter-spacing:.04em}
+.site-header .desktop-nav{visibility:hidden}.unified-nav-ready .site-header .desktop-nav{visibility:visible}
 .site-header .desktop-nav>a{position:relative;display:inline-flex;align-items:center;padding:2px 0 0;color:#77807e;transition:color .2s;text-decoration:none}
 .site-header .desktop-nav>a::after{content:"";position:absolute;right:50%;bottom:0;left:50%;height:3px;border-radius:3px 3px 0 0;background:#087e74;transition:right .22s ease,left .22s ease}
 .site-header .desktop-nav>a:hover,.site-header .desktop-nav>a.is-active{color:#087e74}.site-header .desktop-nav>a.is-active::after{right:0;left:0}

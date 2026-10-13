@@ -146,6 +146,11 @@
     const mobile = ensureMobileNavigation(header);
     mobile.replaceChildren(...items.map(item => link(item, current)));
     if (authenticated) mobile.append(logoutButton());
+
+    // Keep the server-authored fallback navigation out of the first paint.
+    // Reveal the header only after the final session-aware navigation exists,
+    // so users never see an older navigation state flash before replacement.
+    document.documentElement.classList.add('unified-nav-ready');
   }
 
   render();
