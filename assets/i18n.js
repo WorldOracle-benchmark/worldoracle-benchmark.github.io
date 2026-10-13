@@ -1096,7 +1096,29 @@
     'No. Use this optional field for information you want the organizers to know about this submission, up to 4,000 characters.': '不是。该字段为选填，可补充希望主办方了解的本次提交信息，最多 4,000 个字符。',
     'Each approved account may submit up to two evaluations per Track and six evaluations total in its rolling seven-day window. Failed or incomplete attempts do not consume a V number.': '每个已审核账号在滚动 7 天内，每个赛道最多正式评测 2 次，三个赛道合计最多 6 次。失败或未完成的尝试不会占用 V 版本号。',
     'The original ZIP and all other package files remain private. Only the declared comparison video for a model\'s accepted leaderboard-best result may be displayed publicly beside its score.': '原始 ZIP 和其他提交包文件均保持私有。只有模型已接受且成为榜单最佳的结果，其声明的对比视频才可能随分数公开展示。',
-    'No. All three Track forms require prediction-video artifacts. Self-reported numbers alone are insufficient for evaluation.': '不可以。三个赛道都必须提交预测视频材料，仅提供自行汇总的分数不足以完成评测。'
+    'No. All three Track forms require prediction-video artifacts. Self-reported numbers alone are insufficient for evaluation.': '不可以。三个赛道都必须提交预测视频材料，仅提供自行汇总的分数不足以完成评测。',
+    'An uploaded package is not yet a verified benchmark result. Formal queue entry consumes the rolling quota. A successful V number is assigned only after every required metric passes. For a single-view submission, the result replaces the model\'s current best only when its final Single-View Score is higher. For a three-view submission, replacement depends only on a higher final Multi-View Score. Improvements in individual metrics alone do not update the leaderboard.': '上传完成不等于评测结果已经有效。提交正式进入队列时才扣除滚动额度；所有必需指标通过后才会获得成功版本号。单视角提交只有在最终单视角总分更高时才会替换该模型当前最佳成绩；三视角提交只比较最终多视角总分。仅有某些单项指标提高不会更新榜单。',
+    'One email, one registered model.': '一个邮箱对应一个已登记模型。',
+    'Each registration email is bound to exactly one model. A team may register multiple models: choose Same Team, New Model and verify the email and password used to create the original team before adding a new model account. The team name remains shared public attribution, while every model account supplies its own model name, organization, logo, registration email and password. Accounts receive no submission quota until organizer review is complete.': '每个注册邮箱只绑定一个模型。同一队伍可以登记多个模型：请选择“同队伍，新增模型”，并验证最初创建该队伍时使用的邮箱和密码，然后再添加新的模型账号。队伍名称作为共同的公开署名；每个模型账号需分别提供模型名称、所属机构、Logo、注册邮箱和密码。主办方审核完成前，账号不会获得正式提交额度。',
+    'Code, model weights and papers are optional during registration. Any valid public model resource can qualify the model as Certified after organizer verification. A model is marked Open Source only after both its public code repository and public model weights are verified. Resource URLs may use any public HTTP/HTTPS host.': '注册时可以选填代码、模型权重和论文。任意一项有效的公开模型资源经主办方核验后，模型即可获得“已认证”标识。只有公开代码仓库与公开模型权重均通过核验后，模型才会标记为“已开源”。资源地址可使用任意公开可访问的 HTTP/HTTPS 网站。',
+    'Registration type': '注册类型', 'New Account': '新账号', 'Same Team, New Model': '同队伍，新增模型',
+    'Register a new team and model': '注册新队伍和模型', 'Add another model account': '添加另一个模型账号',
+    'Create the first model account for a team that is not yet registered.': '为尚未登记的队伍创建第一个模型账号。',
+    'Reuse an existing team name after verifying the original team account.': '验证原队伍账号后，复用已有队伍名称登记新模型。',
+    'Add a Model Account': '添加新模型账号',
+    'Enter the existing public team name exactly as registered.': '请输入现有队伍已登记的公开名称。',
+    'Add Model & Verify Email ↗': '添加模型并验证邮箱 ↗',
+    'Team Verification': '队伍身份验证', 'Verify the original team account.': '验证原队伍账号。',
+    'Enter the email and password used when this team was first created. The new model account is created only after these credentials are verified.': '请输入最初创建该队伍时使用的邮箱和密码。只有验证通过后，才会创建新的模型账号。',
+    'Original Team Email': '原队伍账号邮箱', 'Original Team Password': '原队伍账号密码',
+    'Cancel': '取消', 'Verify Team & Continue ↗': '验证队伍并继续 ↗',
+    'Close team verification': '关闭队伍身份验证',
+    'Model account saved. Verify the new registration email to enter organizer review.': '模型账号已保存。请验证新的注册邮箱，完成后将进入主办方审核。'
+    , 'Enter the original team account email.': '请输入原队伍账号邮箱。'
+    , 'Enter the original team account password.': '请输入原队伍账号密码。'
+    , 'The original team email or password is incorrect, or the team email is not verified.': '原队伍邮箱或密码不正确，或者该队伍邮箱尚未完成验证。'
+    , 'That team name is already registered. Choose Same Team, New Model to add another model.': '该队伍名称已登记；如需添加其他模型，请选择“同队伍，新增模型”。'
+    , 'Any valid public model resource can qualify the model as Certified after organizer verification. Open-source status requires both public Code and Weights. Add a valid Code Repository URL to reveal Model Weights. Resource links may use any public HTTP/HTTPS host.': '任意一项有效的公开模型资源经主办方核验后，模型即可获得“已认证”标识。开源状态要求同时具备公开代码和公开权重；填写有效的代码仓库地址后才会显示模型权重栏。资源链接可使用任意公开可访问的 HTTP/HTTPS 网站。'
   });
 
   const normalize = value => value.replace(/\s+/g, ' ').trim();

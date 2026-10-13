@@ -10,6 +10,13 @@
   const registrationLayout = document.querySelector('[data-registration-layout]');
   const apiBase = (document.querySelector('meta[name="worldoracle-api-base"]')?.content || '').replace(/\/$/, '');
 
+  function idleSubmitLabel() {
+    const sameTeam = form.elements.registration_mode?.value === 'same_team';
+    const chinese = document.documentElement.lang.toLowerCase().startsWith('zh');
+    if (sameTeam) return chinese ? '添加模型并验证邮箱 ↗' : 'Add Model & Verify Email ↗';
+    return chinese ? '创建账号并验证邮箱 ↗' : 'Create Account & Verify Email ↗';
+  }
+
   function clearServerErrors() {
     form.dispatchEvent(new CustomEvent('registration:server-errors', { detail: { errors: {} } }));
   }
@@ -41,7 +48,8 @@
     }
     clearServerErrors();
     submit.disabled = true;
-    submit.textContent = 'Creating account…';
+    submit.textContent = form.elements.registration_mode?.value === 'same_team'
+      ? 'Adding model account…' : 'Creating account…';
     try {
       const response = await fetch(`${apiBase}/api/v1/register`, {
         method: 'POST',
@@ -74,7 +82,7 @@
       showErrors({}, 'The registration service could not be reached. Check your connection and try again.');
     } finally {
       submit.disabled = false;
-      submit.textContent = 'Create Account & Verify Email ↗';
+      submit.textContent = idleSubmitLabel();
     }
   });
 })();

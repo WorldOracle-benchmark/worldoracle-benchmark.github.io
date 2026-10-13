@@ -11,12 +11,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../../assets/portal.css?v=20261013-brand-unified-v1">
-  <script src="../../../assets/i18n.js?v=20261013-i18n-v5" defer></script>
+  <link rel="stylesheet" href="../../../assets/portal.css?v=20261013-multi-model-v1">
+  <script src="../../../assets/i18n.js?v=20261013-multi-model-v1" defer></script>
   <script src="../../../assets/unified-nav.js?v=20261013-i18n-v5" defer></script>
   <script src="../../../assets/portal.js?v=20261013-nav-atomic-v1" defer></script>
-  <script src="../../../assets/registration-validation.js?v=20261013-open-source-v4" defer></script>
-  <script src="../../../assets/registration-api.js?v=20261013-nav-project-v3" defer></script>
+  <script src="../../../assets/registration-validation.js?v=20261013-multi-model-v1" defer></script>
+  <script src="../../../assets/registration-api.js?v=20261013-multi-model-v1" defer></script>
 </head>
 <body class="auth-centered-page">
   <a class="skip" href="#main">Skip to Content</a>
@@ -31,11 +31,16 @@
   <nav class="mobile-menu" aria-label="Mobile Navigation" data-mobile-menu><a href="../../../">Project Page</a><a href="../../../leaderboard.html">Full Leaderboard</a><a href="../../">Submission</a><a class="is-active" href="../">Sign In</a></nav>
   <main id="main" class="shell">
     <form class="panel auth-form registration-form" method="post" enctype="multipart/form-data" data-registration-layout data-registration-form novalidate>
-      <div class="registration-title"><h1>Create Submission Account</h1><span class="badge registration-detail-tag">Complete information helps us review your application faster</span></div>
+      <div class="registration-title"><h1 data-registration-heading>Create Submission Account</h1><span class="badge registration-detail-tag">Complete information helps us review your application faster</span></div>
+      <input type="hidden" name="registration_mode" value="new_account">
+      <div class="registration-mode-grid" role="radiogroup" aria-label="Registration type">
+        <button class="registration-mode-card is-active" type="button" role="radio" aria-checked="true" data-registration-mode="new_account"><span class="registration-mode-tag">New Account</span><strong>Register a new team and model</strong><small>Create the first model account for a team that is not yet registered.</small></button>
+        <button class="registration-mode-card" type="button" role="radio" aria-checked="false" data-registration-mode="same_team"><span class="registration-mode-tag">Same Team, New Model</span><strong>Add another model account</strong><small>Reuse an existing team name after verifying the original team account.</small></button>
+      </div>
       <p class="form-legend"><span class="required-mark" aria-hidden="true">*</span> Required <span class="optional-label">Optional</span> Supporting information</p>
       <div class="form-error-summary" data-registration-summary role="alert" aria-live="polite" tabindex="-1" hidden><strong>Please check the highlighted fields.</strong><ul data-registration-summary-list></ul></div>
       <div class="field-grid">
-        <label class="registration-field">Team Name <span class="required-mark" aria-hidden="true">*</span><span class="sr-only"> required</span><input name="team_name" maxlength="200" required aria-describedby="team-name-help team-name-error"><small class="field-help" id="team-name-help">Public name of the team submitting this model.</small><small class="field-error" id="team-name-error" data-field-error="team_name" hidden></small></label>
+        <label class="registration-field">Team Name <span class="required-mark" aria-hidden="true">*</span><span class="sr-only"> required</span><input name="team_name" maxlength="200" required aria-describedby="team-name-help team-name-error"><small class="field-help" id="team-name-help" data-team-name-help>Public name of the team submitting this model.</small><small class="field-error" id="team-name-error" data-field-error="team_name" hidden></small></label>
         <label class="registration-field">Model Name <span class="required-mark" aria-hidden="true">*</span><span class="sr-only"> required</span><input name="model_name" maxlength="200" required aria-describedby="model-name-help model-name-error"><small class="field-help" id="model-name-help">Public model name. It is locked after approval.</small><small class="field-error" id="model-name-error" data-field-error="model_name" hidden></small></label>
       </div>
       <div class="field-grid">
@@ -48,7 +53,7 @@
         <label class="registration-field">Confirm Password <span class="required-mark" aria-hidden="true">*</span><span class="sr-only"> required</span><input type="password" name="confirm" autocomplete="new-password" minlength="12" maxlength="256" required aria-describedby="confirm-help confirm-error"><small class="field-help" id="confirm-help">Enter the same password again.</small><small class="field-error" id="confirm-error" data-field-error="confirm" hidden></small></label>
       </div>
       <h3>Public Model Resources <span class="optional-label">Optional</span></h3>
-      <p class="muted small">Open-source status requires both public Code and Weights. Add a valid Code Repository URL to reveal Model Weights. Either field may use any public HTTP/HTTPS host; GitHub and Hugging Face are not required.</p>
+      <p class="muted small">Any valid public model resource can qualify the model as Certified after organizer verification. Open-source status requires both public Code and Weights. Add a valid Code Repository URL to reveal Model Weights. Resource links may use any public HTTP/HTTPS host.</p>
       <label class="registration-field">GitHub / Code Repository <span class="optional-label">Optional</span><input type="url" name="github_url" maxlength="500" placeholder="https://code.example.org/organization/model" aria-describedby="github-help github-error"><small class="field-help" id="github-help">Any public HTTP/HTTPS code repository URL is accepted.</small><small class="field-error" id="github-error" data-field-error="github_url" hidden></small></label>
       <div class="progressive-resource-field" data-weights-field aria-hidden="true"><div class="progressive-resource-field-inner"><label class="registration-field">Hugging Face / Model Weights <span class="optional-label">Optional</span><input type="url" name="huggingface_url" maxlength="500" placeholder="https://weights.example.org/organization/model" aria-describedby="huggingface-help huggingface-error" disabled><small class="field-help" id="huggingface-help">Any public HTTP/HTTPS model-weights URL is accepted.</small><small class="field-error" id="huggingface-error" data-field-error="huggingface_url" hidden></small></label></div></div>
       <label class="registration-field">Paper / Technical Report <span class="optional-label">Optional</span><input type="url" name="paper_url" maxlength="500" placeholder="A public link is acceptable." aria-describedby="paper-error"><small class="field-error" id="paper-error" data-field-error="paper_url" hidden></small></label>
@@ -56,7 +61,18 @@
       <div class="registration-consent"><label class="check"><input type="checkbox" name="terms" value="yes" required aria-describedby="terms-error"><span>I accept the registration and participation terms and confirm that the team and model information above is accurate. <span class="required-mark" aria-hidden="true">*</span><span class="sr-only"> required</span></span></label><small class="field-error" id="terms-error" data-field-error="terms" hidden></small></div>
       <div class="registration-consent"><label class="check"><input type="checkbox" name="privacy" value="yes" required aria-describedby="privacy-error"><span>I have read the privacy notice and authorize WorldOracle to store the private information required for account review and auditing. <span class="required-mark" aria-hidden="true">*</span><span class="sr-only"> required</span></span></label><small class="field-error" id="privacy-error" data-field-error="privacy" hidden></small></div>
       <p class="field-error form-level-error" data-field-error="form" hidden></p>
-      <button class="button primary" type="submit">Create Account &amp; Verify Email ↗</button>
+      <button class="button primary" type="submit" data-registration-submit>Create Account &amp; Verify Email ↗</button>
+      <div class="team-auth-dialog" data-team-auth-dialog hidden>
+        <div class="team-auth-dialog-backdrop" data-team-auth-close></div>
+        <section class="team-auth-dialog-panel" role="dialog" aria-modal="true" aria-labelledby="team-auth-title" tabindex="-1">
+          <button class="team-auth-dialog-close" type="button" aria-label="Close team verification" data-team-auth-close>×</button>
+          <p class="eyebrow">Team Verification</p><h2 id="team-auth-title">Verify the original team account.</h2>
+          <p class="muted">Enter the email and password used when this team was first created. The new model account is created only after these credentials are verified.</p>
+          <label class="registration-field">Original Team Email <span class="required-mark" aria-hidden="true">*</span><input type="email" name="team_auth_email" autocomplete="username" maxlength="254" disabled aria-describedby="team-auth-email-error"><small class="field-error" id="team-auth-email-error" data-field-error="team_auth_email" hidden></small></label>
+          <label class="registration-field">Original Team Password <span class="required-mark" aria-hidden="true">*</span><input type="password" name="team_auth_password" autocomplete="current-password" maxlength="256" disabled aria-describedby="team-auth-password-error"><small class="field-error" id="team-auth-password-error" data-field-error="team_auth_password" hidden></small></label>
+          <div class="team-auth-actions"><button class="button" type="button" data-team-auth-close>Cancel</button><button class="button primary" type="button" data-team-auth-confirm>Verify Team &amp; Continue ↗</button></div>
+        </section>
+      </div>
     </form>
     <section class="registration-success" data-registration-success role="status" aria-live="polite" tabindex="-1" hidden>
       <div class="registration-success-mark" aria-hidden="true">✓</div><p class="eyebrow">Registration Received</p><h1>Check your email.</h1><p data-registration-success-message></p>
