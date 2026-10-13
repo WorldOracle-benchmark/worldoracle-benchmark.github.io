@@ -18,9 +18,17 @@
     if (!Object.keys(errors).length && fallback) errors.form = fallback;
     form.dispatchEvent(new CustomEvent('registration:server-errors', { detail: { errors } }));
     if (summary && Object.keys(errors).length) summary.focus({ preventScroll: true });
-    const first = Object.keys(errors).map((name) => form.elements[name]).find(Boolean);
-    first?.focus();
-    first?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const firstName = Object.keys(errors)[0];
+    const firstField = firstName ? form.elements[firstName] : null;
+    const firstError = firstName
+      ? form.querySelector(`[data-field-error="${CSS.escape(firstName)}"]`)
+      : null;
+    const target = firstField || firstError;
+    if (target) {
+      if (!firstField) target.setAttribute('tabindex', '-1');
+      target.focus({ preventScroll: true });
+      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
   }
 
   form.addEventListener('submit', async (event) => {
