@@ -70,7 +70,8 @@ function createChunkHasher(workerUrl) {
     job.resolve({hash: event.data.hash, buffer: event.data.buffer});
   };
   worker.onerror = error => {
-    pending.forEach(job => job.reject(error)); pending.clear(); worker.terminate(); worker = null;
+    const failure = new Error(error?.message || 'The background checksum worker stopped unexpectedly.');
+    pending.forEach(job => job.reject(failure)); pending.clear(); worker.terminate(); worker = null;
   };
   return {
     digest(buffer) {
@@ -132,7 +133,10 @@ if (typeof document !== 'undefined') {
           }
           return json;
         } catch (error) {
-          if (paused || !retry || attempt >= 5 || !retryableUpload(error.status || 0)) throw error;
+          const failure = error instanceof Error
+            ? error
+            : new Error(error?.message || 'The upload request failed unexpectedly.');
+          if (paused || !retry || attempt >= 5 || !retryableUpload(failure.status || 0)) throw failure;
           show(`Connection interrupted or server busy. Retrying (${attempt + 1}/5)…`);
         } finally { clearTimeout(timer); controllers.delete(controller); }
         await sleep(Math.min(8000, 500 * 2 ** attempt) + Math.random() * 300);
@@ -199,12 +203,22 @@ if (typeof document !== 'undefined') {
           const started = performance.now(), initial = confirmed;
           update(confirmed, file.size);
           const laneCount = Math.min(config.parallelism || 6, ranges.length);
-          const workerUrl = new URL('chunk-hasher.js?v=20261005-multipart-v2', chunkUploadAssetBase);
+          const workerUrl = new URL('chunk-hasher.js?v=20261013-upload-worker-fallback-v1', chunkUploadAssetBase);
           async function lane(hasher) {
             while (cursor < ranges.length) {
               checkPaused(); const range = ranges[cursor++];
               let buffer = await file.slice(range.start, range.end).arrayBuffer();
-              const result = await hasher.digest(buffer); buffer = result.buffer;
+              let result;
+              try {
+                result = await hasher.digest(buffer);
+              } catch (_) {
+                // A Worker can be reclaimed under memory pressure while several
+                // large chunks are being hashed. Re-read the detached buffer and
+                // continue with Web Crypto instead of aborting every upload lane.
+                buffer = await file.slice(range.start, range.end).arrayBuffer();
+                result = {hash: await digestHex(buffer), buffer};
+              }
+              buffer = result.buffer;
               hashes[range.index] = result.hash;
               if (session.checksums?.[String(range.index)] !== result.hash) {
                 await api(`${base}/${session.id}/parts/${range.index}`, {method: 'POST', raw: true, body: buffer, retry: true,
@@ -225,8 +239,9 @@ if (typeof document !== 'undefined') {
         }
         await poll();
       })().catch(error => {
-        show(error.name === 'AbortError' ? 'Upload paused. Received parts are saved; use Resume Upload to continue.' : `Upload Failed: ${error.message} You have not advanced to the next step. Use Retry Upload to try again.`, error.name !== 'AbortError');
-        submit.textContent = error.name === 'AbortError' ? 'Resume Upload' : 'Retry Upload';
+        const reason = error?.message || 'An unexpected browser upload error occurred.';
+        show(error?.name === 'AbortError' ? 'Upload paused. Received parts are saved; use Resume Upload to continue.' : `Upload Failed: ${reason} You have not advanced to the next step. Use Retry Upload to try again.`, error?.name !== 'AbortError');
+        submit.textContent = error?.name === 'AbortError' ? 'Resume Upload' : 'Retry Upload';
       }).finally(() => {busy = false; input.disabled = false; submit.disabled = session?.state === 'complete'; pause.hidden = true;});
     });
     pause.addEventListener('click', stop);
