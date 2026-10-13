@@ -6,8 +6,8 @@
   'use strict';
 
   const urlLabels = {
-    github_url: 'GitHub / code repository',
-    huggingface_url: 'Hugging Face / model weights',
+    github_url: 'code repository',
+    huggingface_url: 'model weights',
     paper_url: 'paper / technical report'
   };
 
@@ -84,6 +84,9 @@
       .map(node => [node.dataset.fieldError, node]));
     const clientMessages = new Map();
     const serverMessages = new Map();
+    const codeField = form.elements.github_url;
+    const weightsField = form.elements.huggingface_url;
+    const weightsRegion = form.querySelector('[data-weights-field]');
 
     errors.forEach((node, name) => {
       if (!node.hidden && node.textContent.trim()) serverMessages.set(name, node.textContent.trim());
@@ -139,11 +142,27 @@
       return !message;
     };
 
+    const syncWeightsField = () => {
+      if (!codeField || !weightsField || !weightsRegion) return;
+      const codeValue = String(codeField.value || '').trim();
+      const reveal = Boolean(codeValue) && !validationMessage('github_url', codeValue);
+      weightsRegion.classList.toggle('is-revealed', reveal);
+      weightsRegion.setAttribute('aria-hidden', String(!reveal));
+      weightsField.disabled = !reveal;
+      if (!reveal) {
+        clientMessages.delete('huggingface_url');
+        serverMessages.delete('huggingface_url');
+        renderField('huggingface_url');
+        renderSummary();
+      }
+    };
+
     fields.forEach(field => {
       const eventName = field.type === 'file' || field.type === 'checkbox' ? 'change' : 'input';
       field.addEventListener(eventName, () => {
         serverMessages.delete(field.name);
         validateField(field);
+        if (field === codeField) syncWeightsField();
         if (field.name === 'password' && form.elements.confirm && form.elements.confirm.value) {
           validateField(form.elements.confirm);
         }
@@ -158,10 +177,12 @@
       });
       errors.forEach((_, name) => renderField(name));
       renderSummary();
+      syncWeightsField();
     });
 
     form.addEventListener('submit', event => {
-      const invalid = fields.filter(field => !validateField(field));
+      syncWeightsField();
+      const invalid = fields.filter(field => !field.disabled && !validateField(field));
       if (!invalid.length) return;
       event.preventDefault();
       event.stopImmediatePropagation();
@@ -171,6 +192,7 @@
       invalid[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, true);
 
+    syncWeightsField();
     renderSummary();
   }
 

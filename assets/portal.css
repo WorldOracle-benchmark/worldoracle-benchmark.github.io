@@ -83,6 +83,20 @@ body.registration-complete main.shell{display:grid;place-items:center;min-height
 @media(max-width:720px){.registration-complete .registration-success{padding:30px 24px}.registration-success-steps li{grid-template-columns:30px 1fr}}
 .service-note{display:flex;align-items:center;gap:8px;margin-top:14px;color:#6b7f8e;font-size:10px}.service-note::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(0,191,104,.1)}
 
+/* Progressive open-source materials: weights become available only after the
+   code-repository field contains a syntactically valid public web URL. */
+.progressive-resource-field{
+  display:grid;grid-template-rows:0fr;margin:-8px 0 0;opacity:0;transform:translate3d(0,-12px,0);
+  pointer-events:none;visibility:hidden;
+  transition:grid-template-rows .58s cubic-bezier(.22,.8,.32,1),margin .58s cubic-bezier(.22,.8,.32,1),opacity .34s ease,transform .58s cubic-bezier(.22,.8,.32,1),visibility 0s linear .58s
+}
+.progressive-resource-field-inner{min-height:0;overflow:hidden}
+.progressive-resource-field.is-revealed{
+  grid-template-rows:1fr;margin:0;opacity:1;transform:translate3d(0,0,0);pointer-events:auto;visibility:visible;
+  transition:grid-template-rows .58s cubic-bezier(.22,.8,.32,1),margin .58s cubic-bezier(.22,.8,.32,1),opacity .42s ease .08s,transform .58s cubic-bezier(.22,.8,.32,1),visibility 0s
+}
+@media(prefers-reduced-motion:reduce){.progressive-resource-field,.progressive-resource-field.is-revealed{transition:none;transform:none}}
+
 /* The public site and portal share one visually stationary navigation shell. */
 body{padding-top:66px}
 .site-header{position:fixed;z-index:100;inset:0 0 auto;height:66px;color:#111514;background:#fcfdfd;border-bottom:1px solid #d8e2e0;transition:box-shadow .25s,border-color .25s;view-transition-name:site-header}

@@ -330,9 +330,13 @@ const CURATED_MODEL_RESOURCES={
 };
 function normalizeCuratedModelStatus(model){
   const name=String(model.model_name||'').toLowerCase();
-  if(CURATED_PUBLIC_MODELS.has(name)){model.certified=true;model.model_public=true;}
+  if(CURATED_PUBLIC_MODELS.has(name))model.certified=true;
   if(CURRENT_LEADERBOARD_MODELS.has(name))model.updated_at='2026-10-16';
   if(CURATED_MODEL_RESOURCES[name])Object.assign(model,CURATED_MODEL_RESOURCES[name]);
+  // "Open Source" has one deliberately narrow meaning on this leaderboard:
+  // both a public code repository and public model weights are available.
+  // Papers and a stale backend publication flag never satisfy this filter.
+  model.model_public=Boolean(publicResourceUrl(model.github_url)&&publicResourceUrl(model.huggingface_url));
   return model;
 }
 
@@ -343,14 +347,18 @@ function publicResourceUrl(value){
 
 function appendLeaderboardResources(row,model){
   const cell=document.createElement('td');cell.className='board-resources';
-  const resources=[['Paper',model.paper_url],['Code',model.github_url],['Weights',model.huggingface_url]]
-    .map(([label,value])=>[label,publicResourceUrl(value)]).filter(([,url])=>url).slice(0,3);
+  const paperUrl=publicResourceUrl(model.paper_url);
+  const codeUrl=publicResourceUrl(model.github_url);
+  // A weights link is meaningful only when the same record also exposes code.
+  // This also prevents legacy records from rendering a weights-only state.
+  const weightsUrl=codeUrl?publicResourceUrl(model.huggingface_url):null;
+  const resources=[['Paper',paperUrl],['Code',codeUrl],['Weights',weightsUrl]].filter(([,url])=>url);
   if(resources.length){
     const list=document.createElement('span');list.className='board-resource-list';
     resources.forEach(([label,url])=>{const link=document.createElement('a');link.href=url;link.target='_blank';link.rel='noopener noreferrer';link.textContent=label;link.setAttribute('aria-label',label+' resource for '+model.model_name+' (opens in a new tab)');list.append(link);});
     cell.append(list);
   }else if(model.model_public){
-    const status=document.createElement('span');status.className='board-resource-status';status.textContent='Public';status.title='Verified public resources are available; individual links are not included in this record.';cell.append(status);
+    const status=document.createElement('span');status.className='board-resource-status';status.textContent='Open Source';status.title='Public code and model weights are available; individual links are not included in this record.';cell.append(status);
   }else cell.textContent='—';
   row.append(cell);
 }

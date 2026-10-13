@@ -838,9 +838,10 @@
     'Public Model Record': '公开模型档案', 'Verification': '审核标识', 'Public Resources': '公开资源',
     'Certified Team': '认证队伍', 'Non-Certified Team': '非认证队伍',
     'Model record ↗': '查看模型档案 ↗',
-    'Certification': '认证状态', 'Public status': '公开状态', 'All teams': '全部队伍',
+    'Certification': '认证状态', 'Public status': '公开状态', 'Open-source status': '开源状态', 'All teams': '全部队伍',
     'Certified teams': '认证队伍', 'Non-certified teams': '非认证队伍',
-    'All models': '全部模型', 'Rolling Seven-Day Quota': '滚动 7 天提交额度',
+    'All models': '全部模型', 'All Models': '全部模型', 'Open Source': '已开源', 'Not Open Source': '未开源',
+    'All source states': '全部开源状态', 'Rolling Seven-Day Quota': '滚动 7 天提交额度',
     'Model Materials': '模型资料', 'Save Materials for Review': '保存并提交审核',
     'This account is permanently bound to one organizer-approved team and model. Every version remains attributable to that registered team, organization, and model.': '当前账号固定绑定一个经主办方审核的队伍和模型。此后提交的每个版本都会归属到该队伍、机构和模型名下。',
     'Register a separate team account to submit a different model.': '如需提交其他模型，请另行注册新的队伍账号。',
@@ -858,6 +859,10 @@
     , 'Private. Used for verification, review decisions and English notices. Institutional email is preferred.': '不会公开，用于邮箱验证、接收审核结果和英文通知。建议使用机构邮箱。'
     , 'Private review evidence. Official submissions must establish model ownership or authorization.': '不会公开，仅用于审核。以官方名义提交时，须说明模型归属或提交授权。'
     , 'Links must be real, reachable and model-related. A verified GitHub or paper qualifies the team for certification. A verified GitHub, HuggingFace or paper qualifies the model as public.': '链接必须真实、可访问且与该模型直接相关。GitHub 仓库或论文经核验后，队伍可标记为“认证队伍”；GitHub、Hugging Face 或论文任一项经核验后，模型可标记为“模型已公开”。'
+    , 'Open-source status requires both public Code and Weights. Add a valid Code Repository URL to reveal Model Weights. Either field may use any public HTTP/HTTPS host; GitHub and Hugging Face are not required.': '模型只有同时公开代码与权重时才标记为“已开源”。填写并通过格式校验的代码仓库地址后，才会显示模型权重字段。两项均可使用任意公开的 HTTP/HTTPS 地址，不限定 GitHub 或 Hugging Face。'
+    , 'Hugging Face / Model Weights': 'Hugging Face／模型权重'
+    , 'Any public HTTP/HTTPS code repository URL is accepted.': '支持任意公开的 HTTP/HTTPS 代码仓库地址。'
+    , 'Any public HTTP/HTTPS model-weights URL is accepted.': '支持任意公开的 HTTP/HTTPS 模型权重地址。'
     , 'Optional': '选填', 'Optional · private': '选填 · 不公开'
     , 'I accept the registration and participation terms and confirm that all submitted identity and model information is accurate.': '我同意注册与参评条款，并确认填写的主体身份和模型信息真实、准确。'
     , 'I have read the privacy notice and authorize storage of private review information and audit records.': '我已阅读隐私说明，并同意平台保存审核所需的非公开信息和审计记录。'
