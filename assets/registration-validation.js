@@ -82,20 +82,42 @@
     const fields = [...form.querySelectorAll('input[name]:not([type="hidden"]), textarea[name]')];
     const errors = new Map([...form.querySelectorAll('[data-field-error]')]
       .map(node => [node.dataset.fieldError, node]));
-    const messages = new Map();
+    const clientMessages = new Map();
+    const serverMessages = new Map();
 
     errors.forEach((node, name) => {
-      if (!node.hidden && node.textContent.trim()) messages.set(name, node.textContent.trim());
+      if (!node.hidden && node.textContent.trim()) serverMessages.set(name, node.textContent.trim());
     });
+
+    const combinedMessages = () => {
+      const combined = new Map(serverMessages);
+      clientMessages.forEach((message, name) => combined.set(name, message));
+      return combined;
+    };
 
     const renderSummary = () => {
       if (!summary || !summaryList) return;
+      const messages = combinedMessages();
       summaryList.replaceChildren(...[...messages.values()].map(message => {
         const item = document.createElement('li');
         item.textContent = message;
         return item;
       }));
       summary.hidden = messages.size === 0;
+    };
+
+    const renderField = name => {
+      const message = clientMessages.get(name) || serverMessages.get(name) || '';
+      const field = form.elements[name];
+      const node = errors.get(name);
+      if (node) {
+        node.textContent = message;
+        node.hidden = !message;
+      }
+      if (field) {
+        field.toggleAttribute('aria-invalid', Boolean(message));
+        field.closest('.registration-field, .registration-consent')?.classList.toggle('has-error', Boolean(message));
+      }
     };
 
     const validateField = field => {
@@ -108,19 +130,11 @@
       });
       field.setCustomValidity(message);
       if (message) {
-        field.setAttribute('aria-invalid', 'true');
-        messages.set(name, message);
+        clientMessages.set(name, message);
       } else {
-        field.removeAttribute('aria-invalid');
-        messages.delete(name);
+        clientMessages.delete(name);
       }
-      const container = field.closest('.registration-field, .registration-consent');
-      if (container) container.classList.toggle('has-error', Boolean(message));
-      const node = errors.get(name);
-      if (node) {
-        node.textContent = message;
-        node.hidden = !message;
-      }
+      renderField(name);
       renderSummary();
       return !message;
     };
@@ -128,12 +142,22 @@
     fields.forEach(field => {
       const eventName = field.type === 'file' || field.type === 'checkbox' ? 'change' : 'input';
       field.addEventListener(eventName, () => {
+        serverMessages.delete(field.name);
         validateField(field);
         if (field.name === 'password' && form.elements.confirm && form.elements.confirm.value) {
           validateField(form.elements.confirm);
         }
       });
       field.addEventListener('blur', () => validateField(field));
+    });
+
+    form.addEventListener('registration:server-errors', event => {
+      serverMessages.clear();
+      Object.entries(event.detail?.errors || {}).forEach(([name, message]) => {
+        if (message) serverMessages.set(name, String(message));
+      });
+      errors.forEach((_, name) => renderField(name));
+      renderSummary();
     });
 
     form.addEventListener('submit', event => {
