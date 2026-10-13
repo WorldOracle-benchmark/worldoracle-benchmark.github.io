@@ -1162,6 +1162,8 @@ html.scroll-reveal-ready [data-scroll-reveal].is-revealed {
 }
 .brand{color:var(--brand-navy)}
 .desktop-nav a,.mobile-menu a{--nav-color:var(--brand-blue);--nav-tint:#edf6fd}
+.desktop-nav .nav-button{align-self:center;padding:7px 0;border:0;background:transparent;color:#77807e;font:500 11px/1 var(--mono);letter-spacing:.04em;cursor:pointer;transition:color .2s}.desktop-nav .nav-button:hover{color:var(--brand-blue)}
+.mobile-menu .nav-button{margin-top:4px;padding:13px 14px;border:0;border-radius:5px;background:transparent;color:var(--muted);font-size:14px;font-weight:600;text-align:left;cursor:pointer}.mobile-menu .nav-button:hover{color:var(--brand-blue);background:#edf6fd}
 .language-toggle{color:var(--brand-navy)}
 .language-divider{color:#8aa7ba}
 .language-secondary{color:#668095}

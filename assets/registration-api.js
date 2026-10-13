@@ -7,6 +7,7 @@
   const summary = form.querySelector('[data-registration-summary]');
   const submit = form.querySelector('[type="submit"]');
   const success = document.querySelector('[data-registration-success]');
+  const registrationLayout = document.querySelector('[data-registration-layout]');
   const apiBase = (document.querySelector('meta[name="worldoracle-api-base"]')?.content || '').replace(/\/$/, '');
 
   function clearServerErrors() {
@@ -63,7 +64,8 @@
         showErrors(errors, message);
         return;
       }
-      form.hidden = true;
+      registrationLayout.hidden = true;
+      document.body.classList.add('registration-complete');
       success.hidden = false;
       success.querySelector('[data-registration-success-message]').textContent = payload.message;
       success.focus();

@@ -1,3 +1,16 @@
+(() => {
+  if (window.WorldOracleNavigation) {
+    window.WorldOracleNavigation.render();
+    return;
+  }
+  const source = document.currentScript?.src;
+  if (!source || document.querySelector('script[data-unified-nav-loader]')) return;
+  const script = document.createElement('script');
+  script.src = new URL('unified-nav.js?v=20261013-unified-nav-v1', source).href;
+  script.dataset.unifiedNavLoader = '';
+  document.head.append(script);
+})();
+
 const navigationReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 function initializeScrollReveal() {
@@ -70,15 +83,19 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 syncPortalHeader();
 
-portalMenuButton?.addEventListener('click', () => {
-  const open = portalMenuButton.getAttribute('aria-expanded') === 'true';
-  portalMenuButton.setAttribute('aria-expanded', String(!open));
-  portalMobileMenu.classList.toggle('is-open', !open);
-});
-portalMobileMenu?.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
-  portalMenuButton.setAttribute('aria-expanded', 'false');
-  portalMobileMenu.classList.remove('is-open');
-}));
+if (portalMenuButton && portalMobileMenu && !portalMenuButton.dataset.unifiedMenuBound) {
+  portalMenuButton.dataset.unifiedMenuBound = 'true';
+  portalMenuButton.addEventListener('click', () => {
+    const open = portalMenuButton.getAttribute('aria-expanded') === 'true';
+    portalMenuButton.setAttribute('aria-expanded', String(!open));
+    portalMobileMenu.classList.toggle('is-open', !open);
+  });
+  portalMobileMenu.addEventListener('click', event => {
+    if (!event.target.closest('a,button')) return;
+    portalMenuButton.setAttribute('aria-expanded', 'false');
+    portalMobileMenu.classList.remove('is-open');
+  });
+}
 
 const guideLinks = [...document.querySelectorAll('.contents nav a')];
 const guideSections = guideLinks.map(link => document.querySelector(link.hash)).filter(Boolean);

@@ -129,16 +129,19 @@ window.addEventListener('resize', requestNavigationSync);
 window.addEventListener('hashchange', requestNavigationSync);
 syncNavigation();
 
-menuButton?.addEventListener('click', () => {
-  const open = menuButton.getAttribute('aria-expanded') === 'true';
-  menuButton.setAttribute('aria-expanded', String(!open));
-  mobileMenu.classList.toggle('is-open', !open);
-});
-
-mobileMenu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
-  menuButton.setAttribute('aria-expanded', 'false');
-  mobileMenu.classList.remove('is-open');
-}));
+if (menuButton && mobileMenu && !menuButton.dataset.unifiedMenuBound) {
+  menuButton.dataset.unifiedMenuBound = 'true';
+  menuButton.addEventListener('click', () => {
+    const open = menuButton.getAttribute('aria-expanded') === 'true';
+    menuButton.setAttribute('aria-expanded', String(!open));
+    mobileMenu.classList.toggle('is-open', !open);
+  });
+  mobileMenu.addEventListener('click', event => {
+    if (!event.target.closest('a,button')) return;
+    menuButton.setAttribute('aria-expanded', 'false');
+    mobileMenu.classList.remove('is-open');
+  });
+}
 
 // Real GT action excerpts; source intervals are documented in OUTCOME_CLIPS.md.
 const outcomeTasks = {
