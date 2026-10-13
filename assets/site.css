@@ -3268,3 +3268,43 @@ html.scroll-reveal-ready [data-scroll-reveal].is-revealed {
 @media(prefers-reduced-motion:reduce){
   .full-leaderboard-page .leaderboard-highlight-slide::after{animation:none}
 }
+
+/* Ranking deck v42 — compact badges, neutral rank markers, edge-to-center
+   hover atmosphere, and an instant seam reset for the cloned circular track. */
+.full-leaderboard-page .leaderboard-highlight-track.is-jumping{transition:none!important}
+.full-leaderboard-page .leaderboard-highlight-tag{
+  gap:6px;text-transform:none;letter-spacing:0
+}
+.full-leaderboard-page .leaderboard-highlight-tag span,
+.full-leaderboard-page .leaderboard-highlight-tag strong{
+  display:inline-flex;align-items:center;min-height:22px;padding:0 8px;border:1px solid rgba(var(--highlight-rgb),.3);
+  border-radius:3px;font:680 8px/1 var(--board-sans);letter-spacing:.015em;text-transform:none;text-shadow:none
+}
+.full-leaderboard-page .leaderboard-highlight-tag span{
+  color:var(--highlight-accent);background:rgba(var(--highlight-rgb),.08)
+}
+.full-leaderboard-page .leaderboard-highlight-tag strong{
+  color:#365365;background:rgba(255,255,255,.72)
+}
+.full-leaderboard-page .leaderboard-highlight-tag i{
+  width:4px;height:4px;border-radius:50%;background:#9cb0bc
+}
+.full-leaderboard-page .leaderboard-highlight-ranking li>b,
+.full-leaderboard-page .leaderboard-highlight-ranking li:first-child>b{
+  border-color:rgba(var(--highlight-rgb),.2);color:#668092;background:rgba(var(--highlight-rgb),.06);box-shadow:none
+}
+.full-leaderboard-page .leaderboard-highlight-edge{
+  overflow:visible;background:transparent!important;backdrop-filter:none
+}
+.full-leaderboard-page .leaderboard-highlight-edge::before{
+  content:"";position:absolute;z-index:0;top:0;bottom:0;width:300%;pointer-events:none;backdrop-filter:blur(2.5px)
+}
+.full-leaderboard-page .leaderboard-highlight-edge.is-previous::before{
+  left:0;background:linear-gradient(90deg,rgba(15,63,91,.34) 0%,rgba(27,100,139,.13) 32%,rgba(27,100,139,0) 100%);
+  -webkit-mask-image:linear-gradient(90deg,#000 0%,rgba(0,0,0,.68) 42%,transparent 100%);mask-image:linear-gradient(90deg,#000 0%,rgba(0,0,0,.68) 42%,transparent 100%)
+}
+.full-leaderboard-page .leaderboard-highlight-edge.is-next::before{
+  right:0;background:linear-gradient(270deg,rgba(15,63,91,.34) 0%,rgba(27,100,139,.13) 32%,rgba(27,100,139,0) 100%);
+  -webkit-mask-image:linear-gradient(270deg,#000 0%,rgba(0,0,0,.68) 42%,transparent 100%);mask-image:linear-gradient(270deg,#000 0%,rgba(0,0,0,.68) 42%,transparent 100%)
+}
+.full-leaderboard-page .leaderboard-highlight-edge span{z-index:1}

@@ -824,8 +824,6 @@ function initializeLeaderboardHighlights(entries){
  const carousel=document.querySelector('[data-leaderboard-highlights]');
  if(!carousel)return;
  const track=carousel.querySelector('[data-highlight-track]');
- const dots=carousel.querySelector('[data-highlight-dots]');
- const currentLabel=carousel.querySelector('[data-highlight-current]');
  const metricButtons=[...carousel.querySelectorAll('[data-highlight-metric]')];
  const previousButton=carousel.querySelector('[data-highlight-prev]');
  const nextButton=carousel.querySelector('[data-highlight-next]');
@@ -842,6 +840,8 @@ function initializeLeaderboardHighlights(entries){
  const make=(tag,className,text)=>{const node=document.createElement(tag);if(className)node.className=className;if(text!==undefined)node.textContent=text;return node;};
  let metric='single';
  let active=0;
+ let physical=1;
+ let moving=false;
  let timer=0;
  let paused=false;
  const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -854,31 +854,40 @@ function initializeLeaderboardHighlights(entries){
  };
  const team=model=>CURATED_PUBLIC_MODELS.has(String(model.model_name||'').toLowerCase())
   ?'WorldOracle Team':(model.contributor||model.organization||model.team_name||'—');
- const setActive=(index,userInitiated=false)=>{
-  active=(index+configurations.length)%configurations.length;
-  track.style.setProperty('--active-slide',String(active));
+ const updateAccessibility=()=>{
   [...track.children].forEach((slide,slideIndex)=>{
-   slide.setAttribute('aria-hidden',String(slideIndex!==active));
-   slide.toggleAttribute('inert',slideIndex!==active);
+   const visible=!slide.hasAttribute('data-highlight-clone')&&slideIndex===active+1;
+   slide.setAttribute('aria-hidden',String(!visible));
+   slide.toggleAttribute('inert',!visible);
   });
-  [...(dots?.children||[])].forEach((dot,dotIndex)=>{
-   dot.classList.toggle('is-active',dotIndex===active);
-   dot.setAttribute('aria-pressed',String(dotIndex===active));
-  });
-  if(currentLabel)currentLabel.textContent=String(active+1).padStart(2,'0');
+ };
+ const positionTrack=(animate=true)=>{
+  if(!animate)track.classList.add('is-jumping');
+  track.style.setProperty('--active-slide',String(physical));
+  if(!animate){void track.offsetWidth;track.classList.remove('is-jumping');}
+ };
+ const move=(direction,userInitiated=false)=>{
+  if(moving&&!reducedMotion.matches)return;
+  moving=true;
+  active=(active+direction+configurations.length)%configurations.length;
+  physical+=direction;
+  updateAccessibility();
+  positionTrack(true);
+  if(reducedMotion.matches){
+   physical=active+1;positionTrack(false);moving=false;
+  }
   if(userInitiated)restart();
  };
  const stop=()=>{if(timer)window.clearInterval(timer);timer=0;};
  const start=()=>{
   stop();
   if(paused||document.hidden||reducedMotion.matches)return;
-  timer=window.setInterval(()=>setActive(active+1),3000);
+  timer=window.setInterval(()=>move(1),3000);
  };
  const restart=()=>{stop();start();};
  const render=()=>{
   track.replaceChildren();
-  dots?.replaceChildren();
-  configurations.forEach(([regime,platform,trackName,platformLabel,tone],index)=>{
+  const slides=configurations.map(([regime,platform,trackName,platformLabel,tone])=>{
    const ranked=entries.filter(entry=>entry.regime===regime&&entry.platform===platform&&Number.isFinite(score(entry,metric)))
     .sort((a,b)=>score(b,metric)-score(a,metric)||a.model_name.localeCompare(b.model_name)).slice(0,3);
    const slide=make('article','leaderboard-highlight-slide is-'+tone);
@@ -886,8 +895,8 @@ function initializeLeaderboardHighlights(entries){
    slide.setAttribute('aria-label',label);
    const tag=make('div','leaderboard-highlight-tag');
    const divider=make('i');divider.setAttribute('aria-hidden','true');
-   tag.append(make('span','',trackName),divider);
-   if(regime!=='policy')tag.append(make('strong','',platformLabel));
+   tag.append(make('span','',trackName));
+   if(regime!=='policy')tag.append(divider,make('strong','',platformLabel));
    tag.append(make('em','','Top 3'));
    const ranking=make('ol','leaderboard-highlight-ranking');
    for(let rankIndex=0;rankIndex<3;rankIndex+=1){
@@ -895,19 +904,22 @@ function initializeLeaderboardHighlights(entries){
     const item=make('li',model?'':'is-empty');
     const rankedScore=model?score(model,metric):0;
     item.style.setProperty('--row-score',Math.max(0,Math.min(100,rankedScore||0))+'%');
-    item.append(make('b','',String(rankIndex+1).padStart(2,'0')));
+    item.append(make('b','',String(rankIndex+1)));
     const identity=make('span');
     identity.append(make('strong','',model?model.model_name:'Not yet ranked'),make('small','',model?team(model):'Awaiting a published result'));
     item.append(identity,make('em','',model?rankedScore.toFixed(2):'—'));
     ranking.append(item);
    }
-   slide.append(tag,ranking);track.append(slide);
-   if(dots){
-    const dot=make('button');dot.type='button';dot.setAttribute('aria-label','Show '+label);dot.setAttribute('aria-pressed','false');
-    dot.addEventListener('click',()=>setActive(index,true));dots.append(dot);
-   }
+   slide.append(tag,ranking);return slide;
   });
-  setActive(active);
+  const firstClone=slides[0].cloneNode(true);
+  const lastClone=slides[slides.length-1].cloneNode(true);
+  [firstClone,lastClone].forEach(clone=>{clone.setAttribute('data-highlight-clone','');clone.setAttribute('aria-hidden','true');clone.toggleAttribute('inert',true);});
+  track.append(lastClone,...slides,firstClone);
+  physical=active+1;
+  updateAccessibility();
+  positionTrack(false);
+  moving=false;
   restart();
  };
  metricButtons.forEach(button=>button.addEventListener('click',()=>{
@@ -915,8 +927,15 @@ function initializeLeaderboardHighlights(entries){
   metricButtons.forEach(item=>item.setAttribute('aria-pressed',String(item===button)));
   render();
  }));
- previousButton?.addEventListener('click',()=>setActive(active-1,true));
- nextButton?.addEventListener('click',()=>setActive(active+1,true));
+ previousButton?.addEventListener('click',()=>move(-1,true));
+ nextButton?.addEventListener('click',()=>move(1,true));
+ track.addEventListener('transitionend',event=>{
+  if(event.target!==track||event.propertyName!=='transform')return;
+  if(physical===configurations.length+1)physical=1;
+  else if(physical===0)physical=configurations.length;
+  positionTrack(false);
+  moving=false;
+ });
  carousel.addEventListener('mouseenter',()=>{paused=true;stop();});
  carousel.addEventListener('mouseleave',()=>{paused=false;start();});
  carousel.addEventListener('focusin',()=>{paused=true;stop();});
