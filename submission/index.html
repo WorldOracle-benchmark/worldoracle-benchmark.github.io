@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/portal.css?v=20261013-multi-model-v1">
-  <script src="../assets/i18n.js?v=20261013-bug-audit-v1" defer></script><script src="../assets/unified-nav.js?v=20261013-i18n-v5" defer></script><script src="../assets/portal.js?v=20261013-nav-atomic-v1" defer></script>
+  <script src="../assets/i18n.js?v=20261013-guide-contract-v1" defer></script><script src="../assets/unified-nav.js?v=20261013-i18n-v5" defer></script><script src="../assets/portal.js?v=20261013-nav-atomic-v1" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to Content</a>
@@ -67,9 +67,9 @@
           <p class="eyebrow">03 · Evaluation tracks</p>
           <h2>Choose a Track</h2>
           <div class="track-grid">
-            <div class="track-card"><span class="badge">Main</span><h3>Main Track</h3><p>Standard action-conditioned prediction on human-operated trajectories. Submit the first 30 seconds of every required episode.</p></div>
-            <div class="track-card blue"><span class="badge blue">Policy</span><h3>Policy Track</h3><p>Complete policy-distribution rollouts using actions collected from real policy executions on AgiBot G2.</p></div>
-            <div class="track-card"><span class="badge">Long Horizon</span><h3>Long-Horizon Track</h3><p>Complete action-conditioned episodes evaluated over the full prediction horizon.</p></div>
+            <div class="track-card"><span class="badge">Main</span><h3>Main Track</h3><p>First 30 seconds of human-operated trajectories. PSC, KIAF and ISA are evaluated for every submission; MVAC is added for three-view submissions.</p></div>
+            <div class="track-card blue"><span class="badge blue">Policy</span><h3>Policy Track</h3><p>Complete policy-rollout trajectories on AgiBot G2. PSC, KIAF and ISA are evaluated for every submission; MVAC is added for three-view submissions.</p></div>
+            <div class="track-card"><span class="badge">Long Horizon</span><h3>Long-Horizon Track</h3><p>Full prescribed trajectories. PSC, KIAF and ISA are evaluated for every submission; MVAC is added for three-view submissions.</p></div>
           </div>
           <p>Each submission targets exactly one Track. Submit separately to enter more than one Track. Main and Long-Horizon accept prediction videos for AgiBot G2, YAM, or Human Hand. Policy Track currently covers AgiBot G2 policy-distribution rollouts.</p>
         </section>
@@ -77,7 +77,7 @@
         <section id="prepare">
           <p class="eyebrow">04 · Package specification</p>
           <h2>Prepare Your Submission</h2>
-          <p>The portal automatically uses the single organizer-approved model bound to this account. Select the Track and platform and optionally add submission notes. Each queue entry receives the next account submission number within its Track. V1, V2, and so on are assigned only after successful evaluations; failed attempts never consume a V number.</p>
+          <p>The portal automatically uses the single organizer-approved model bound to this account. Select the Track and platform and optionally add submission notes. Each queue entry receives the next account submission number within its Track.</p>
 
           <h3>Track limits and required coverage</h3>
           <ul>
@@ -90,14 +90,28 @@
           <p>Do not reorder episodes by array position. Preserve the official <code>task / episode_id / view</code> identity and map every video explicitly in <code>manifest.json</code>. Frame indices must be contiguous from zero; synchronized views of an episode must have equal frame counts, frame rates, and durations. Do not select only successful rollouts or silently replace a trajectory.</p>
           <p>The implemented schema is <code>preview-2</code>. Set <code>benchmark_track</code> to <code>main</code>, <code>policy</code>, or <code>long_horizon</code>, matching the form. Set <code>evaluation.horizon</code> to <code>30s</code>, <code>policy</code>, or <code>full</code>; set <code>action_source</code> to <code>policy</code> only for Policy Track and <code>recorded</code> otherwise; and set <code>view_mode</code> to <code>single</code> or <code>multi</code>. Unknown top-level manifest fields are rejected.</p>
 
-          <h3>Input directory format</h3>
+          <h3>Single-view input directory format</h3>
           <pre><code>submission.zip
 ├── manifest.json              # Required; metadata and prediction index
 ├── README.md                  # Required; reproduction and alignment details
-├── predictions/               # Prediction MP4 files for the selected Track
+├── predictions/               # One top-head MP4 per required episode
 │   └── pickfruit/ep000000/top_head.mp4
 ├── config/                    # Recommended; inference settings and seeds
 └── logs/                      # Recommended; generation and evaluation logs</code></pre>
+          <p>Set <code>evaluation.view_mode</code> to <code>single</code>. Every submitted episode contains exactly one <code>top_head.mp4</code> prediction.</p>
+
+          <h3>Three-view input directory format</h3>
+          <pre><code>submission.zip
+├── manifest.json              # Required; metadata and prediction index
+├── README.md                  # Required; reproduction and alignment details
+├── predictions/               # Three synchronized MP4 files per episode
+│   └── pickfruit/ep000000/
+│       ├── top_head.mp4
+│       ├── left_hand.mp4
+│       └── right_hand.mp4
+├── config/                    # Recommended; inference settings and seeds
+└── logs/                      # Recommended; generation and evaluation logs</code></pre>
+          <p>Set <code>evaluation.view_mode</code> to <code>multi</code>. Every submitted episode must contain synchronized <code>top_head</code>, <code>left_hand</code>, and <code>right_hand</code> predictions with identical frame counts, frame rates, and durations.</p>
           <p>Each prediction entry must include <code>task, episode_id, view, fps, path</code>. The standard output is H.264 MP4, <code>yuv420p</code>, no audio, source resolution preserved, and the platform's native benchmark frame rate. In <code>README.md</code>, explain the action-to-frame mapping, whether the initial frame is included, the original resolution, and any unavoidable resampling.</p>
 
           <h3>Required compression profile</h3>
@@ -131,9 +145,11 @@ shasum -a 256 submission.zip</code></pre>
         <section id="validate">
           <p class="eyebrow">05 · Submission wizard</p>
           <h2>Validate and Submit</h2>
-          <p>Use the same validation routine locally before uploading:</p>
+          <p>Download the public structural-validation template and run it locally before uploading:</p>
+          <div class="actions"><a class="button" href="../assets/validate_package.py" download>Download Validation Template</a></div>
           <pre><code>python validate_package.py submission.zip</code></pre>
-          <p>The validator ships with the submission portal source code; its standalone public distribution is pending. In the submission portal, follow four steps:</p>
+          <p>The public template checks participant-visible ZIP safety, manifest fields, declared frame rate, file references, and single-view or three-view completeness. It intentionally contains no ground-truth episode list, private evaluation criteria, metric implementation, service path, or credential. The evaluation service repeats these checks and performs additional private admission checks after upload.</p>
+          <p>In the submission portal, follow four steps:</p>
           <ol>
             <li><strong>Model and Track:</strong> check your assigned model, choose a Track and platform, and optionally add submission notes.</li>
             <li><strong>Upload Materials:</strong> choose a ZIP. The browser uploads resumable parts and the background worker checks the assembled package and records its SHA-256 checksum.</li>
@@ -149,7 +165,7 @@ shasum -a 256 submission.zip</code></pre>
           <h2>Evaluation and Publication</h2>
           <p>Follow progress in My Submissions. The public stages are Draft, Submitted, Evaluating, Review, and Accepted. During Evaluating, the portal shows only overall progress and does not expose which metric is currently running.</p>
           <ol class="evaluation-timeline" aria-label="Evaluation stages"><li><span>Draft</span></li><li><span>Submitted</span></li><li><span>Evaluating</span></li><li><span>Review</span></li><li><span>Accepted</span></li></ol>
-          <p>If any evaluated dimension exceeds the current leaderboard top score, publication is paused for organizer review. Otherwise, a successful evaluation is accepted automatically. An accepted result updates the public leaderboard only if it improves the model's current best.</p>
+          <p>If any evaluated dimension exceeds the current leaderboard top score, publication is paused for organizer review. Otherwise, a successful evaluation is accepted automatically. For a single-view submission, the accepted result replaces the model's current best only when its final Single-View Score is higher. For a three-view submission, replacement depends only on a higher final Multi-View Score. Improvements in individual metrics alone do not update the leaderboard.</p>
         </section>
 
         <section id="rules">
