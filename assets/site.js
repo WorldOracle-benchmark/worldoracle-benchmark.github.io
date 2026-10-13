@@ -821,8 +821,15 @@ function policyModels(entries){
 }
 
 function initializeLeaderboardHighlights(entries){
- const feed=document.querySelector('[data-leaderboard-highlights]');
- if(!feed)return;
+ const carousel=document.querySelector('[data-leaderboard-highlights]');
+ if(!carousel)return;
+ const track=carousel.querySelector('[data-highlight-track]');
+ const dots=carousel.querySelector('[data-highlight-dots]');
+ const currentLabel=carousel.querySelector('[data-highlight-current]');
+ const metricButtons=[...carousel.querySelectorAll('[data-highlight-metric]')];
+ const previousButton=carousel.querySelector('[data-highlight-prev]');
+ const nextButton=carousel.querySelector('[data-highlight-next]');
+ if(!track||!dots)return;
  const configurations=[
   ['30s','agibot_g2','Main Track','AgiBot G2','main'],
   ['30s','yam','Main Track','YAM','main'],
@@ -832,34 +839,87 @@ function initializeLeaderboardHighlights(entries){
   ['full','yam','Long-Horizon Track','YAM','long'],
   ['full','human_hands','Long-Horizon Track','Human Hand','long']
  ];
- const score=model=>model.single_score??model.score;
- const leaders=configurations.map(([regime,platform,track,platformLabel,tone])=>{
-  const model=entries.filter(entry=>entry.regime===regime&&entry.platform===platform&&Number.isFinite(score(entry)))
-   .sort((a,b)=>score(b)-score(a)||a.model_name.localeCompare(b.model_name))[0];
-  return model?{model,track,platformLabel,tone,score:score(model)}:null;
- });
- // Keep the embedded seven-card snapshot when an offline/API fallback does
- // not contain every public platform yet.
- if(leaders.some(leader=>leader===null))return;
  const make=(tag,className,text)=>{const node=document.createElement(tag);if(className)node.className=className;if(text!==undefined)node.textContent=text;return node;};
- feed.replaceChildren();
- leaders.forEach((leader,index)=>{
-  const article=make('article','leaderboard-news-item is-'+leader.tone);
-  article.style.setProperty('--leader-score',Math.max(0,Math.min(100,leader.score))+'%');
-  article.setAttribute('aria-label',leader.track+' — '+leader.platformLabel+' leader');
-  const rank=make('p','leaderboard-leader-index',String(index+1).padStart(2,'0'));
-  const copy=make('div','leaderboard-leader-copy');
-  const meta=make('p','leaderboard-news-meta');
-  const dot=make('i');dot.setAttribute('aria-hidden','true');
-  meta.append(dot,make('span','',leader.track),make('em','',leader.platformLabel));
-  const name=make('h2','',leader.model.model_name);
-  const team=make('p','leaderboard-leader-team');
-  team.append(make('span','','Team'),make('strong','',CURATED_PUBLIC_MODELS.has(String(leader.model.model_name||'').toLowerCase())?'WorldOracle Team':(leader.model.contributor||leader.model.organization||leader.model.team_name||'—')));
-  copy.append(meta,name,team);
-  const scoreBox=make('p','leaderboard-leader-score');
-  scoreBox.append(make('span','','SV Score'),make('b','',leader.score.toFixed(2)));
-  article.append(rank,copy,scoreBox);feed.append(article);
- });
+ let metric='single';
+ let active=0;
+ let timer=0;
+ let paused=false;
+ const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
+ const score=(model,mode)=>{
+  if(mode==='single')return Number.isFinite(model.single_score)?model.single_score:model.score;
+  if(Number.isFinite(model.multiview_score))return model.multiview_score;
+  const values=Array.isArray(model.values)?model.values.slice(0,4):[];
+  return model.view_mode==='multi'&&values.length===4&&values.every(Number.isFinite)
+   ?values.reduce((sum,value)=>sum+value,0)/4:null;
+ };
+ const team=model=>CURATED_PUBLIC_MODELS.has(String(model.model_name||'').toLowerCase())
+  ?'WorldOracle Team':(model.contributor||model.organization||model.team_name||'—');
+ const setActive=(index,userInitiated=false)=>{
+  active=(index+configurations.length)%configurations.length;
+  track.style.setProperty('--active-slide',String(active));
+  [...track.children].forEach((slide,slideIndex)=>{
+   slide.setAttribute('aria-hidden',String(slideIndex!==active));
+   slide.toggleAttribute('inert',slideIndex!==active);
+  });
+  [...dots.children].forEach((dot,dotIndex)=>{
+   dot.classList.toggle('is-active',dotIndex===active);
+   dot.setAttribute('aria-pressed',String(dotIndex===active));
+  });
+  if(currentLabel)currentLabel.textContent=String(active+1).padStart(2,'0');
+  if(userInitiated)restart();
+ };
+ const stop=()=>{if(timer)window.clearInterval(timer);timer=0;};
+ const start=()=>{
+  stop();
+  if(paused||document.hidden||reducedMotion.matches)return;
+  timer=window.setInterval(()=>setActive(active+1),3000);
+ };
+ const restart=()=>{stop();start();};
+ const render=()=>{
+  track.replaceChildren();
+  dots.replaceChildren();
+  configurations.forEach(([regime,platform,trackName,platformLabel,tone],index)=>{
+   const ranked=entries.filter(entry=>entry.regime===regime&&entry.platform===platform&&Number.isFinite(score(entry,metric)))
+    .sort((a,b)=>score(b,metric)-score(a,metric)||a.model_name.localeCompare(b.model_name)).slice(0,3);
+   const slide=make('article','leaderboard-highlight-slide is-'+tone);
+   const label=regime==='policy'?trackName+' — Top 3':trackName+' — '+platformLabel+' — Top 3';
+   slide.setAttribute('aria-label',label);
+   const tag=make('div','leaderboard-highlight-tag');
+   const divider=make('i');divider.setAttribute('aria-hidden','true');
+   tag.append(make('span','',trackName),divider);
+   if(regime!=='policy')tag.append(make('strong','',platformLabel));
+   tag.append(make('em','','Top 3'));
+   const ranking=make('ol','leaderboard-highlight-ranking');
+   for(let rankIndex=0;rankIndex<3;rankIndex+=1){
+    const model=ranked[rankIndex];
+    const item=make('li',model?'':'is-empty');
+    item.append(make('b','',String(rankIndex+1).padStart(2,'0')));
+    const identity=make('span');
+    identity.append(make('strong','',model?model.model_name:'Not yet ranked'),make('small','',model?team(model):'Awaiting a published result'));
+    item.append(identity,make('em','',model?score(model,metric).toFixed(2):'—'));
+    ranking.append(item);
+   }
+   slide.append(tag,ranking);track.append(slide);
+   const dot=make('button');dot.type='button';dot.setAttribute('aria-label','Show '+label);dot.setAttribute('aria-pressed','false');
+   dot.addEventListener('click',()=>setActive(index,true));dots.append(dot);
+  });
+  setActive(active);
+  restart();
+ };
+ metricButtons.forEach(button=>button.addEventListener('click',()=>{
+  metric=button.dataset.highlightMetric==='multi'?'multi':'single';
+  metricButtons.forEach(item=>item.setAttribute('aria-pressed',String(item===button)));
+  render();
+ }));
+ previousButton?.addEventListener('click',()=>setActive(active-1,true));
+ nextButton?.addEventListener('click',()=>setActive(active+1,true));
+ carousel.addEventListener('mouseenter',()=>{paused=true;stop();});
+ carousel.addEventListener('mouseleave',()=>{paused=false;start();});
+ carousel.addEventListener('focusin',()=>{paused=true;stop();});
+ carousel.addEventListener('focusout',event=>{if(carousel.contains(event.relatedTarget))return;paused=false;start();});
+ document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();else start();});
+ reducedMotion.addEventListener?.('change',start);
+ render();
 }
 
 async function initializePublicLeaderboards(){
