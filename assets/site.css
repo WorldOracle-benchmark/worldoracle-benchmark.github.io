@@ -3562,3 +3562,32 @@ html.scroll-reveal-ready [data-scroll-reveal].is-revealed {
     padding:60px 24px 42px;font-size:9px
   }
 }
+
+/* Larger project-section labels and consistent public navigation typography. */
+.project-page .overview-panel > .section-label,
+.project-page .framework-intro > .section-label,
+.project-page .gt-heading > .section-label,
+.project-page .embodiment-heading .section-label,
+.project-page .outcomes-heading > .section-label,
+.project-page .metrics-heading > .section-label {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.45;
+  letter-spacing: .11em;
+}
+@media (min-width: 901px) {
+  .site-header .desktop-nav,
+  .site-header .desktop-nav > a,
+  .site-header .desktop-nav > .nav-button { font-size: 12px; }
+  .site-header .desktop-nav > .nav-button { font-weight: 500; }
+  .site-header .language-primary { font-size: 13px; }
+  .site-header .language-secondary { font-size: 11px; }
+}
+@media (max-width: 700px) {
+  .project-page .overview-panel > .section-label,
+  .project-page .framework-intro > .section-label,
+  .project-page .gt-heading > .section-label,
+  .project-page .embodiment-heading .section-label,
+  .project-page .outcomes-heading > .section-label,
+  .project-page .metrics-heading > .section-label { font-size: 12px; }
+}

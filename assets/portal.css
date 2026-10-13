@@ -174,3 +174,13 @@ h1 span{color:var(--accent)}.lead{color:#5e7182}p code{background:#eaf4fb}pre{bo
 .auth-form .notice+.auth-actions{margin-top:18px}
 @media(max-width:720px){.auth-centered-page main.shell{padding-block:36px}.auth-form .auth-actions{grid-template-columns:1fr}.auth-form.registration-form{width:100%}}
 .registration-title h1{margin:0;font-size:clamp(30px,4vw,44px)}
+
+/* Match signed-in and signed-out navigation typography across portal pages. */
+@media(min-width:901px){
+  .site-header .desktop-nav,
+  .site-header .desktop-nav>a,
+  .site-header .desktop-nav>.nav-button{font-size:12px}
+  .site-header .desktop-nav>.nav-button{font-weight:500}
+  .site-header .language-primary{font-size:13px}
+  .site-header .language-secondary{font-size:11px}
+}
