@@ -184,3 +184,34 @@ h1 span{color:var(--accent)}.lead{color:#5e7182}p code{background:#eaf4fb}pre{bo
   .site-header .language-primary{font-size:13px}
   .site-header .language-secondary{font-size:11px}
 }
+
+/* Submission Guide process timelines. */
+.submission-roadmap{position:relative;overflow:hidden;margin:52px 0 8px;padding:30px 34px 32px;border:1px solid #cfe1ed;border-radius:18px;background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(239,248,253,.92));box-shadow:0 18px 48px rgba(5,62,116,.065)}
+.submission-roadmap::after{content:"";position:absolute;width:240px;height:240px;right:-110px;top:-150px;border-radius:50%;background:radial-gradient(circle,rgba(11,185,223,.16),transparent 68%);pointer-events:none}
+.submission-roadmap>.eyebrow{position:relative;z-index:1;margin:0;color:var(--accent-dark);font-size:11px}
+.submission-roadmap .journey{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin:26px 0 0;padding:0;border:0;color:var(--navy);list-style:none}
+.submission-roadmap .journey::before{content:"";position:absolute;z-index:0;top:19px;left:12.5%;right:12.5%;height:2px;background:linear-gradient(90deg,#0b7ff2,#0bb9df 58%,#19a889);opacity:.62}
+.submission-roadmap .journey li{position:relative;z-index:1;display:grid;grid-template-rows:38px auto;justify-items:center;align-items:start;gap:13px;padding:0 14px;text-align:center;min-width:0}
+.submission-roadmap .journey b{display:grid;place-items:center;width:38px;height:38px;margin:0;border:1px solid #a9cee5;border-radius:50%;color:#075fa8;background:#fff;box-shadow:0 0 0 7px rgba(242,249,253,.96),0 7px 18px rgba(5,81,145,.11);font:800 11px/1 var(--sans);letter-spacing:.04em}
+.submission-roadmap .journey span{display:block;min-width:0}
+.submission-roadmap .journey small{display:block;margin-bottom:5px;color:#7e94a4;font:700 9px/1.2 var(--sans);letter-spacing:.13em;text-transform:uppercase}
+.submission-roadmap .journey strong{display:block;color:#173f5e;font:700 13px/1.5 var(--sans);letter-spacing:-.01em}
+.evaluation-timeline{position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;margin:28px 0 24px!important;padding:0!important;list-style:none}
+.evaluation-timeline::before{content:"";position:absolute;top:11px;left:10%;right:10%;height:2px;background:linear-gradient(90deg,#a4cce5,#3d9fdc 48%,#37ad91);opacity:.8}
+.guide-copy .evaluation-timeline li{position:relative;z-index:1;display:grid;justify-items:center;gap:10px;padding:0 5px;color:#496b83;text-align:center}
+.evaluation-timeline li::before{content:"";display:block;width:22px;height:22px;border:5px solid #f8fbfd;border-radius:50%;background:#5aa8d6;box-shadow:0 0 0 1px #9fc7df}
+.evaluation-timeline li:nth-child(3)::before{background:#0b7ff2;box-shadow:0 0 0 1px #0b7ff2,0 0 0 6px rgba(11,127,242,.08)}
+.evaluation-timeline li:nth-child(4)::before{background:#9a78c2;box-shadow:0 0 0 1px #9a78c2}
+.evaluation-timeline li:last-child::before{background:#179d80;box-shadow:0 0 0 1px #179d80}
+.evaluation-timeline span{font-size:11px;font-weight:700;line-height:1.45;white-space:nowrap}
+@media(max-width:720px){
+  .submission-roadmap{margin-top:28px;padding:24px 22px 20px}
+  .submission-roadmap .journey{display:grid;grid-template-columns:1fr;gap:0;margin-top:20px}
+  .submission-roadmap .journey::before{top:19px;bottom:35px;left:19px;right:auto;width:2px;height:auto}
+  .submission-roadmap .journey li{grid-template-columns:38px minmax(0,1fr);grid-template-rows:auto;justify-items:start;align-items:center;gap:15px;min-height:72px;padding:0;text-align:left}
+  .submission-roadmap .journey strong{font-size:13px}
+  .evaluation-timeline{grid-template-columns:1fr;margin-left:3px!important}
+  .evaluation-timeline::before{top:11px;bottom:11px;left:11px;right:auto;width:2px;height:auto}
+  .guide-copy .evaluation-timeline li{grid-template-columns:22px minmax(0,1fr);justify-items:start;align-items:center;gap:13px;min-height:48px;padding:0;text-align:left}
+  .evaluation-timeline span{white-space:normal;font-size:12px}
+}

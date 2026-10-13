@@ -489,6 +489,11 @@
   };
 
   Object.assign(zh, {
+    'Submission workflow': '提交流程',
+    'Step 1': '步骤 1', 'Step 2': '步骤 2', 'Step 3': '步骤 3', 'Step 4': '步骤 4',
+    'Wait for account approval': '等待账号通过审批',
+    'Prepare your submission data': '准备自己的提交数据',
+    'Submit and wait for evaluation results': '提交数据并等待评测结果',
     'Recommended frame-to-video encoding': '建议的图片帧转视频编码方式',
     'Encode the original PNG sequence directly to the final MP4 once. Replace': '将原始 PNG 序列直接一次编码为最终 MP4。请将',
     'with the source sequence FPS and keep the same value in': '替换为源图片序列的 FPS，并在',
@@ -1082,8 +1087,8 @@
     'check the summary and enter the automatic evaluation queue.': '核对摘要后，正式进入自动评测队列。',
     'Saved steps remain in your account. After an interruption, reopen the same draft and reselect the identical file to resume. Replacing the package resets its declarations to prevent mismatched submissions. After final submission, the record is read-only unless the organizers request changes.': '已保存的步骤会保留在账号中。上传中断后，重新打开同一草稿并选择完全相同的文件即可继续。更换提交包会重置相关声明，避免材料与声明不一致。正式提交后，除非主办方要求修改，否则该记录为只读状态。',
     'Track admission checks inspect video headers and decode the first frame, enforce the platform frame rate (30 FPS for AgiBot G2 and YAM; 15 FPS for Human Hand), validate view counts, synchronization, and Main Track\'s 30-second limit. They do not decode every frame, assess data leakage, recompute metrics, or establish result validity.': '赛道入队检查会读取视频头并解码首帧，核对平台帧率（AgiBot G2 和 YAM 为 30 FPS，人手平台为 15 FPS），并检查视角数量、同步性和主赛道 30 秒上限。这一阶段不会解码所有帧、评估数据泄漏、重新计算指标或判定结果有效性。',
-    'Follow progress in My Submissions. The public stages are Draft, Submitted, Evaluating, Review when manual confirmation is required, and Accepted. During Evaluating, the portal shows only overall progress and does not expose which metric is currently running.': '可在“我的提交”中查看进度。对用户展示的阶段依次为“草稿”“已提交”“评测中”，需要人工确认时进入“审核”，最终为“已接受”。评测中仅显示整体进度，不会暴露当前正在计算的具体指标。',
-    'Draft': '草稿', 'Submitted': '已提交', 'Evaluating': '评测中', 'Review if required': '必要时审核', 'Accepted': '已接受',
+    'Follow progress in My Submissions. The public stages are Draft, Submitted, Evaluating, Review, and Accepted. During Evaluating, the portal shows only overall progress and does not expose which metric is currently running.': '可在“我的提交”中查看进度。对用户展示的阶段依次为“草稿”“已提交”“评测中”“审核”和“已接受”。评测中仅显示整体进度，不会暴露当前正在计算的具体指标。',
+    'Draft': '草稿', 'Submitted': '已提交', 'Evaluating': '评测中', 'Review': '审核', 'Accepted': '已接受',
     'If any evaluated dimension exceeds the current leaderboard top score, publication is paused for organizer review. Otherwise, a successful evaluation is accepted automatically. An accepted result updates the public leaderboard only if it improves the model\'s current best.': '如果任一评测维度超过当前榜单最高分，结果会暂停发布并进入主办方人工审核；其他成功评测会自动接受。已接受的结果只有在优于该模型当前最佳成绩时，才会更新公开榜单。',
     'Use N/A, with the reason and supported views. A missing or unsupported metric is not a measured zero.': '请填写 N/A，并说明原因和受支持的视角。缺失或不支持的指标不等于测得分数为 0。',
     'No. Use this optional field for information you want the organizers to know about this submission, up to 4,000 characters.': '不是。该字段为选填，可补充希望主办方了解的本次提交信息，最多 4,000 个字符。',
