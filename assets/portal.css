@@ -215,3 +215,47 @@ h1 span{color:var(--accent)}.lead{color:#5e7182}p code{background:#eaf4fb}pre{bo
   .guide-copy .evaluation-timeline li{grid-template-columns:22px minmax(0,1fr);justify-items:start;align-items:center;gap:13px;min-height:48px;padding:0;text-align:left}
   .evaluation-timeline span{white-space:normal;font-size:12px}
 }
+
+/* Canonical WorldOracle header identity.
+   Keep this final override identical to site.css so auth state and page type
+   never alter the Project Page logo, wordmark, spacing or typography. */
+.site-header .header-inner > .brand {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 10px;
+  color: #062f72;
+  font-family: "Manrope", "Avenir Next", "Segoe UI", sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -.02em;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.site-header .header-inner > .brand:hover,
+.site-header .header-inner > .brand:focus-visible {
+  color: #062f72;
+  text-decoration: none;
+}
+.site-header .header-inner > .brand > .brand-logo {
+  display: block;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 7px rgba(4,54,110,.16));
+}
+.site-header .header-inner > .brand > span:last-child {
+  color: #062f72;
+  font: inherit;
+  letter-spacing: inherit;
+}
+.site-header .header-inner > .brand > span:last-child > span {
+  color: #0b7ff2;
+  font-weight: 600;
+}
+@media(max-width:720px){
+  .site-header .header-inner > .brand{gap:7px;font-size:17px}
+  .site-header .header-inner > .brand > .brand-logo{width:27px;height:27px;flex-basis:27px}
+}
