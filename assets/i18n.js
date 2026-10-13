@@ -215,6 +215,8 @@
     'Sign in with the verified email and password used for this registered model.': '请使用该模型账号已验证的邮箱和密码登录。',
     'The interface stays on GitHub Pages. Your credentials are sent only to the WorldOracle evaluation API over HTTPS and are never stored by GitHub Pages.': '页面始终由 GitHub Pages 提供。登录信息仅通过 HTTPS 发送至 WorldOracle 评测接口，不会存储在 GitHub Pages。',
     'Need an account? Register →': '还没有账号？立即注册 →', 'Register →': '注册 →', 'Sign Out': '退出登录', 'Profile': '账号信息',
+    'Cancel': '取消', 'Weekly Submission Allowance': '每周提交额度', 'Remaining Submissions': '剩余提交次数',
+    'Update Password': '更新密码', 'WorldOracle Submission Portal': 'WorldOracle 提交平台', 'Account Profile': '账号信息',
     'Loading account…': '正在加载账号…', 'Loading submission access…': '正在加载提交权限…',
     'Loading submissions…': '正在加载提交记录…', 'Loading submission…': '正在加载提交…',
     'Current Stage': '当前阶段', 'Delete Draft': '删除草稿', 'Registered Model': '注册模型',

@@ -1057,3 +1057,27 @@ function initializeFloatingComparison(){
 }
 
 initializePublicLeaderboards();
+
+/* Keep compact leaderboard rows self-describing when the wide table changes
+   into the no-horizontal-scroll layout. Labels are copied from the current
+   (and therefore currently translated) column headers. */
+function initializeResponsiveLeaderboardLabels(){
+ const tables=[...document.querySelectorAll('.full-leaderboard-page .board-table, .full-leaderboard-page .policy-table')];
+ if(!tables.length)return;
+ const synchronize=table=>{
+  const headings=[...(table.tHead?.rows?.[0]?.cells||[])].map(cell=>cell.textContent.trim());
+  [...(table.tBodies?.[0]?.rows||[])].forEach(row=>{
+   [...row.cells].forEach((cell,index)=>{
+    if(cell.colSpan>1){cell.removeAttribute('data-column-label');return;}
+    cell.dataset.columnLabel=headings[index]||'';
+   });
+  });
+ };
+ const synchronizeAll=()=>tables.forEach(synchronize);
+ const observer=new MutationObserver(synchronizeAll);
+ tables.forEach(table=>observer.observe(table.tBodies[0],{childList:true,subtree:true}));
+ window.addEventListener('worldoracle:languagechange',()=>window.requestAnimationFrame(synchronizeAll));
+ synchronizeAll();
+}
+
+initializeResponsiveLeaderboardLabels();

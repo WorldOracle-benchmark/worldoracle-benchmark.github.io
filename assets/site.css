@@ -3677,3 +3677,172 @@ html.scroll-reveal-ready [data-scroll-reveal].is-revealed {
     flex-basis: 27px;
   }
 }
+
+/* Leaderboard no-horizontal-scroll responsive contract.
+   Desktop keeps a compact comparison table. Reduced viewports collapse the
+   same semantic table into labelled rows so browser zoom never requires a
+   sideways gesture and no score or resource information is discarded. */
+body.full-leaderboard-page #leaderboard .board-table-scroll,
+body.full-leaderboard-page #policy-track .policy-table-scroll,
+body.full-leaderboard-page #long-horizon .board-table-scroll {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip !important;
+  overflow-y: visible !important;
+  overscroll-behavior-x: none;
+  touch-action: pan-y;
+  scrollbar-gutter: auto;
+}
+body.full-leaderboard-page #leaderboard .board-table,
+body.full-leaderboard-page #policy-track .policy-table,
+body.full-leaderboard-page #long-horizon .board-table {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100%;
+  table-layout: fixed !important;
+}
+.full-leaderboard-page .col-rank { width: 4%; }
+.full-leaderboard-page .col-model { width: 13%; }
+.full-leaderboard-page .col-view { width: 5%; }
+.full-leaderboard-page .col-contributor { width: 13%; }
+.full-leaderboard-page .col-score { width: 5.5%; }
+.full-leaderboard-page .col-certification { width: 10%; }
+.full-leaderboard-page .col-resources { width: 13%; }
+.full-leaderboard-page .col-updated { width: 9%; }
+.full-leaderboard-page .board-table th,
+.full-leaderboard-page .board-table td,
+.full-leaderboard-page .policy-table th,
+.full-leaderboard-page .policy-table td {
+  min-width: 0 !important;
+  padding-inline: clamp(4px, .55vw, 10px);
+  overflow-wrap: anywhere;
+}
+.full-leaderboard-page .board-resource-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3px 5px;
+  white-space: normal;
+}
+.full-leaderboard-page .board-updated { white-space: normal; }
+
+@media (max-width: 1120px) and (min-width: 941px) {
+  .full-leaderboard-page .board-table,
+  .full-leaderboard-page .policy-table { font-size: 10px; }
+  .full-leaderboard-page .board-table th,
+  .full-leaderboard-page .board-table td,
+  .full-leaderboard-page .policy-table th,
+  .full-leaderboard-page .policy-table td { padding-inline: 4px; }
+  .full-leaderboard-page .board-table tr > :nth-child(3),
+  .full-leaderboard-page .policy-table tr > :nth-child(3),
+  .full-leaderboard-page .board-table tr > :nth-child(13),
+  .full-leaderboard-page .policy-table tr > :nth-child(13) { display: none; }
+}
+
+@media (max-width: 1120px) {
+  .full-leaderboard-page .board-table colgroup,
+  .full-leaderboard-page .policy-table colgroup { display: none; }
+  .full-leaderboard-page .board-table thead,
+  .full-leaderboard-page .policy-table thead {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    margin: -1px !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    clip: rect(0 0 0 0) !important;
+    clip-path: inset(50%) !important;
+    white-space: nowrap !important;
+  }
+  .full-leaderboard-page .board-table,
+  .full-leaderboard-page .policy-table,
+  .full-leaderboard-page .board-table tbody,
+  .full-leaderboard-page .policy-table tbody { display: block; }
+  .full-leaderboard-page .board-table tbody,
+  .full-leaderboard-page .policy-table tbody {
+    padding: 10px;
+    display: grid;
+    gap: 10px;
+  }
+  .full-leaderboard-page .board-table tbody tr,
+  .full-leaderboard-page .policy-table tbody tr {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    border: 1px solid rgba(44, 89, 118, .18);
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, .92);
+    box-shadow: 0 8px 22px rgba(34, 69, 92, .06);
+  }
+  .full-leaderboard-page .board-table tbody tr > *,
+  .full-leaderboard-page .policy-table tbody tr > * {
+    display: flex !important;
+    min-width: 0 !important;
+    min-height: 58px;
+    padding: 9px 11px !important;
+    flex-direction: column;
+    align-items: flex-start !important;
+    justify-content: center;
+    gap: 5px;
+    border: 0 !important;
+    border-right: 1px solid rgba(44, 89, 118, .11) !important;
+    border-bottom: 1px solid rgba(44, 89, 118, .11) !important;
+    text-align: left !important;
+    white-space: normal !important;
+  }
+  .full-leaderboard-page .board-table tbody tr > :nth-child(even),
+  .full-leaderboard-page .policy-table tbody tr > :nth-child(even) { border-right: 0 !important; }
+  .full-leaderboard-page .board-table tbody tr > :nth-last-child(-n+2),
+  .full-leaderboard-page .policy-table tbody tr > :nth-last-child(-n+2) { border-bottom: 0 !important; }
+  .full-leaderboard-page .board-table tbody tr > :nth-child(4),
+  .full-leaderboard-page .policy-table tbody tr > :nth-child(4),
+  .full-leaderboard-page .board-table tbody tr > :nth-child(12),
+  .full-leaderboard-page .policy-table tbody tr > :nth-child(12),
+  .full-leaderboard-page .board-table tbody tr > :nth-child(13),
+  .full-leaderboard-page .policy-table tbody tr > :nth-child(13),
+  .full-leaderboard-page .board-table tbody tr > [colspan],
+  .full-leaderboard-page .policy-table tbody tr > [colspan] { grid-column: 1 / -1; }
+  .full-leaderboard-page .board-table tbody td::before,
+  .full-leaderboard-page .policy-table tbody td::before {
+    content: attr(data-column-label);
+    display: block;
+    color: #708391;
+    font: 700 9px/1.2 "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+  }
+  .full-leaderboard-page .board-table tbody td[colspan]::before,
+  .full-leaderboard-page .policy-table tbody td[colspan]::before { content: none; }
+  .full-leaderboard-page .board-resource-list { justify-content: flex-start; }
+}
+
+@media (max-width: 560px) {
+  .full-leaderboard-page .board-table tbody,
+  .full-leaderboard-page .policy-table tbody { padding: 7px; gap: 8px; }
+  .full-leaderboard-page .board-table tbody tr > *,
+  .full-leaderboard-page .policy-table tbody tr > * { min-height: 54px; padding: 8px 9px !important; }
+}
+
+/* The Project Page preview also stays within its column. At compact widths we
+   keep Rank, Model, Contributor, SV and MV and omit the detailed diagnostics,
+   which remain available in the full leaderboard. */
+.hero-layout:not(.full-board-layout) .board-table-scroll {
+  max-width: 100%;
+  overflow-x: hidden !important;
+  touch-action: pan-y;
+}
+.hero-layout:not(.full-board-layout) .board-table {
+  width: 100% !important;
+  min-width: 0 !important;
+  table-layout: fixed !important;
+}
+@container (max-width: 720px) {
+  .hero-layout:not(.full-board-layout) .board-table tr > :nth-child(n+6) { display: none; }
+  .hero-layout:not(.full-board-layout) .board-table th,
+  .hero-layout:not(.full-board-layout) .board-table td {
+    min-width: 0;
+    padding-inline: 5px;
+    overflow-wrap: anywhere;
+  }
+}
