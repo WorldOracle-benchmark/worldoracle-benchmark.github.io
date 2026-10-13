@@ -1855,6 +1855,11 @@ html.scroll-reveal-ready [data-scroll-reveal].is-revealed {
 }
 .full-leaderboard-page .board-insight .radar-series-group.is-selected .radar-series{fill-opacity:.2;stroke-width:3.4}
 .full-leaderboard-page .board-insight .radar-series-group.is-selected .radar-point{r:5px}
+.full-leaderboard-page .policy-insight .policy-radar-series-group{opacity:1;transition:opacity .2s}
+.full-leaderboard-page .policy-insight .policy-radar-series-group.is-muted{opacity:.4}
+.full-leaderboard-page .policy-insight .policy-radar-point{r:3px;stroke:#fff;stroke-width:1.25}
+.full-leaderboard-page .policy-insight .policy-radar-series-group.is-selected .policy-radar-series{fill-opacity:.2;stroke-width:3.4}
+.full-leaderboard-page .policy-insight .policy-radar-series-group.is-selected .policy-radar-point{r:5px}
 
 /* Preview normalization v18 — published comparison clips are generated at the
    canonical 640x480 GT resolution, so the player can fill its frame exactly. */

@@ -733,10 +733,10 @@ function initializePolicy(models){
   svg.append(node('text',{x:tickX,y:228,'text-anchor':'middle',class:'policy-tick'},String(v)));
  });
  const groups=models.map((m,i)=>{
-  const group=node('g',{'data-policy-series':String(i)});
+  const group=node('g',{class:'policy-radar-series-group','data-policy-series':String(i)});
   group.append(node('polygon',{points:keys.map((k,axis)=>point(axis,m[k]===null?0:m[k]).join(',')).join(' '),fill:m.color,stroke:m.color,class:'policy-radar-series'}));
   keys.forEach((key,axis)=>{
-   const [cx,cy]=point(axis,m[key]===null?0:m[key]),dot=node('circle',{cx,cy,r:3.5,fill:m.color});
+   const [cx,cy]=point(axis,m[key]===null?0:m[key]),dot=node('circle',{cx,cy,r:3.5,fill:m.color,class:'policy-radar-point'});
    dot.append(node('title',{},m.model_name+' · '+policyAxes[axis].name+': '+(m[key]===null?'Not applicable (displayed at zero)':m[key].toFixed(2)+(m.demo?' (Demo)':''))));
    group.append(dot);
   });
@@ -747,13 +747,18 @@ function initializePolicy(models){
  const contributor=model=>CURATED_PUBLIC_MODELS.has(String(model.model_name||'').toLowerCase())?'WorldOracle Team':(model.contributor||model.organization||model.team_name||'—');
  function focus(index){
   selected=selected===index?null:index;
-  groups.forEach((g,i)=>g.setAttribute('opacity',selected===null||selected===i?'1':'.45'));
+  groups.forEach((group,i)=>{
+   group.classList.toggle('is-selected',selected===i);
+   group.classList.toggle('is-muted',selected!==null&&selected!==i);
+  });
   [...rows.children].forEach(r=>{
    const rowIndex=Number(r.dataset.policyIndex);
    r.classList.toggle('is-muted',selected!==null&&selected!==rowIndex);
    r.classList.toggle('is-selected',selected===rowIndex);
    r.querySelector('button').setAttribute('aria-pressed',String(selected===rowIndex));
   });
+  const active=selected===null?null:groups[selected];
+  if(active)svg.append(active);
   const selectedModel=selected===null?null:models[selected];
   updateComparisonHeading(document.getElementById('policy-track'),'Policy Track','AgiBot G2',selectedModel);
   updateModelPreview(document.getElementById('policy-track'),selectedModel);
@@ -801,7 +806,7 @@ function initializePolicy(models){
    rows.append(row);
   });
   models.forEach((model,index)=>{groups[index].style.display=visible.includes(model)?'':'none';});
-  selected=null;groups.forEach(group=>group.setAttribute('opacity','1'));
+  selected=null;groups.forEach(group=>group.classList.remove('is-selected','is-muted'));
   updateComparisonHeading(document.getElementById('policy-track'),'Policy Track','AgiBot G2',null);
   updateModelPreview(document.getElementById('policy-track'),null);
  }
