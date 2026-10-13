@@ -361,7 +361,7 @@ h1 span{color:var(--accent)}.lead{color:#5e7182}p code{background:#eaf4fb}pre{bo
 }
 
 /* Keep the existing-team lookup aligned with the adjacent model field. */
-.registration-form [data-team-name-field]{
+.registration-form .registration-field-stack{
   display:flex;
   flex-direction:column;
   gap:8px;
@@ -369,7 +369,7 @@ h1 span{color:var(--accent)}.lead{color:#5e7182}p code{background:#eaf4fb}pre{bo
   font-size:12px;
   font-weight:600;
 }
-.registration-form [data-team-name-field]>label{
+.registration-form .registration-field-stack>label{
   display:block;
   margin:0;
   font:inherit;
