@@ -1920,7 +1920,15 @@ html.scroll-reveal-ready [data-scroll-reveal].is-revealed {
 .full-leaderboard-page #leaderboard .board-table-scroll,
 .full-leaderboard-page #policy-track .policy-table-scroll,
 .full-leaderboard-page #long-horizon .board-table-scroll{
-  height:auto!important;max-height:none!important;overflow:visible!important
+  height:auto!important;max-height:none!important;max-width:100%;
+  overflow-x:auto!important;overflow-y:visible!important;
+  overscroll-behavior-x:contain;touch-action:pan-x pan-y;scrollbar-gutter:stable;
+  -webkit-overflow-scrolling:touch
+}
+.full-leaderboard-page #leaderboard .board-table,
+.full-leaderboard-page #policy-track .policy-table,
+.full-leaderboard-page #long-horizon .board-table{
+  width:100%;min-width:1280px!important;table-layout:fixed
 }
 @media(min-width:1321px){
   .full-leaderboard-page .leaderboard-floating-preview .board-radar svg,
@@ -3590,4 +3598,34 @@ html.scroll-reveal-ready [data-scroll-reveal].is-revealed {
   .project-page .embodiment-heading .section-label,
   .project-page .outcomes-heading > .section-label,
   .project-page .metrics-heading > .section-label { font-size: 12px; }
+}
+
+/* Preserve readable leaderboard columns when browser zoom reduces the viewport. */
+.full-leaderboard-page .board-table-scroll,
+.full-leaderboard-page .policy-table-scroll {
+  overflow-x: auto !important;
+  overscroll-behavior-x: contain;
+  touch-action: pan-x pan-y;
+  scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
+}
+.full-leaderboard-page .board-table,
+.full-leaderboard-page .policy-table {
+  width: 100%;
+  min-width: 1280px !important;
+}
+.full-leaderboard-page .board-resource-list,
+.full-leaderboard-page .board-updated { max-width: 100%; }
+
+/* The compact Project Page board scrolls instead of crushing nine columns. */
+@container (max-width: 720px) {
+  .hero-layout:not(.full-board-layout) .board-table-scroll {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    touch-action: pan-x pan-y;
+  }
+  .hero-layout:not(.full-board-layout) .board-table {
+    width: 100%;
+    min-width: 720px;
+  }
 }
