@@ -829,7 +829,7 @@ function initializeLeaderboardHighlights(entries){
  const metricButtons=[...carousel.querySelectorAll('[data-highlight-metric]')];
  const previousButton=carousel.querySelector('[data-highlight-prev]');
  const nextButton=carousel.querySelector('[data-highlight-next]');
- if(!track||!dots)return;
+ if(!track)return;
  const configurations=[
   ['30s','agibot_g2','Main Track','AgiBot G2','main'],
   ['30s','yam','Main Track','YAM','main'],
@@ -861,7 +861,7 @@ function initializeLeaderboardHighlights(entries){
    slide.setAttribute('aria-hidden',String(slideIndex!==active));
    slide.toggleAttribute('inert',slideIndex!==active);
   });
-  [...dots.children].forEach((dot,dotIndex)=>{
+  [...(dots?.children||[])].forEach((dot,dotIndex)=>{
    dot.classList.toggle('is-active',dotIndex===active);
    dot.setAttribute('aria-pressed',String(dotIndex===active));
   });
@@ -877,7 +877,7 @@ function initializeLeaderboardHighlights(entries){
  const restart=()=>{stop();start();};
  const render=()=>{
   track.replaceChildren();
-  dots.replaceChildren();
+  dots?.replaceChildren();
   configurations.forEach(([regime,platform,trackName,platformLabel,tone],index)=>{
    const ranked=entries.filter(entry=>entry.regime===regime&&entry.platform===platform&&Number.isFinite(score(entry,metric)))
     .sort((a,b)=>score(b,metric)-score(a,metric)||a.model_name.localeCompare(b.model_name)).slice(0,3);
@@ -893,15 +893,19 @@ function initializeLeaderboardHighlights(entries){
    for(let rankIndex=0;rankIndex<3;rankIndex+=1){
     const model=ranked[rankIndex];
     const item=make('li',model?'':'is-empty');
+    const rankedScore=model?score(model,metric):0;
+    item.style.setProperty('--row-score',Math.max(0,Math.min(100,rankedScore||0))+'%');
     item.append(make('b','',String(rankIndex+1).padStart(2,'0')));
     const identity=make('span');
     identity.append(make('strong','',model?model.model_name:'Not yet ranked'),make('small','',model?team(model):'Awaiting a published result'));
-    item.append(identity,make('em','',model?score(model,metric).toFixed(2):'—'));
+    item.append(identity,make('em','',model?rankedScore.toFixed(2):'—'));
     ranking.append(item);
    }
    slide.append(tag,ranking);track.append(slide);
-   const dot=make('button');dot.type='button';dot.setAttribute('aria-label','Show '+label);dot.setAttribute('aria-pressed','false');
-   dot.addEventListener('click',()=>setActive(index,true));dots.append(dot);
+   if(dots){
+    const dot=make('button');dot.type='button';dot.setAttribute('aria-label','Show '+label);dot.setAttribute('aria-pressed','false');
+    dot.addEventListener('click',()=>setActive(index,true));dots.append(dot);
+   }
   });
   setActive(active);
   restart();
