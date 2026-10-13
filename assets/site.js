@@ -264,6 +264,12 @@ function updateModelPreview(scope, model) {
   const title=panel.querySelector('[data-preview-title]');
   const meta=panel.querySelector('[data-preview-meta]');
   const empty=panel.querySelector('[data-preview-empty]');
+  // This player deliberately exposes only our scrubber. Keep native browser
+  // controls disabled even if a browser restores an old media element state.
+  player.controls=false;
+  player.removeAttribute('controls');
+  player.setAttribute('controlslist','nodownload noplaybackrate nofullscreen');
+  player.disablePictureInPicture=true;
   if(scrubber&&!scrubber.dataset.previewBound){
     const sync=()=>{
       const progress=Number.isFinite(player.duration)&&player.duration>0?player.currentTime/player.duration:0;
@@ -992,41 +998,6 @@ async function initializePublicLeaderboards(){
  document.querySelectorAll('.benchmark-board').forEach(board=>initializeBoard(board,loaded.entries));
  const embeddedPolicy=JSON.parse(document.getElementById('policy-results-data')?.textContent||'[]');
  initializePolicy(loaded.source==='api'?policyModels(loaded.entries):embeddedPolicy);
- initializeFloatingComparison();
-}
-
-function initializeFloatingComparison(){
- const mount=document.querySelector('[data-floating-comparison]');
- if(!mount)return;
- const desktop=window.matchMedia('(min-width:1321px)');
- const items=[
-  ['leaderboard','.board-insight'],
-  ['policy-track','.policy-insight'],
-  ['long-horizon','.board-insight']
- ].map(([id,selector])=>{
-  const panel=document.getElementById(id),insight=panel?.querySelector(selector);
-  if(!panel||!insight)return null;
-  insight.dataset.floatingOrigin=id;
-  return{panel,insight,parent:insight.parentNode,next:insight.nextSibling};
- }).filter(Boolean);
- const restore=item=>{
-  if(item.insight.parentNode!==item.parent)item.parent.insertBefore(item.insight,item.next);
- };
- const sync=()=>{
-  items.forEach(restore);
-  if(!desktop.matches){mount.hidden=true;delete mount.dataset.activeTrack;return;}
-  const active=items.find(item=>!item.panel.hidden);
-  if(!active){mount.hidden=true;delete mount.dataset.activeTrack;return;}
-  mount.append(active.insight);
-  mount.dataset.activeTrack=active.panel.dataset.trackPanel||'';
-  mount.hidden=false;
- };
- const observer=new MutationObserver(sync);
- items.forEach(item=>observer.observe(item.panel,{attributes:true,attributeFilter:['hidden']}));
- if(desktop.addEventListener)desktop.addEventListener('change',sync);
- else desktop.addListener(sync);
- window.addEventListener('hashchange',()=>window.requestAnimationFrame(sync));
- sync();
 }
 
 initializePublicLeaderboards();

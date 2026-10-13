@@ -3463,3 +3463,32 @@ html.scroll-reveal-ready [data-scroll-reveal].is-revealed {
   .full-leaderboard-page .leaderboard-floating-preview .model-preview-source:not([hidden]){top:11px;left:11px;padding:6px 8px;font-size:7px}
   .full-leaderboard-page .leaderboard-floating-preview .model-preview-scrubber{right:13px;bottom:12px;left:13px;width:calc(100% - 26px)}
 }
+
+/* Comparison workspace v45 — keep the complete module below its table on
+   every desktop width and never fall back to browser-native video chrome. */
+.full-leaderboard-page [data-preview-video]::-webkit-media-controls,
+.full-leaderboard-page [data-preview-video]::-webkit-media-controls-enclosure,
+.full-leaderboard-page [data-preview-video]::-webkit-media-controls-panel{
+  display:none!important
+}
+.full-leaderboard-page .model-preview-media p[data-preview-empty]:not([hidden]){
+  position:absolute;z-index:2;inset:0;display:flex!important;align-items:center;justify-content:center;
+  max-width:none;margin:0;padding:74px 38px 58px;color:rgba(225,239,247,.9);
+  background:
+    radial-gradient(circle at 50% 42%,rgba(43,164,204,.16),transparent 34%),
+    linear-gradient(135deg,rgba(6,34,50,.34),rgba(4,20,31,.08));
+  font:600 11px/1.65 var(--board-sans);letter-spacing:.01em;text-align:center
+}
+.full-leaderboard-page .model-preview-media p[data-preview-empty]:not([hidden])::before{
+  content:"";position:absolute;top:calc(50% - 43px);left:50%;width:28px;height:28px;
+  border:1px solid rgba(121,211,235,.5);border-radius:50%;transform:translate(-50%,-50%);
+  background:radial-gradient(circle,rgba(57,184,216,.48) 0 3px,transparent 4px);
+  box-shadow:0 0 0 8px rgba(55,174,208,.07),0 0 28px rgba(50,184,220,.2)
+}
+.full-leaderboard-page .leaderboard-floating-preview{display:none!important}
+@media(min-width:1321px){
+  .full-leaderboard-page .track-panel>.board-insight,
+  .full-leaderboard-page .track-panel>.policy-insight{
+    display:grid;grid-template-columns:repeat(2,minmax(0,1fr))
+  }
+}
