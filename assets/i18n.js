@@ -1047,6 +1047,51 @@
     'Click a model in the table to highlight its six-metric profile.': '点击表格中的模型可突出显示其六维指标；再次点击可显示全部模型。'
   });
 
+  // Detailed static Submission Guide restored for GitHub Pages.
+  // Keep full-sentence entries so Chinese mode never falls back to mixed copy.
+  Object.assign(zh, {
+    '01 · Get started': '01 · 开始提交',
+    '02 · Eligibility & registration': '02 · 参评资格与注册',
+    '03 · Evaluation tracks': '03 · 评测赛道',
+    '04 · Package specification': '04 · 提交包规范',
+    '05 · Submission wizard': '05 · 提交流程',
+    '06 · What happens next': '06 · 后续流程',
+    '07 · Fair and reproducible': '07 · 公平与可复现',
+    'Eligibility & Registration': '参评资格与注册',
+    'Evaluation and Publication': '评测与发布',
+    'Code, model weights and papers are optional during registration. A model is marked Open Source only after both its public code repository and public model weights are verified. Resource URLs may use any public HTTP/HTTPS host.': '注册时可以选填代码、模型权重和论文。只有公开代码仓库与公开模型权重均通过核验后，模型才会标记为“已开源”。资源地址可使用任意公开可访问的 HTTP/HTTPS 网站。',
+    'After approval, each account may submit up to two evaluations per Track and six evaluations total in a rolling seven-day window. The seven-day window begins with the account\'s first formal submission and resets the quota for all Tracks together.': '审核通过后，每个账号在滚动 7 天内，每个赛道最多正式评测 2 次，三个赛道合计最多 6 次。7 天周期从该账号第一次正式提交开始计算，到期后统一刷新所有赛道的额度。',
+    'Standard action-conditioned prediction on human-operated trajectories. Submit the first 30 seconds of every required episode.': '对人工操作轨迹进行标准动作条件视频预测，并提交每个必需 episode 的前 30 秒。',
+    'Complete policy-distribution rollouts using actions collected from real policy executions on AgiBot G2.': '使用 AgiBot G2 真实策略执行中采集的动作，提交完整的策略分布轨迹。',
+    'Complete action-conditioned episodes evaluated over the full prediction horizon.': '提交完整的动作条件 episode，并在完整预测时长上进行评测。',
+    'Input directory format': '输入目录格式',
+    'Encode the original JPEG or PNG sequence directly to the final MP4. Use': '请直接将原始 JPEG 或 PNG 序列编码为最终 MP4。使用',
+    ', a 60-frame GOP, scene-cut disabled, and no audio. Do not create a lossless MP4 first and transcode it again.': '，GOP 设为 60 帧，禁用场景切换，且不包含音频。不要先生成无损 MP4 再二次转码。',
+    'The commands below use 30 FPS for AgiBot G2 and YAM. For Human Hand, change both': '下面的命令为 AgiBot G2 和 YAM 使用 30 FPS。对于人手平台，请将两处',
+    'values to 15. The example input is one': '的值改为 15。示例输入为一组',
+    'primarily controls file size;': '主要控制文件大小；',
+    'controls how efficiently that bitrate is used. Use the same bitrate for every view and episode. If the complete ZIP exceeds the Track limit, lower the bitrate uniformly for every video and record the reduced bitrate in': '决定该码率的使用效率。每个视角和 episode 必须采用相同码率。如果完整 ZIP 超过赛道上限，请统一降低所有视频的码率，并在',
+    'In the submission portal, follow four steps:': '在提交平台中，请依次完成以下四步：',
+    'The validator ships with the submission portal source code; its standalone public distribution is pending. In the submission portal, follow four steps:': '校验器随提交平台源代码提供，独立公开版本仍在准备中。在提交平台中，请依次完成以下四步：',
+    'Model and Track:': '模型与赛道：',
+    'check your assigned model, choose a Track and platform, and optionally add submission notes.': '确认账号绑定的模型，选择赛道和平台，并可选填写提交说明。',
+    'Upload Materials:': '上传材料：',
+    'choose a ZIP. The browser uploads resumable parts and the background worker checks the assembled package and records its SHA-256 checksum.': '选择一个 ZIP。浏览器会以可断点续传的分片上传，后台任务将检查合并后的提交包并记录其 SHA-256 校验值。',
+    'Declarations:': '声明：',
+    'confirm authenticity, permissions, and the absence of secrets.': '确认材料真实、拥有相应权限，且不含任何机密信息。',
+    'check the summary and enter the automatic evaluation queue.': '核对摘要后，正式进入自动评测队列。',
+    'Saved steps remain in your account. After an interruption, reopen the same draft and reselect the identical file to resume. Replacing the package resets its declarations to prevent mismatched submissions. After final submission, the record is read-only unless the organizers request changes.': '已保存的步骤会保留在账号中。上传中断后，重新打开同一草稿并选择完全相同的文件即可继续。更换提交包会重置相关声明，避免材料与声明不一致。正式提交后，除非主办方要求修改，否则该记录为只读状态。',
+    'Track admission checks inspect video headers and decode the first frame, enforce the platform frame rate (30 FPS for AgiBot G2 and YAM; 15 FPS for Human Hand), validate view counts, synchronization, and Main Track\'s 30-second limit. They do not decode every frame, assess data leakage, recompute metrics, or establish result validity.': '赛道入队检查会读取视频头并解码首帧，核对平台帧率（AgiBot G2 和 YAM 为 30 FPS，人手平台为 15 FPS），并检查视角数量、同步性和主赛道 30 秒上限。这一阶段不会解码所有帧、评估数据泄漏、重新计算指标或判定结果有效性。',
+    'Follow progress in My Submissions. The public stages are Draft, Submitted, Evaluating, Review when manual confirmation is required, and Accepted. During Evaluating, the portal shows only overall progress and does not expose which metric is currently running.': '可在“我的提交”中查看进度。对用户展示的阶段依次为“草稿”“已提交”“评测中”，需要人工确认时进入“审核”，最终为“已接受”。评测中仅显示整体进度，不会暴露当前正在计算的具体指标。',
+    'Draft': '草稿', 'Submitted': '已提交', 'Evaluating': '评测中', 'Review if required': '必要时审核', 'Accepted': '已接受',
+    'If any evaluated dimension exceeds the current leaderboard top score, publication is paused for organizer review. Otherwise, a successful evaluation is accepted automatically. An accepted result updates the public leaderboard only if it improves the model\'s current best.': '如果任一评测维度超过当前榜单最高分，结果会暂停发布并进入主办方人工审核；其他成功评测会自动接受。已接受的结果只有在优于该模型当前最佳成绩时，才会更新公开榜单。',
+    'Use N/A, with the reason and supported views. A missing or unsupported metric is not a measured zero.': '请填写 N/A，并说明原因和受支持的视角。缺失或不支持的指标不等于测得分数为 0。',
+    'No. Use this optional field for information you want the organizers to know about this submission, up to 4,000 characters.': '不是。该字段为选填，可补充希望主办方了解的本次提交信息，最多 4,000 个字符。',
+    'Each approved account may submit up to two evaluations per Track and six evaluations total in its rolling seven-day window. Failed or incomplete attempts do not consume a V number.': '每个已审核账号在滚动 7 天内，每个赛道最多正式评测 2 次，三个赛道合计最多 6 次。失败或未完成的尝试不会占用 V 版本号。',
+    'The original ZIP and all other package files remain private. Only the declared comparison video for a model\'s accepted leaderboard-best result may be displayed publicly beside its score.': '原始 ZIP 和其他提交包文件均保持私有。只有模型已接受且成为榜单最佳的结果，其声明的对比视频才可能随分数公开展示。',
+    'No. All three Track forms require prediction-video artifacts. Self-reported numbers alone are insufficient for evaluation.': '不可以。三个赛道都必须提交预测视频材料，仅提供自行汇总的分数不足以完成评测。'
+  });
+
   const normalize = value => value.replace(/\s+/g, ' ').trim();
   const dynamicZh = [
     [/^Signed in as (.+) · (.+)$/, match => `当前账号：${match[1]} · ${match[2]}`],

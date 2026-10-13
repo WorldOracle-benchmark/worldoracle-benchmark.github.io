@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/portal.css?v=20261013-typography-v1">
-  <script src="../assets/i18n.js?v=20261012-pages-registration-v1" defer></script><script src="../assets/unified-nav.js?v=20261013-nav-atomic-v1" defer></script><script src="../assets/portal.js?v=20261013-nav-atomic-v1" defer></script>
+  <script src="../assets/i18n.js?v=20261013-detailed-guide-v1" defer></script><script src="../assets/unified-nav.js?v=20261013-nav-atomic-v1" defer></script><script src="../assets/portal.js?v=20261013-nav-atomic-v1" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to Content</a>
@@ -19,12 +19,135 @@
     <section class="guide-hero"><div><p class="eyebrow">WorldOracle Submission</p><h1>Register once.<br><span>Evaluate continuously.</span></h1><p class="lead">Each submission account represents one team and one model. Email verification and organizer review protect the leaderboard from unauthorised or unverifiable entries.</p><div class="actions"><a class="button primary" href="login/register/">Create Submission Account ↗</a><a class="button" href="login/">Sign In</a></div></div><aside class="hero-note"><span class="badge">Review-based access</span><h2>Account workflow</h2><p>Registration → email verification → organizer review → submission access.</p><p>Complete public-resource information makes identity and model verification faster.</p></aside></section>
     <div class="journey" aria-label="Submission workflow"><span><b>01</b> Register</span><i>→</i><span><b>02</b> Verify email</span><i>→</i><span><b>03</b> Organizer review</span><i>→</i><span><b>04</b> Submit</span></div>
     <div class="guide-layout">
-      <aside class="contents"><p class="eyebrow">On this page</p><nav aria-label="Guide Sections"><a class="is-active" href="#access"><span>01</span> Eligibility</a><a href="#resources"><span>02</span> Public resources</a><a href="#limits"><span>03</span> Submission limits</a><a href="#tracks"><span>04</span> Tracks</a></nav></aside>
+      <aside class="contents">
+        <p class="eyebrow">On this page</p>
+        <nav aria-label="Guide Sections">
+          <a class="is-active" href="#overview"><span>01</span> Submission Overview</a>
+          <a href="#access"><span>02</span> Eligibility &amp; Registration</a>
+          <a href="#tracks"><span>03</span> Choose a Track</a>
+          <a href="#prepare"><span>04</span> Prepare Your Submission</a>
+          <a href="#validate"><span>05</span> Validate and Submit</a>
+          <a href="#review"><span>06</span> Evaluation and Publication</a>
+          <a href="#rules"><span>07</span> Rules and FAQ</a>
+        </nav>
+      </aside>
       <article class="guide-copy">
-        <section id="access"><p class="eyebrow">01 · Eligibility</p><h2>One account, one registered model.</h2><p>Create a separate submission account for every model your team enters. Team name, model name, organization, logo and verified email are required. Accounts receive no submission quota until organizer review is complete.</p><div class="callout"><strong>More complete information makes approval easier.</strong> Use an institutional address where possible and provide public resources that clearly belong to the registered model.</div></section>
-        <section id="resources"><p class="eyebrow">02 · Public resources</p><h2>Open-source status shown clearly.</h2><p>Code, model weights and papers are optional during registration. A model is marked Open Source only after both its public code repository and public model weights are verified. Resource URLs may use any public HTTP/HTTPS host.</p></section>
-        <section id="limits"><p class="eyebrow">03 · Submission limits</p><h2>A shared rolling quota.</h2><p>After approval, each account may submit up to two evaluations per Track and six evaluations total in a rolling seven-day window. The account may submit new versions of its registered model, but may not switch to a different model identity.</p></section>
-        <section id="tracks"><p class="eyebrow">04 · Evaluation tracks</p><h2>One account across all eligible Tracks.</h2><div class="track-grid"><div class="track-card"><span class="badge">Main</span><h3>Main Track</h3><p>Standard action-conditioned prediction evaluated on the benchmark protocol.</p></div><div class="track-card blue"><span class="badge blue">Policy</span><h3>Policy Track</h3><p>Policy-rollout distribution using the corresponding paired real executions.</p></div><div class="track-card"><span class="badge">Long Horizon</span><h3>Long-Horizon Track</h3><p>Extended prediction windows with multi-segment evaluation.</p></div></div></section>
+        <section id="overview">
+          <p class="eyebrow">01 · Get started</p>
+          <h2>Submission Overview</h2>
+          <p>Register one account for one participating team and one fixed model. After email verification and organizer review, that model can submit multiple versions to Main, Policy, and Long-Horizon Tracks. Open-weight and closed-source approaches may both participate; public resources and certification are disclosed separately on the leaderboard.</p>
+          <p>WorldOracle uses one evaluation framework across two data distributions: human-operated trajectories and policy rollouts collected on a real robot. The benchmark covers AgiBot G2, YAM, and human-hand embodiments. Choose Main, Policy, or Long-Horizon Track and submit prediction videos; no separate protocol selection is needed.</p>
+          <div class="callout">An uploaded package is not yet a verified benchmark result. Formal queue entry consumes the rolling quota. A successful V number is assigned only after every required metric passes, and only an improved result replaces the model's current leaderboard best.</div>
+        </section>
+
+        <section id="access">
+          <p class="eyebrow">02 · Eligibility &amp; registration</p>
+          <h2>One account, one registered model.</h2>
+          <p>Create a separate submission account for every model your team enters. Team name, model name, organization, logo and verified email are required. Accounts receive no submission quota until organizer review is complete.</p>
+          <p>Code, model weights and papers are optional during registration. A model is marked Open Source only after both its public code repository and public model weights are verified. Resource URLs may use any public HTTP/HTTPS host.</p>
+          <p>After approval, each account may submit up to two evaluations per Track and six evaluations total in a rolling seven-day window. The seven-day window begins with the account's first formal submission and resets the quota for all Tracks together.</p>
+          <div class="callout"><strong>More complete information makes approval easier.</strong> Use an institutional address where possible and provide public resources that clearly belong to the registered model.</div>
+        </section>
+
+        <section id="tracks">
+          <p class="eyebrow">03 · Evaluation tracks</p>
+          <h2>Choose a Track</h2>
+          <div class="track-grid">
+            <div class="track-card"><span class="badge">Main</span><h3>Main Track</h3><p>Standard action-conditioned prediction on human-operated trajectories. Submit the first 30 seconds of every required episode.</p></div>
+            <div class="track-card blue"><span class="badge blue">Policy</span><h3>Policy Track</h3><p>Complete policy-distribution rollouts using actions collected from real policy executions on AgiBot G2.</p></div>
+            <div class="track-card"><span class="badge">Long Horizon</span><h3>Long-Horizon Track</h3><p>Complete action-conditioned episodes evaluated over the full prediction horizon.</p></div>
+          </div>
+          <p>Each submission targets exactly one Track. Submit separately to enter more than one Track. Main and Long-Horizon accept prediction videos for AgiBot G2, YAM, or Human Hand. Policy Track currently covers AgiBot G2 policy-distribution rollouts.</p>
+        </section>
+
+        <section id="prepare">
+          <p class="eyebrow">04 · Package specification</p>
+          <h2>Prepare Your Submission</h2>
+          <p>The portal automatically uses the single organizer-approved model bound to this account. Select the Track and platform and optionally add submission notes. Each queue entry receives the next account submission number within its Track. V1, V2, and so on are assigned only after successful evaluations; failed attempts never consume a V number.</p>
+
+          <h3>Track limits and required coverage</h3>
+          <ul>
+            <li><strong>Main Track:</strong> one ZIP below <strong>3 GiB</strong>. Submit the first 30 seconds of every required episode using recorded actions.</li>
+            <li><strong>Policy Track:</strong> one ZIP below <strong>3 GiB</strong>. Submit the complete policy-distribution rollout for AgiBot G2 and use <code>action_source: policy</code> in the manifest.</li>
+            <li><strong>Long-Horizon Track:</strong> one ZIP below <strong>12 GiB</strong>. Submit each complete episode using recorded actions; do not truncate it to the Main Track horizon.</li>
+          </ul>
+          <div class="callout">Frame rate is platform-specific: AgiBot G2 and YAM use 30 FPS (900 frames for Main); Human Hand uses 15 FPS (450 frames for Main). Preserve the native frame rate and do not duplicate frames.</div>
+          <p>The limit applies independently to both the uploaded ZIP and the sum of its declared expanded contents. A package may contain at most 20,000 entries. ZIP symlinks, encrypted entries, duplicate or unsafe paths, and a wrapper directory above <code>manifest.json</code> are rejected.</p>
+          <p>Do not reorder episodes by array position. Preserve the official <code>task / episode_id / view</code> identity and map every video explicitly in <code>manifest.json</code>. Frame indices must be contiguous from zero; synchronized views of an episode must have equal frame counts, frame rates, and durations. Do not select only successful rollouts or silently replace a trajectory.</p>
+          <p>The implemented schema is <code>preview-2</code>. Set <code>benchmark_track</code> to <code>main</code>, <code>policy</code>, or <code>long_horizon</code>, matching the form. Set <code>evaluation.horizon</code> to <code>30s</code>, <code>policy</code>, or <code>full</code>; set <code>action_source</code> to <code>policy</code> only for Policy Track and <code>recorded</code> otherwise; and set <code>view_mode</code> to <code>single</code> or <code>multi</code>. Unknown top-level manifest fields are rejected.</p>
+
+          <h3>Input directory format</h3>
+          <pre><code>submission.zip
+├── manifest.json              # Required; metadata and prediction index
+├── README.md                  # Required; reproduction and alignment details
+├── predictions/               # Prediction MP4 files for the selected Track
+│   └── pickfruit/ep000000/top_head.mp4
+├── config/                    # Recommended; inference settings and seeds
+└── logs/                      # Recommended; generation and evaluation logs</code></pre>
+          <p>Each prediction entry must include <code>task, episode_id, view, fps, path</code>. The standard output is H.264 MP4, <code>yuv420p</code>, no audio, source resolution preserved, and the platform's native benchmark frame rate. In <code>README.md</code>, explain the action-to-frame mapping, whether the initial frame is included, the original resolution, and any unavoidable resampling.</p>
+
+          <h3>Required compression profile</h3>
+          <p>Encode the original JPEG or PNG sequence directly to the final MP4. Use <code>libx264</code>, the <code>slow</code> preset, two-pass average bitrate <code>2830k</code>, <code>yuv420p</code>, a 60-frame GOP, scene-cut disabled, and no audio. Do not create a lossless MP4 first and transcode it again.</p>
+          <p>The five benchmark baseline packages currently shown for AgiBot G2—IRASim, DreamDojo, Ctrl-World, Cosmos 3, and GE-Sim 2.0—were all encoded at the same target video bitrate: <code>2830k</code> in both passes. The two ffmpeg commands are the analysis pass and the final-output pass of one two-pass encode, not two different compression settings.</p>
+          <p>The commands below use 30 FPS for AgiBot G2 and YAM. For Human Hand, change both <code>-framerate</code> values to 15. The example input is one <code>frame_00000.jpg</code> sequence. For six-digit PNG input, use <code>frame_%06d.png</code>.</p>
+          <pre><code>ffmpeg -nostdin -hide_banner -loglevel error -y \
+  -framerate 30 -start_number 0 -i 'frame_%05d.jpg' \
+  -map 0:v:0 -an -c:v libx264 -preset slow -b:v 2830k \
+  -pix_fmt yuv420p -vsync 0 -g 60 -keyint_min 60 -sc_threshold 0 \
+  -pass 1 -passlogfile 'top_head-pass' -f null /dev/null
+
+ffmpeg -nostdin -hide_banner -loglevel error -y \
+  -framerate 30 -start_number 0 -i 'frame_%05d.jpg' \
+  -map 0:v:0 -an -c:v libx264 -preset slow -b:v 2830k \
+  -pix_fmt yuv420p -vsync 0 -g 60 -keyint_min 60 -sc_threshold 0 \
+  -pass 2 -passlogfile 'top_head-pass' -movflags +faststart \
+  top_head.mp4</code></pre>
+          <p><code>2830k</code> is the parameter that primarily controls file size; <code>preset slow</code> controls how efficiently that bitrate is used, not the target size. CRF is not used for the standard package because its final size is content-dependent. The approximate total is <code>bitrate × the sum of all video durations ÷ 8</code>, plus MP4 and ZIP overhead. Use the same bitrate for every view and episode. A single-view submission is therefore smaller than a three-view submission, but each video receives the same compression strength. If the complete ZIP exceeds the Track limit, lower the bitrate uniformly for every video. Record the reduced bitrate in the submission README (<code>README.md</code>).</p>
+
+          <h3>Package and verify</h3>
+          <pre><code># Run from the directory containing manifest.json, README.md and predictions/
+zip -0 -r submission.zip manifest.json README.md predictions/
+unzip -t submission.zip
+shasum -a 256 submission.zip</code></pre>
+          <p><code>-0</code> stores the already-compressed MP4 files without wasting time recompressing them. Before uploading, confirm the ZIP is below the selected Track limit and that <code>manifest.json</code> is at the ZIP root. Every Track package must include <code>pickfruit / ep000000 / top_head</code>; if the result becomes that model's leaderboard best, its complete 30-second comparison video is shown publicly. All other package files remain private.</p>
+          <p>Do not include passwords, API keys, private tokens, personal data, raw GT frames, caches, checkpoints, or unrelated experiment outputs.</p>
+          <div class="callout">Uploads are resumable: the browser sends verified 16 MiB parts over up to 6 parallel lanes. Each part is checked with SHA-256, the assembled ZIP receives a full-file SHA-256, and interrupted uploads can resume by reopening the same draft and selecting the identical ZIP. Incomplete uploads expire after 48 hours.</div>
+        </section>
+
+        <section id="validate">
+          <p class="eyebrow">05 · Submission wizard</p>
+          <h2>Validate and Submit</h2>
+          <p>Use the same validation routine locally before uploading:</p>
+          <pre><code>python validate_package.py submission.zip</code></pre>
+          <p>The validator ships with the submission portal source code; its standalone public distribution is pending. In the submission portal, follow four steps:</p>
+          <ol>
+            <li><strong>Model and Track:</strong> check your assigned model, choose a Track and platform, and optionally add submission notes.</li>
+            <li><strong>Upload Materials:</strong> choose a ZIP. The browser uploads resumable parts and the background worker checks the assembled package and records its SHA-256 checksum.</li>
+            <li><strong>Declarations:</strong> confirm authenticity, permissions, and the absence of secrets.</li>
+            <li><strong>Confirm and Submit:</strong> check the summary and enter the automatic evaluation queue.</li>
+          </ol>
+          <p>Saved steps remain in your account. After an interruption, reopen the same draft and reselect the identical file to resume. Replacing the package resets its declarations to prevent mismatched submissions. After final submission, the record is read-only unless the organizers request changes.</p>
+          <p class="muted">Track admission checks inspect video headers and decode the first frame, enforce the platform frame rate (30 FPS for AgiBot G2 and YAM; 15 FPS for Human Hand), validate view counts, synchronization, and Main Track's 30-second limit. They do not decode every frame, assess data leakage, recompute metrics, or establish result validity.</p>
+        </section>
+
+        <section id="review">
+          <p class="eyebrow">06 · What happens next</p>
+          <h2>Evaluation and Publication</h2>
+          <p>Follow progress in My Submissions. The public stages are Draft, Submitted, Evaluating, Review when manual confirmation is required, and Accepted. During Evaluating, the portal shows only overall progress and does not expose which metric is currently running.</p>
+          <div class="status-flow"><span>Draft</span><span>Submitted</span><span>Evaluating</span><span>Review if required</span><span>Accepted</span></div>
+          <p>If any evaluated dimension exceeds the current leaderboard top score, publication is paused for organizer review. Otherwise, a successful evaluation is accepted automatically. An accepted result updates the public leaderboard only if it improves the model's current best.</p>
+        </section>
+
+        <section id="rules">
+          <p class="eyebrow">07 · Fair and reproducible</p>
+          <h2>Rules and FAQ</h2>
+          <details open><summary>How should unavailable metrics be reported?</summary><p>Use N/A, with the reason and supported views. A missing or unsupported metric is not a measured zero.</p></details>
+          <details><summary>Are submission notes required?</summary><p>No. Use this optional field for information you want the organizers to know about this submission, up to 4,000 characters.</p></details>
+          <details><summary>Can I submit repeatedly?</summary><p>Each approved account may submit up to two evaluations per Track and six evaluations total in its rolling seven-day window. Failed or incomplete attempts do not consume a V number.</p></details>
+          <details><summary>Are my files public?</summary><p>The original ZIP and all other package files remain private. Only the declared comparison video for a model's accepted leaderboard-best result may be displayed publicly beside its score.</p></details>
+          <details><summary>Can I upload only my aggregate scores?</summary><p>No. All three Track forms require prediction-video artifacts. Self-reported numbers alone are insufficient for evaluation.</p></details>
+        </section>
+
         <section class="closing"><div><p class="eyebrow">Ready to begin?</p><h2>Create a submission account.</h2></div><a class="button primary" href="login/register/">Register ↗</a></section>
       </article>
     </div>
