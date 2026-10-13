@@ -67,6 +67,32 @@
 .team-auth-dialog[hidden]{display:none!important}.team-auth-dialog{position:fixed;inset:0;z-index:1200;display:grid;place-items:center;padding:24px}.team-auth-dialog-backdrop{position:absolute;inset:0;background:rgba(4,27,48,.52);backdrop-filter:blur(8px);animation:team-auth-fade .22s ease both}.team-auth-dialog-panel{position:relative;z-index:1;width:min(100%,520px);padding:30px;border:1px solid rgba(154,192,214,.8);border-radius:22px;background:linear-gradient(150deg,#fff,#f4f9fc);box-shadow:0 30px 90px rgba(3,30,52,.28);animation:team-auth-rise .28s cubic-bezier(.2,.8,.2,1) both}.team-auth-dialog-panel:focus{outline:none}.team-auth-dialog-panel h2{margin:4px 34px 10px 0;font-size:26px}.team-auth-dialog-panel>p.muted{margin-bottom:22px;font-size:12px;line-height:1.7}.team-auth-dialog-close{position:absolute;top:16px;right:16px;width:34px;height:34px;padding:0;border:1px solid #d4e0e8;border-radius:50%;background:#fff;color:#5f7789;font-size:23px;line-height:1;cursor:pointer}.team-auth-actions{display:grid;grid-template-columns:1fr 1.5fr;gap:10px;margin-top:22px}.team-auth-actions .button{width:100%;margin:0}body.team-auth-open{overflow:hidden}@keyframes team-auth-fade{from{opacity:0}to{opacity:1}}@keyframes team-auth-rise{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}@media(max-width:700px){.registration-mode-grid{grid-template-columns:1fr}.registration-mode-card{min-height:126px}.team-auth-dialog{padding:14px}.team-auth-dialog-panel{padding:24px 20px}.team-auth-actions{grid-template-columns:1fr}}
 .team-summary{max-width:760px;margin-bottom:35px}.card-grid,.role-grid,.team-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:18px 0 34px}.team-grid{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}.role-grid .panel{padding:20px}.role-grid .panel p{color:var(--muted);font-size:12px}.compact-row,.member-card{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:10px 0}.member-card>div{display:flex;flex-wrap:wrap;align-items:center;gap:8px}.member-card small{display:block;width:100%;color:var(--muted)}.member-card form{display:flex;align-items:center;gap:8px}.member-card form select,.member-card form input{width:auto;max-width:150px;margin:0}.team-grid section>.panel{margin:10px 0}.badge.pending{background:#fff5df;color:#916b27;border-color:#ead8b1}.badge.approved,.badge.active{background:#edf8f2;color:#167e64}.badge.rejected,.badge.removed{background:#fbede9;color:#a44d43;border-color:#efd6cf}
 @media(max-width:900px){.card-grid,.role-grid{grid-template-columns:1fr}.team-grid{grid-template-columns:1fr}.compact-row,.member-card{align-items:flex-start;flex-direction:column}.member-card form{flex-wrap:wrap;width:100%}}
+/* Compact registration choices: each card carries one precise label. */
+.registration-mode-grid .registration-mode-card{
+  min-height:84px;
+  justify-content:center;
+  padding:18px 20px;
+}
+.registration-mode-grid .registration-mode-tag{
+  padding:6px 10px;
+  font-size:11px;
+  letter-spacing:.025em;
+  text-transform:none;
+}
+.registration-mode-grid .registration-mode-card strong,
+.registration-mode-grid .registration-mode-card small{display:none}
+@media(max-width:700px){.registration-mode-grid .registration-mode-card{min-height:72px}}
+
+/* Existing-team lookup sits beside the team name and gates model creation. */
+.team-name-check-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:stretch}
+.team-name-check-row>input{min-width:0}
+.team-name-check-button{min-width:116px;margin:0;padding:0 17px;white-space:nowrap}
+.team-name-check-button[hidden]{display:none!important}
+.team-name-check-status{display:block;margin-top:8px;font-size:11px;font-weight:700;line-height:1.5}
+.team-name-check-status.is-success{color:#168267}
+.team-name-check-status.is-error{color:#a33b32}
+@media(max-width:560px){.team-name-check-row{grid-template-columns:1fr}.team-name-check-button{width:100%;min-height:44px}}
+
 /* Shared Chinese / English switch. */
 .language-toggle{flex:0 0 auto;align-self:center;display:inline-flex;align-items:baseline;justify-content:center;gap:1px;width:auto;min-width:0;height:auto;padding:7px 3px;border:0;border-radius:5px;background:transparent;color:#07675d;font-family:var(--sans);line-height:1;white-space:nowrap;cursor:pointer}.language-primary{font-size:12px;font-weight:800;letter-spacing:.025em}.language-divider{color:#91aaa5;font-size:9px;font-weight:500}.language-secondary{color:#758a86;font-size:10px;font-weight:600;letter-spacing:.01em}.language-toggle:hover{background:#eef7f5;color:#064f48}.language-toggle:focus-visible{outline:3px solid #289d90;outline-offset:3px}.header nav .language-toggle{margin-left:2px}
 /* Progressive scroll reveal: no JavaScript means no hidden content. */
