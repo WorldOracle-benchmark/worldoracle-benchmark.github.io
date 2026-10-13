@@ -838,7 +838,7 @@
     'Public Model Record': '公开模型档案', 'Verification': '审核标识', 'Public Resources': '公开资源',
     'Certified Team': '认证队伍', 'Non-Certified Team': '非认证队伍',
     'Model record ↗': '查看模型档案 ↗',
-    'Certification': '认证状态', 'Public status': '公开状态', 'Open-source status': '开源状态', 'All teams': '全部队伍',
+    'Certification': '认证状态', 'Public status': '公开状态', 'Open-source status': '开源状态', 'Open-source': '开源', 'All teams': '全部队伍',
     'Certified teams': '认证队伍', 'Non-certified teams': '非认证队伍',
     'All models': '全部模型', 'All Models': '全部模型', 'Open Source': '已开源', 'Not Open Source': '未开源',
     'All source states': '全部开源状态', 'Rolling Seven-Day Quota': '滚动 7 天提交额度',
