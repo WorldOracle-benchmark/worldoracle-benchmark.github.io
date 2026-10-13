@@ -1117,6 +1117,22 @@
     'Team Verification': '队伍身份验证', 'Verify the original team account.': '验证原队伍账号。',
     'Enter the email and password used when this team was first created. The new model account is created only after these credentials are verified.': '请输入最初创建该队伍时使用的邮箱和密码。只有验证通过后，才会创建新的模型账号。',
     'Original Team Email': '原队伍账号邮箱', 'Original Team Password': '原队伍账号密码',
+    'Use 12–256 characters.': '请使用 12–256 个字符。',
+    'Enter the same password again.': '请再次输入相同密码。',
+    'The WorldOracle service could not be reached. Check your connection and try again.': '无法连接 WorldOracle 服务。请检查网络连接后重试。',
+    'Your session has expired. Sign in again.': '会话已过期，请重新登录。',
+    'Unable to sign in. Check your registered email and password.': '无法登录。请检查注册邮箱和密码。',
+    'Verify your email before signing in.': '请先完成邮箱验证，再进行登录。',
+    'Password updated. Sign in again with the new password.': '密码已更新。请使用新密码重新登录。',
+    'The current password is incorrect.': '当前密码不正确。',
+    'Check the current password.': '请检查当前密码。',
+    'Use a new 12–256 character password.': '请使用一个新的 12–256 字符密码。',
+    'Passwords must match.': '两次输入的密码必须一致。',
+    'Password changed in another session. Sign in again.': '密码已在另一个会话中更改，请重新登录。',
+    'Each weekly cycle starts from this account\'s first formal submission. Every Track receives 2 submissions, with 6 total across all Tracks.': '每个周期从该账号的首次正式提交开始计算。每个赛道可提交 2 次，三个赛道合计 6 次。',
+    'The first formal submission starts the seven-day cycle.': '首次正式提交将启动 7 天周期。',
+    'Overall evaluation progress': '整体评测进度',
+    'Create a draft and save your progress one step at a time.': '创建草稿，并逐步保存提交进度。',
     'Cancel': '取消', 'Verify Team & Continue ↗': '验证队伍并继续 ↗',
     'Close team verification': '关闭队伍身份验证',
     'Model account saved. Verify the new registration email to enter organizer review.': '模型账号已保存。请验证新的注册邮箱，完成后将进入主办方审核。'
@@ -1129,6 +1145,7 @@
 
   const normalize = value => value.replace(/\s+/g, ' ').trim();
   const dynamicZh = [
+    [/^Resets (.+)$/, match => `重置时间：${match[1]}`],
     [/^Signed in as (.+) · (.+)$/, match => `当前账号：${match[1]} · ${match[2]}`],
     [/^Team #(\d+) · (.+)$/, match => `队伍 #${match[1]} · ${match[2]}`],
     [/^Role: (.+)$/, match => `角色：${translate(match[1])}`],
