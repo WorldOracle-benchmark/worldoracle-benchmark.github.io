@@ -3464,8 +3464,8 @@ html.scroll-reveal-ready [data-scroll-reveal].is-revealed {
   .full-leaderboard-page .leaderboard-floating-preview .model-preview-scrubber{right:13px;bottom:12px;left:13px;width:calc(100% - 26px)}
 }
 
-/* Comparison workspace v45 — keep the complete module below its table on
-   every desktop width and never fall back to browser-native video chrome. */
+/* Comparison workspace v45 — provide the compact fallback layout and never
+   fall back to browser-native video chrome. Wide screens move it to the rail. */
 .full-leaderboard-page [data-preview-video]::-webkit-media-controls,
 .full-leaderboard-page [data-preview-video]::-webkit-media-controls-enclosure,
 .full-leaderboard-page [data-preview-video]::-webkit-media-controls-panel{
@@ -3490,5 +3490,68 @@ html.scroll-reveal-ready [data-scroll-reveal].is-revealed {
   .full-leaderboard-page .track-panel>.board-insight,
   .full-leaderboard-page .track-panel>.policy-insight{
     display:grid;grid-template-columns:repeat(2,minmax(0,1fr))
+  }
+}
+
+/* Comparison rail v46 — the active track keeps its complete comparison
+   workspace in the left rail and follows the reader while the table scrolls. */
+@media(min-width:1321px){
+  .full-leaderboard-page .leaderboard-floating-preview:not([hidden]){
+    position:sticky;z-index:3;top:76px;display:block!important;max-height:calc(100vh - 92px);
+    margin-top:16px;overflow-y:auto;overflow-x:visible;overscroll-behavior:contain;
+    scrollbar-width:thin;scrollbar-color:rgba(90,126,147,.42) transparent
+  }
+  .full-leaderboard-page .leaderboard-floating-preview .board-insight,
+  .full-leaderboard-page .leaderboard-floating-preview .policy-insight{
+    display:flex;flex-direction:column;gap:10px;margin:0;padding:0 10px 11px;
+    border:1px solid rgba(87,137,166,.43);border-radius:24px 7px 24px 7px;
+    background:
+      radial-gradient(circle at 95% 4%,rgba(31,151,206,.15),transparent 31%),
+      radial-gradient(circle at 3% 100%,rgba(21,155,141,.11),transparent 29%),
+      linear-gradient(150deg,rgba(246,251,254,.98),rgba(255,255,255,.98) 48%,rgba(239,247,251,.97));
+    box-shadow:0 16px 38px rgba(20,64,91,.12),inset 0 1px 0 rgba(255,255,255,.95)
+  }
+  .full-leaderboard-page .leaderboard-floating-preview .comparison-workspace-heading{
+    align-items:flex-start;flex-direction:column;gap:8px;min-height:0;margin:0 -10px;padding:13px 12px 12px;
+    border-radius:23px 6px 0 0
+  }
+  .full-leaderboard-page .leaderboard-floating-preview .comparison-workspace-heading>p{
+    width:100%;font-size:9px;line-height:1.45;text-align:left
+  }
+  .full-leaderboard-page .leaderboard-floating-preview .comparison-workspace-tags span{
+    min-height:23px;padding:0 8px;font-size:7.5px
+  }
+  .full-leaderboard-page .leaderboard-floating-preview .board-radar,
+  .full-leaderboard-page .leaderboard-floating-preview .policy-chart{
+    width:auto;max-width:none;margin:0;padding:10px 8px 7px;border-radius:18px 6px 18px 6px
+  }
+  .full-leaderboard-page .leaderboard-floating-preview .board-radar svg,
+  .full-leaderboard-page .leaderboard-floating-preview .policy-chart svg{
+    display:block;width:100%;height:286px;max-height:none;overflow:visible
+  }
+  .full-leaderboard-page .leaderboard-floating-preview .board-radar figcaption,
+  .full-leaderboard-page .leaderboard-floating-preview .policy-chart figcaption{display:none}
+  .full-leaderboard-page .leaderboard-floating-preview .radar-axis-label,
+  .full-leaderboard-page .leaderboard-floating-preview .policy-axis{font-size:22px}
+  .full-leaderboard-page .leaderboard-floating-preview .radar-level,
+  .full-leaderboard-page .leaderboard-floating-preview .policy-tick{font-size:13px}
+  .full-leaderboard-page .leaderboard-floating-preview .radar-value{font-size:17px}
+  .full-leaderboard-page .leaderboard-floating-preview .model-preview{
+    width:auto;max-width:none;margin:0;padding:6px!important;border-radius:29px 8px 29px 8px!important
+  }
+  .full-leaderboard-page .leaderboard-floating-preview .model-preview-media{
+    min-height:174px;border-radius:24px 6px 24px 6px!important
+  }
+  .full-leaderboard-page .leaderboard-floating-preview .model-preview video{
+    display:block;width:100%;height:184px;object-fit:contain
+  }
+  .full-leaderboard-page .leaderboard-floating-preview .model-preview-source:not([hidden]){
+    top:11px;left:12px;max-width:calc(100% - 24px);padding:6px 8px;font-size:7px
+  }
+  .full-leaderboard-page .leaderboard-floating-preview .model-preview-scrubber{
+    right:13px;bottom:11px;left:13px;width:calc(100% - 26px);height:23px
+  }
+  .full-leaderboard-page .leaderboard-floating-preview .model-preview-media p[data-preview-empty]:not([hidden]){
+    padding:60px 24px 42px;font-size:9px
   }
 }
