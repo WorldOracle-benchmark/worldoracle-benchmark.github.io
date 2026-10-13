@@ -130,7 +130,9 @@
 
     desktop.replaceChildren(...items.map(item => link(item, current)));
     if (authenticated) desktop.append(logoutButton());
-    else desktop.append(languageButton());
+    // Language switching stays available in both anonymous and signed-in
+    // navigation states.
+    desktop.append(languageButton());
 
     const inner = header.querySelector('.header-inner');
     let mobileLanguage = inner?.querySelector('.mobile-language-toggle');
@@ -139,7 +141,7 @@
       const menuButton = inner.querySelector('[data-menu-button]');
       inner.insertBefore(mobileLanguage, menuButton || null);
     }
-    if (mobileLanguage) mobileLanguage.hidden = authenticated;
+    if (mobileLanguage) mobileLanguage.hidden = false;
 
     const mobile = ensureMobileNavigation(header);
     mobile.replaceChildren(...items.map(item => link(item, current)));

@@ -561,9 +561,14 @@ function initializeBoard(board, entries) {
       const label=shape('text',{x:lx,y:ly-6,'text-anchor':fullLayout?fullAnchor:Math.abs(lx-300)<1?'middle':lx>300?'start':'end',class:'radar-axis-label'});
       lines.forEach((line,j)=>label.append(shape('tspan',{x:lx,dy:j?23:0},line))); svg.append(label);
     });
-    [0,10,20,30,40,50,60,70,80,90,100].forEach(level=>svg.append(shape('text',fullLayout
-      ? {x:300+196*level/100,y:228,'text-anchor':'middle',class:'radar-level'}
-      : {x:307,y:241-142*level/100,class:'radar-level'},String(level))));
+    [0,10,20,30,40,50,60,70,80,90,100].forEach(level=>{
+      // Derive the tick position from the same radius used to draw the grid.
+      // This keeps every label centered on its corresponding ring.
+      const [tickX,tickY]=point(0,level);
+      svg.append(shape('text',fullLayout
+        ? {x:tickX,y:228,'text-anchor':'middle',class:'radar-level'}
+        : {x:tickX+7,y:tickY+4,'text-anchor':'start',class:'radar-level'},String(level)));
+    });
     current.forEach(model=>{
       const group=shape('g',{class:'radar-series-group','data-radar-series':String(model.id)});
       const rawValues=radarValues(model);
@@ -723,7 +728,10 @@ function initializePolicy(models){
   axis.lines.forEach((line,j)=>label.append(node('tspan',{x:lx,dy:j?21:0},line)));
   svg.append(label);
  });
- [0,10,20,30,40,50,60,70,80,90,100].forEach(v=>svg.append(node('text',{x:300+196*v/100,y:228,'text-anchor':'middle',class:'policy-tick'},String(v))));
+ [0,10,20,30,40,50,60,70,80,90,100].forEach(v=>{
+  const [tickX]=point(0,v);
+  svg.append(node('text',{x:tickX,y:228,'text-anchor':'middle',class:'policy-tick'},String(v)));
+ });
  const groups=models.map((m,i)=>{
   const group=node('g',{'data-policy-series':String(i)});
   group.append(node('polygon',{points:keys.map((k,axis)=>point(axis,m[k]===null?0:m[k]).join(',')).join(' '),fill:m.color,stroke:m.color,class:'policy-radar-series'}));
