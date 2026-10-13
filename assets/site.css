@@ -3308,3 +3308,54 @@ html.scroll-reveal-ready [data-scroll-reveal].is-revealed {
   -webkit-mask-image:linear-gradient(270deg,#000 0%,rgba(0,0,0,.68) 42%,transparent 100%);mask-image:linear-gradient(270deg,#000 0%,rgba(0,0,0,.68) 42%,transparent 100%)
 }
 .full-leaderboard-page .leaderboard-highlight-edge span{z-index:1}
+
+/* Ranking deck v43 — differentiated typography and softer, varied geometry. */
+.full-leaderboard-page .leaderboard-news-grid[data-leaderboard-highlights]{
+  border-radius:16px 5px 16px 5px
+}
+.full-leaderboard-page .leaderboard-highlight-metric{
+  padding:4px;border-radius:18px
+}
+.full-leaderboard-page .leaderboard-highlight-metric button{
+  height:30px;border-radius:14px
+}
+.full-leaderboard-page .leaderboard-highlight-tag span,
+.full-leaderboard-page .leaderboard-highlight-tag strong{
+  min-height:23px;padding:0 9px
+}
+.full-leaderboard-page .leaderboard-highlight-tag span{
+  border-radius:11px 4px 11px 4px
+}
+.full-leaderboard-page .leaderboard-highlight-tag strong{
+  border-radius:4px 11px 4px 11px
+}
+.full-leaderboard-page .leaderboard-highlight-tag em{
+  border-radius:12px 4px 12px 4px
+}
+.full-leaderboard-page .leaderboard-highlight-ranking li{
+  min-height:56px;border-radius:14px 6px 14px 6px;
+  background:linear-gradient(115deg,rgba(255,255,255,.82),rgba(255,255,255,.57));
+  box-shadow:0 6px 19px rgba(29,71,96,.065)
+}
+.full-leaderboard-page .leaderboard-highlight-ranking li:nth-child(even){
+  border-radius:6px 14px 6px 14px
+}
+.full-leaderboard-page .leaderboard-highlight-ranking li>b,
+.full-leaderboard-page .leaderboard-highlight-ranking li:first-child>b{
+  width:26px;height:26px;border:0;border-radius:50%;color:#607887;
+  background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.96),rgba(var(--highlight-rgb),.09));
+  box-shadow:inset 0 0 0 1px rgba(var(--highlight-rgb),.18)
+}
+.full-leaderboard-page .leaderboard-highlight-ranking li>span strong{
+  color:#102f43;font-size:14px;font-weight:720;line-height:1.18;letter-spacing:-.02em
+}
+.full-leaderboard-page .leaderboard-highlight-ranking li>span small{
+  margin-top:4px;color:#83929d;font-size:8.5px;font-weight:500;line-height:1.15;letter-spacing:.01em
+}
+.full-leaderboard-page .leaderboard-highlight-ranking li>em{
+  border-radius:15px 5px 15px 5px
+}
+@media(max-width:700px){
+  .full-leaderboard-page .leaderboard-highlight-ranking li>span strong{font-size:13px}
+  .full-leaderboard-page .leaderboard-highlight-ranking li>span small{font-size:8px}
+}
