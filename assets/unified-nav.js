@@ -21,7 +21,7 @@
   function activeItem() {
     const path = window.location.pathname.replace(/index\.html$/, '');
     if (/\/leaderboard\.html$/.test(path)) return 'leaderboard';
-    if (/\/submission\/login\/?$/.test(path)) return 'login';
+    if (/\/submission\/login(?:\/register)?\/?$/.test(path)) return 'login';
     if (/\/submission\/(dashboard|edit|view)\//.test(path)) return 'submissions';
     if (/\/submission\/(profile|change-password)\//.test(path)) return 'profile';
     if (/\/submission\//.test(path)) return 'guide';

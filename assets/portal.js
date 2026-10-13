@@ -6,7 +6,7 @@
   const source = document.currentScript?.src;
   if (!source || document.querySelector('script[data-unified-nav-loader]')) return;
   const script = document.createElement('script');
-  script.src = new URL('unified-nav.js?v=20261013-unified-nav-v1', source).href;
+  script.src = new URL('unified-nav.js?v=20261013-auth-forms-v2', source).href;
   script.dataset.unifiedNavLoader = '';
   document.head.append(script);
 })();
