@@ -869,7 +869,6 @@
     , 'Public submitting-entity name.': '公开展示的参评主体名称。'
     , 'Protected after approval and cannot be replaced.': '审核通过后锁定，不可替换为其他模型。'
     , 'Public institution or independent-researcher name.': '公开展示的机构全称或独立研究者名称。'
-    , 'Public logo shown with the model profile.': '随模型档案公开展示的机构 Logo。'
     , 'Private. Used for verification, review decisions and English notices. Institutional email is preferred.': '不会公开，用于邮箱验证、接收审核结果和英文通知。建议使用机构邮箱。'
     , 'Private review evidence. Official submissions must establish model ownership or authorization.': '不会公开，仅用于审核。以官方名义提交时，须说明模型归属或提交授权。'
     , 'Links must be real, reachable and model-related. A verified GitHub or paper qualifies the team for certification. A verified GitHub, HuggingFace or paper qualifies the model as public.': '链接必须真实、可访问且与该模型直接相关。GitHub 仓库或论文经核验后，队伍可标记为“认证队伍”；GitHub、Hugging Face 或论文任一项经核验后，模型可标记为“模型已公开”。'
@@ -888,7 +887,7 @@
     , '3. Certification & Public Status': '3. 认证与公开状态'
     , '4. Submission Limits': '4. 提交额度'
     , '5. Integrity & Audit': '5. 完整性与审计'
-    , 'Public:': '公开信息：', 'team name, model name, organization and organization logo.': '队伍名称、模型名称、所属机构和机构 Logo。'
+    , 'Public:': '公开信息：', 'team name, model name and organization.': '队伍名称、模型名称和所属机构。'
     , 'Private:': '非公开信息：'
     , 'Optional model materials:': '选填的模型资料：', 'a real model-related GitHub repository, HuggingFace/inference-weight link, paper or technical report, and supplementary provenance/version notes.': '真实且与模型相关的 GitHub 仓库、Hugging Face／推理权重链接、论文或技术报告，以及模型来源／版本补充说明。'
     , 'Register the team account and bound model.': '注册队伍账号，并绑定唯一模型。'
@@ -908,11 +907,8 @@
     , ', no audio, source resolution preserved, and the platform\'s native benchmark frame rate. Explain the action-to-frame mapping, whether the initial frame is included, the original resolution, and any unavoidable resampling in': '，不包含音频，保留原始分辨率，并使用该平台的基准原生帧率。请在'
     , 'Required compression profile': '必须遵循的压缩规范'
     , 'Package and verify': '打包与校验'
-    , 'Organization Logo': '机构 Logo'
-    , 'Replace Organization Logo': '更换机构 Logo'
     , 'More complete information makes approval easier': '信息越完整，越有助于顺利通过审核'
     , 'Required fields': '必填项', 'Supporting materials': '辅助材料', 'required': '必填'
-    , 'Upload PNG, JPEG, or WebP, up to 1 MiB. The logo appears on the public model profile.': '请上传 PNG、JPEG 或 WebP 图片，文件不超过 1 MiB。Logo 将展示在公开模型档案中。'
     , 'Any verified public-resource link adds the Public Resources label.': '任一公开资源链接通过核验后，模型将获得“有公开资源”标识。'
     , 'Links must be real, reachable and model-related. A verified GitHub or paper qualifies the team for certification. Any verified public-resource link adds the Public Resources label.': '链接须真实、可访问且与该模型直接相关。GitHub 仓库或论文通过核验后，队伍可获得认证；任一公开资源链接通过核验后，模型将获得“有公开资源”标识。'
     , 'A public link is acceptable.': '可填写公开访问的链接。'
@@ -925,7 +921,6 @@
     , 'Public Resources': '有公开资源', 'No Public Resources': '暂无公开资源'
     , 'The model name is immutable. Contact organizers if the registered model identity is wrong.': '模型名称不可更改。如登记的模型身份有误，请联系主办方。'
     , 'Add or repair public evidence at any time. Organizers verify resources before certification/resource labels change; existing scores do not need reevaluation.': '您可以随时补充或修正公开材料。主办方核验后才会更新认证和公开资源标识，已有成绩无需重新评测。'
-    , 'Leave empty to keep the current logo. PNG, JPEG, or WebP, up to 1 MiB.': '留空则保留当前 Logo。支持 PNG、JPEG 或 WebP，文件不超过 1 MiB。'
     , 'verified registration email, password, accepted registration terms and privacy notice.': '已验证邮箱、密码，以及注册条款和隐私告知的确认记录。'
     , 'Organizers check the email, organization and supplied model materials.': '主办方会核验邮箱、所属机构和提交的模型资料。'
     , 'An approved account may submit even without code or a paper. A verified model-related GitHub repository or public paper/technical report qualifies the account as a': '账号审核通过后，即使暂未公开代码或论文，也可以提交评测。与模型相关的 GitHub 仓库或公开论文／技术报告经核验后，账号会标记为'
@@ -933,13 +928,8 @@
     , 'label. This means at least one organizer-verified public resource is available; it does not assert an open-source license. Organizers may revoke labels if links fail, resources are unrelated, or submitted artifacts do not match the registered model.': '标识。这表示至少有一项公开资源已经主办方核验，但不代表该模型采用开源许可证。如果链接失效、资料与模型无关，或提交产物与登记模型不一致，主办方可以撤销相应标识。'
     , 'Each approved model account receives a rolling seven-day allowance of 2 formal evaluations per Track and 6 across all three Tracks. Drafts and failed uploads do not consume quota. Quota is consumed when a submission formally enters the evaluation queue. Failures caused by benchmark infrastructure are refunded. Only the best valid version for each model and Track is shown, while every historical version remains in the private account audit.': '每个审核通过的模型账号采用滚动 7 天额度：每个赛道最多正式评测 2 次，三个赛道合计最多 6 次。草稿和上传失败不占额度；提交正式进入评测队列时才计数。由评测基础设施导致的失败会退还额度。每个模型在每个赛道只公开最佳有效版本，但所有历史版本会保留在账号审计记录中。'
     , 'Certification requires an organizer-verified GitHub repository or paper/technical report. “Public Resources” means at least one verified public GitHub, Hugging Face, or paper link is available; it does not assert an open-source license.': '“认证队伍”要求至少有一个经主办方核验的 GitHub 仓库或论文／技术报告。“有公开资源”表示至少存在一个经核验的 GitHub、Hugging Face 或论文链接，但不等同于采用开源许可证。'
-    , 'The registration email is private. Public team, model, organization, logo and verified resource labels appear on model records.': '注册邮箱不会公开；队伍名称、模型名称、所属机构、Logo 和经核验的资源标识会展示在模型档案中。'
+    , 'The registration email is private. Public team, model, organization and verified resource labels appear on model records.': '注册邮箱不会公开；队伍名称、模型名称、所属机构和经核验的资源标识会展示在模型档案中。'
     , 'Sign-in requires a verified registration email. Formal submission additionally requires organizer approval of the team, model identity and registration materials.': '登录前须完成邮箱验证；正式提交前还需通过主办方对参评队伍、模型身份和注册资料的审核。'
-    , 'Upload an organization logo in PNG, JPEG, or WebP format.': '请上传 PNG、JPEG 或 WebP 格式的机构 Logo。'
-    , 'The organization logo file is empty.': '机构 Logo 文件为空。'
-    , 'The organization logo must be 1 MiB or smaller.': '机构 Logo 文件不得超过 1 MiB。'
-    , 'Upload a valid PNG, JPEG, or WebP organization logo.': '请上传有效的 PNG、JPEG 或 WebP 机构 Logo。'
-    , 'The organization logo could not be stored. Please try again.': '机构 Logo 保存失败，请重试。'
     , 'Complete all required team, model, organization and email fields.': '请完整填写队伍、模型、所属机构和邮箱等必填项。'
     , 'Provide valid optional material links.': '请检查选填资料链接是否为有效的 HTTP/HTTPS 地址。'
   });
@@ -962,7 +952,7 @@
     'Register': '注册', 'Verify email': '验证邮箱', 'Organizer review': '主办方审核', 'Submit': '提交',
     'On this page': '本页内容', 'Eligibility': '参评资格', 'Public resources': '公开资料', 'Submission limits': '提交额度', 'Tracks': '赛道',
     'One account, one registered model.': '一个账号对应一个已登记模型。',
-    'Create a separate submission account for every model your team enters. Team name, model name, organization, logo and verified email are required. Accounts receive no submission quota until organizer review is complete.': '队伍每提交一个模型，都需要单独创建一个提交账号。队伍名称、模型名称、所属机构、Logo 和已验证邮箱均为必填项；主办方审核通过前，账号不会获得正式提交额度。',
+    'Create a separate submission account for every model your team enters. Team name, model name, organization and verified email are required. Accounts receive no submission quota until organizer review is complete.': '队伍每提交一个模型，都需要单独创建一个提交账号。队伍名称、模型名称、所属机构和已验证邮箱均为必填项；主办方审核通过前，账号不会获得正式提交额度。',
     'More complete information makes approval easier.': '信息越完整，越有利于通过审核。',
     'Use an institutional address where possible and provide public resources that clearly belong to the registered model.': '请尽量使用机构邮箱，并提供能够明确对应已登记模型的公开资料。',
     'Evidence shown clearly on the leaderboard.': '公开资料将在榜单中清晰标注。',
@@ -985,7 +975,6 @@
     'Public name of the team submitting this model.': '公开展示的模型提交队伍名称。',
     'Public model name. It is locked after approval.': '公开展示的模型名称；审核通过后将锁定。',
     'Public name of the institution, company, or independent researcher.': '公开展示的机构、企业或独立研究者名称。',
-    'Upload a PNG, JPEG, or WebP image up to 1 MiB. It will appear on the public model profile.': '请上传不超过 1 MiB 的 PNG、JPEG 或 WebP 图片；该 Logo 将展示在公开模型档案中。',
     'Private. Used to verify the account and send review decisions and service notices. An institutional email is preferred.': '不会公开。用于账号验证，以及接收审核结果和服务通知；建议使用机构邮箱。',
     'Public Model Resources': '公开模型资料',
     'Provide only public, accessible resources that directly describe this model. A verified GitHub repository or paper can qualify the team as Certified; any verified GitHub, Hugging Face, or paper link adds the Public Resources badge.': '请仅填写公开可访问且与该模型直接相关的资料。经核验的 GitHub 仓库或论文可使队伍获得“认证”标识；GitHub、Hugging Face 或论文任一链接通过核验后，模型将获得“有公开资源”标识。',
@@ -1025,9 +1014,6 @@
     'Provide valid HTTP/HTTPS links for the paper / technical report.': '请输入有效的论文／技术报告 HTTP 或 HTTPS 链接。',
     'Review notes must be 4,000 characters or fewer.': '审核补充说明不能超过 4,000 个字符。',
     'Confirm the registration terms to continue.': '请确认注册与参评条款后继续。', 'Confirm the privacy notice to continue.': '请确认隐私说明后继续。',
-    'Upload a PNG, JPEG, or WebP organization logo.': '请上传 PNG、JPEG 或 WebP 格式的机构 Logo。',
-    'The organization logo file is empty.': '机构 Logo 文件为空。', 'The organization logo must be 1 MiB or smaller.': '机构 Logo 文件不得超过 1 MiB。',
-    'The uploaded logo is too large. Upload an image no larger than 1 MiB.': '机构 Logo 文件过大，请上传不超过 1 MiB 的图片。',
     'Too many registration attempts. Please try again later.': '注册尝试过于频繁，请稍后再试。',
     'Registration could not be completed. Please try again.': '注册未能完成，请稍后重试。',
     'The registration service could not be reached. Check your connection and try again.': '暂时无法连接注册服务，请检查网络后重试。',
@@ -1100,7 +1086,7 @@
     'No. All three Track forms require prediction-video artifacts. Self-reported numbers alone are insufficient for evaluation.': '不可以。三个赛道都必须提交预测视频材料，仅提供自行汇总的分数不足以完成评测。',
     'An uploaded package is not yet a verified benchmark result. Formal queue entry consumes the rolling quota. A successful V number is assigned only after every required metric passes. For a single-view submission, the result replaces the model\'s current best only when its final Single-View Score is higher. For a three-view submission, replacement depends only on a higher final Multi-View Score. Improvements in individual metrics alone do not update the leaderboard.': '上传完成不等于评测结果已经有效。提交正式进入队列时才扣除滚动额度；所有必需指标通过后才会获得成功版本号。单视角提交只有在最终单视角总分更高时才会替换该模型当前最佳成绩；三视角提交只比较最终多视角总分。仅有某些单项指标提高不会更新榜单。',
     'One email, one registered model.': '一个邮箱对应一个已登记模型。',
-    'Each registration email is bound to exactly one model. A team may register multiple models: choose Same Team, New Model and verify the email and password used to create the original team before adding a new model account. The team name remains shared public attribution, while every model account supplies its own model name, organization, logo, registration email and password. Accounts receive no submission quota until organizer review is complete.': '每个注册邮箱只绑定一个模型。同一队伍可以登记多个模型：请选择“同队伍，新增模型”，并验证最初创建该队伍时使用的邮箱和密码，然后再添加新的模型账号。队伍名称作为共同的公开署名；每个模型账号需分别提供模型名称、所属机构、Logo、注册邮箱和密码。主办方审核完成前，账号不会获得正式提交额度。',
+    'Each registration email is bound to exactly one model. A team may register multiple models: choose Same Team, New Model and verify the email and password used to create the original team before adding a new model account. The team name remains shared public attribution, while every model account supplies its own model name, organization, registration email and password. Accounts receive no submission quota until organizer review is complete.': '每个注册邮箱只绑定一个模型。同一队伍可以登记多个模型：请选择“同队伍，新增模型”，并验证最初创建该队伍时使用的邮箱和密码，然后再添加新的模型账号。队伍名称作为共同的公开署名；每个模型账号需分别提供模型名称、所属机构、注册邮箱和密码。主办方审核完成前，账号不会获得正式提交额度。',
     'Code, model weights and papers are optional during registration. Any valid public model resource can qualify the model as Certified after organizer verification. A model is marked Open Source only after both its public code repository and public model weights are verified. Resource URLs may use any public HTTP/HTTPS host.': '注册时可以选填代码、模型权重和论文。任意一项有效的公开模型资源经主办方核验后，模型即可获得“已认证”标识。只有公开代码仓库与公开模型权重均通过核验后，模型才会标记为“已开源”。资源地址可使用任意公开可访问的 HTTP/HTTPS 网站。',
     'Registration type': '注册类型', 'New Account': '新账号', 'Same Team, New Model': '同队伍，新增模型',
     'Create a new account': '创建新账号', 'Same team, new model': '同队伍，新增模型',

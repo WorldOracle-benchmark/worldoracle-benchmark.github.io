@@ -64,17 +64,6 @@
     if (name === 'supplemental' && String(value || '').length > 4000) {
       return 'Review notes must be 4,000 characters or fewer.';
     }
-    if (name === 'logo') {
-      const file = options.file;
-      const maximum = Number(options.maxBytes) || 1048576;
-      if (!file) return 'Upload an organization logo in PNG, JPEG, or WebP format.';
-      if (!file.size) return 'The organization logo file is empty.';
-      if (file.size > maximum) return 'The organization logo must be 1 MiB or smaller.';
-      const extension = String(file.name || '').toLowerCase().split('.').pop();
-      const acceptedExtension = ['png', 'jpg', 'jpeg', 'webp'].includes(extension);
-      const acceptedType = ['image/png', 'image/jpeg', 'image/webp'].includes(String(file.type || '').toLowerCase());
-      if (!acceptedExtension && !acceptedType) return 'Upload a PNG, JPEG, or WebP organization logo.';
-    }
     if (name === 'terms' && !options.checked) {
       return 'Confirm the registration terms to continue.';
     }
