@@ -35,6 +35,42 @@
     });
   };
 
+  const isValidPublicUrl = value => {
+    if (!value) return false;
+    try {
+      const url = new URL(value);
+      return (url.protocol === 'http:' || url.protocol === 'https:') && Boolean(url.hostname);
+    } catch (_) {
+      return false;
+    }
+  };
+
+  const setupResourceDependencies = resources => {
+    const form = resources.querySelector('[data-resource-form]');
+    const codeInput = form?.querySelector('input[name="github_url"]');
+    const weightsInput = form?.querySelector('input[name="huggingface_url"]');
+    const weightsField = weightsInput?.closest('label');
+    if (!form || !codeInput || !weightsInput || !weightsField) return;
+
+    const help = make('small', 'profile-resource-url-help', 'Enter a valid public HTTP/HTTPS Code Repository URL to reveal Model Weights.');
+    codeInput.insertAdjacentElement('afterend', help);
+    weightsField.classList.add('profile-dependent-field');
+
+    const update = () => {
+      const value = codeInput.value.trim();
+      const visible = isValidPublicUrl(value);
+      codeInput.setCustomValidity(value && !visible ? 'Enter a valid public HTTP/HTTPS URL.' : '');
+      weightsField.classList.toggle('is-visible', visible);
+      weightsField.setAttribute('aria-hidden', String(!visible));
+      weightsInput.disabled = !visible;
+      weightsInput.tabIndex = visible ? 0 : -1;
+      if (!visible) weightsInput.value = '';
+    };
+    codeInput.addEventListener('input', update);
+    codeInput.addEventListener('change', update);
+    update();
+  };
+
   const sidebarLink = (href, label, active = false) => {
     const link = make('a', active ? 'is-active' : '', label);
     link.href = href;
@@ -99,6 +135,7 @@
     const resourcesHeading = resources.querySelector('.page-heading');
     resourcesHeading?.classList.add('settings-section-heading');
     resources.querySelector('.summary')?.classList.add('settings-details');
+    setupResourceDependencies(resources);
 
     const security = make('section', 'settings-section settings-security');
     security.id = 'security';

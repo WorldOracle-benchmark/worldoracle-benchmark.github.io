@@ -850,6 +850,8 @@
     'Changing the password signs future requests with the new credential; your submission history remains unchanged.': '修改密码后，后续请求将使用新凭据；已有提交历史不会受到影响。',
     'Maintain the paper, code, and model-weight links associated with this registered model.': '管理与当前已登记模型关联的论文、代码与模型权重链接。',
     'Resource updates enter organizer review before certification and open-source labels change on the public leaderboard.': '公开资源更新需经主办方审核，审核通过后排行榜中的认证与开源标识才会更新。',
+    'Enter a valid public HTTP/HTTPS Code Repository URL to reveal Model Weights.': '填写有效的公开 HTTP/HTTPS 代码仓库地址后，模型权重字段才会显示。',
+    'Enter a valid public HTTP/HTTPS URL.': '请输入有效的公开 HTTP/HTTPS 地址。',
     'Registration Review': '注册审核',
     'Every version remains bound to this account and model for audit.': '每个版本都会绑定当前账号与模型，并保留用于审计。',
     'Unavailable': '不可用',

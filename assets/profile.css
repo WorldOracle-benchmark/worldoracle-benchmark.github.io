@@ -236,6 +236,46 @@
 .resource-update-panel .page-heading h2{margin:0 0 7px;font-size:22px}
 .resource-update-panel .page-heading .muted{margin:0;font-size:12px;line-height:1.75}
 .resource-update-panel .summary{margin-top:0}
+.resource-update-panel [data-resource-toggle]{
+  margin-top:26px;
+}
+.profile-resource-url-help{
+  display:block;
+  margin-top:2px;
+  color:#7890a1;
+  font-size:10px;
+  font-weight:500;
+  line-height:1.55;
+}
+.resource-update-form .profile-dependent-field{
+  max-height:0;
+  margin:0!important;
+  opacity:0;
+  overflow:hidden;
+  pointer-events:none;
+  transform:translate3d(0,-10px,0);
+  visibility:hidden;
+  transition:
+    max-height .48s cubic-bezier(.2,.78,.24,1),
+    margin .42s cubic-bezier(.2,.78,.24,1),
+    opacity .26s ease,
+    transform .42s cubic-bezier(.2,.78,.24,1),
+    visibility 0s linear .48s;
+}
+.resource-update-form .profile-dependent-field.is-visible{
+  max-height:150px;
+  margin:18px 0!important;
+  opacity:1;
+  pointer-events:auto;
+  transform:translate3d(0,0,0);
+  visibility:visible;
+  transition:
+    max-height .48s cubic-bezier(.2,.78,.24,1),
+    margin .42s cubic-bezier(.2,.78,.24,1),
+    opacity .34s ease .08s,
+    transform .42s cubic-bezier(.2,.78,.24,1),
+    visibility 0s;
+}
 .settings-history{
   margin:0 0 60px;
   padding-top:4px;
@@ -271,4 +311,8 @@
   .settings-details dd{padding:0 0 14px}
   .settings-security-row .button{width:100%}
 }
-@media(prefers-reduced-motion:reduce){.settings-sidebar nav a{transition:none}}
+@media(prefers-reduced-motion:reduce){
+  .settings-sidebar nav a,
+  .resource-update-form .profile-dependent-field,
+  .resource-update-form .profile-dependent-field.is-visible{transition:none}
+}
