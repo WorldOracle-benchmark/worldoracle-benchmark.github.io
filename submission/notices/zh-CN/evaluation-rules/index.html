@@ -14,10 +14,11 @@
   <nav class="mobile-menu" data-mobile-menu><a href="../../../../">项目主页</a><a href="../../../../leaderboard.html">完整榜单</a><a class="is-active" href="../../../">提交指南</a><a href="../../../login/">登录</a></nav>
   <main id="main" class="shell"><div class="notice-hub">
     <aside class="notice-nav"><p class="eyebrow">参与者须知</p><a href="../account-terms/">账号使用条款</a><a href="../privacy/">隐私说明</a><a href="../submission-materials/">提交材料说明</a><a aria-current="page" href="./">评测与榜单规则</a><a href="../integrity-review/">评测完整性与复核</a></aside>
-    <article class="notice-document"><p class="eyebrow">评测</p><h1>评测与榜单规则</h1><p class="policy-meta"><span>版本 1.0</span><span>2026 年 10 月 14 日</span><a class="notice-language-switch" href="../../evaluation-rules/"><span>ENG</span><span aria-hidden="true">/</span><strong>中文</strong></a></p>
+    <article class="notice-document"><p class="eyebrow">评测</p><h1>评测与榜单规则</h1><p class="policy-meta"><span>版本 1.1</span><span>2026 年 10 月 15 日</span><a class="notice-language-switch" href="../../evaluation-rules/"><span>ENG</span><span aria-hidden="true">/</span><strong>中文</strong></a></p>
       <p>本规则概述正式提交的评测方式，以及模型公开最优成绩的更新方式。</p>
       <h2>赛道与提交额度</h2><p>每次正式提交对应一个 Track 和一个支持的平台。审核通过的账号在滚动七天窗口内，每个 Track 最多提交两次，所有 Track 合计最多提交六次。该共享窗口从账号第一次正式提交开始计算。</p>
       <h2>正式评测</h2><p>上传阶段的校验只检查结构和安全性，不代表已经产生评测结果。进入正式队列会消耗提交额度。用户可见阶段为 Draft、Submitted、Evaluating、Review 和 Accepted。</p>
+      <h2>VLM 评测器版本</h2><p>论文中报告的指标采用 GPT-5.5 作为 VLM 评测器。在线 Leaderboard 中展示的全部基线方法已在部署机上使用 GPT-5.6 Luna 重新评测，后续新提交的自动评测同样统一使用 GPT-5.6 Luna。该设置保证在线榜单条目之间采用一致的评测器；由于 VLM 版本不同，论文结果与在线榜单结果可能存在差异。</p>
       <h2>榜单成绩更新</h2><ul><li>单视角提交只有在最终 Single-View Score 高于该模型当前最优成绩时，才会更新榜单。</li><li>三视角提交只根据最终 Multi-View Score 是否更高决定是否更新榜单。</li><li>仅某一个组成指标提高，不会替换当前榜单结果。</li></ul>
       <p class="policy-note">评测服务的实际校验结果及 Submission Guide 中公布的提交包规则，是提交准入和评分的参考依据。</p>
       <div class="actions"><a class="button" href="../../../">查看提交指南</a><a class="button" href="../../../../leaderboard.html">查看榜单</a></div>
