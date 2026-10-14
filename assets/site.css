@@ -3884,3 +3884,28 @@ body.full-leaderboard-page #long-horizon .board-table {
     overflow-wrap: anywhere;
   }
 }
+
+/* Leaderboard masthead v45 — match RoboDojo's editorial title typeface and
+   center the metric switch after removing the redundant preview label. */
+.full-leaderboard-page .leaderboard-masthead {
+  --robodojo-news-font: "Google Sans Flex", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+.full-leaderboard-page .leaderboard-news h1 {
+  font-family: var(--robodojo-news-font);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 30px;
+  letter-spacing: -.01em;
+}
+.full-leaderboard-page .leaderboard-news-grid[data-leaderboard-highlights] .leaderboard-highlights-heading {
+  padding-inline: 20px;
+  justify-content: center;
+}
+.full-leaderboard-page .leaderboard-news-grid[data-leaderboard-highlights] .leaderboard-highlight-metric {
+  margin-inline: auto;
+}
+.full-leaderboard-page .leaderboard-news-grid[data-leaderboard-highlights] .leaderboard-highlight-metric button {
+  font-family: var(--robodojo-news-font);
+  font-weight: 700;
+  letter-spacing: -.01em;
+}
