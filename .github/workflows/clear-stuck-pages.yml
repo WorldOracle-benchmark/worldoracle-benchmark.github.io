@@ -1,4 +1,4 @@
-name: Clear stuck Pages deployment
+name: Clear stuck Pages deployment record
 
 on:
   push:
@@ -7,25 +7,42 @@ on:
 
 permissions:
   contents: read
-  pages: write
+  deployments: write
 
 jobs:
   cancel:
     runs-on: ubuntu-latest
     steps:
-      - name: Cancel stale Pages deployment
+      - name: Mark stale deployment inactive
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          response_code="$(curl -sS -o /tmp/pages-cancel-response -w '%{http_code}' \
+          response_code="$(curl -sS -o /tmp/deployment-status-response -w '%{http_code}' \
             -X POST \
             -H 'Accept: application/vnd.github+json' \
             -H "Authorization: Bearer ${GH_TOKEN}" \
             -H 'X-GitHub-Api-Version: 2022-11-28' \
-            'https://api.github.com/repos/WorldOracle-benchmark/worldoracle-benchmark.github.io/pages/deployments/c83716cb694a8d3c511e6141eed988d123359b0a/cancel')"
-          if [ "${response_code}" != "204" ]; then
-            echo "Cancel request returned HTTP ${response_code}."
-            cat /tmp/pages-cancel-response
+            -d '{"state":"inactive","description":"Clear stale Pages deployment record"}' \
+            'https://api.github.com/repos/WorldOracle-benchmark/worldoracle-benchmark.github.io/deployments/7070850937/statuses')"
+          if [ "${response_code}" != "201" ]; then
+            echo "Status request returned HTTP ${response_code}."
+            cat /tmp/deployment-status-response
             exit 1
           fi
-          echo 'Stale Pages deployment canceled.'
+          echo 'Stale deployment marked inactive.'
+      - name: Delete stale deployment record
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          response_code="$(curl -sS -o /tmp/deployment-delete-response -w '%{http_code}' \
+            -X DELETE \
+            -H 'Accept: application/vnd.github+json' \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H 'X-GitHub-Api-Version: 2022-11-28' \
+            'https://api.github.com/repos/WorldOracle-benchmark/worldoracle-benchmark.github.io/deployments/7070850937')"
+          if [ "${response_code}" != "204" ]; then
+            echo "Delete request returned HTTP ${response_code}."
+            cat /tmp/deployment-delete-response
+            exit 1
+          fi
+          echo 'Stale deployment record deleted.'
