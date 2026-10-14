@@ -19,10 +19,10 @@
     button.disabled = value; button.textContent = value ? label : button.dataset.label;
   }
   async function loadAccount() {
-    const {email, team, models, can_submit, submission_reason, quota, must_change_password} = await api.request('/api/v1/account');
+    const {email, team, models, can_submit, submission_reason, quota, must_change_password, resources, resource_update} = await api.request('/api/v1/account');
     document.querySelectorAll('[data-account-email]').forEach(node => { node.textContent = email; });
     if (must_change_password && page !== 'change-password') location.replace(new URL('../change-password/', location.href));
-    return {email, team, models, can_submit, submission_reason, quota};
+    return {email, team, models, can_submit, submission_reason, quota, resources, resource_update};
   }
   document.querySelectorAll('[data-logout]').forEach(button => button.addEventListener('click', api.logout));
 
@@ -133,7 +133,22 @@
 
   async function profile() {
     if (!api.requireSession()) return; const account=await loadAccount();
-    $('[data-profile]').innerHTML=`<div class="page-heading"><div><p class="eyebrow">Submission Account</p><h1>${escape(account.team?.team_name||'Registration Pending')}</h1><p class="muted">${escape(account.email)}</p></div><a class="button" href="../change-password/">Change Password</a></div><section class="panel team-summary"><h2>Registered Model</h2><dl class="summary"><dt>Model</dt><dd>${escape(account.team?.model_name||'Pending')}</dd><dt>Organization</dt><dd>${escape(account.team?.organization||'Pending')}</dd><dt>Status</dt><dd>${escape(account.team?.team_status||'pending')}</dd></dl></section>`;
+    const resources=account.resources||{github_url:'',huggingface_url:'',paper_url:'',supplemental:''};
+    const update=account.resource_update;
+    const pending=update?.status==='pending';
+    const rejected=update?.status==='rejected';
+    const root=$('[data-profile]');
+    root.innerHTML=`<div class="page-heading"><div><p class="eyebrow">Submission Account</p><h1>${escape(account.team?.team_name||'Registration Pending')}</h1><p class="muted">${escape(account.email)}</p></div><a class="button" href="../change-password/">Change Password</a></div><section class="panel team-summary"><h2>Registered Model</h2><dl class="summary"><dt>Model</dt><dd>${escape(account.team?.model_name||'Pending')}</dd><dt>Organization</dt><dd>${escape(account.team?.organization||'Pending')}</dd><dt>Status</dt><dd>${escape(account.team?.team_status||'pending')}</dd></dl></section><section class="panel resource-update-panel"><div class="page-heading"><div><p class="eyebrow">Organizer-reviewed</p><h2>Public Model Resources</h2><p class="muted small">Request changes to Paper, Code, or Weights. Existing public links remain unchanged until approval.</p></div>${update?`<span class="badge ${escape(update.status)}">Latest: ${escape(update.status)}</span>`:''}</div><dl class="summary"><dt>Code</dt><dd>${escape(resources.github_url||'Not published')}</dd><dt>Weights</dt><dd>${escape(resources.huggingface_url||'Not published')}</dd><dt>Paper</dt><dd>${escape(resources.paper_url||'Not published')}</dd></dl>${pending?`<div class="callout"><strong>Update #${escape(update.id)} is awaiting organizer review.</strong><br>You can submit another change after this request is approved or rejected.</div>`:`${rejected?`<div class="notice error"><strong>Previous request rejected:</strong> ${escape(update.review_reason||'Contact the organizers for details.')}</div>`:''}<button class="button primary" type="button" data-resource-toggle>Request Public Resource Update →</button><form class="resource-update-form" data-resource-form hidden><label>Code Repository <span class="optional-label">Optional</span><input type="url" name="github_url" maxlength="500" value="${escape(resources.github_url)}"></label><label>Model Weights <span class="optional-label">Optional</span><input type="url" name="huggingface_url" maxlength="500" value="${escape(resources.huggingface_url)}"></label><label>Paper / Technical Report <span class="optional-label">Optional</span><input type="url" name="paper_url" maxlength="500" value="${escape(resources.paper_url)}"></label><label>Review Notes <span class="optional-label">Optional · private</span><textarea name="supplemental" maxlength="4000">${escape(resources.supplemental)}</textarea></label><p class="notice error" data-message hidden></p><div class="actions"><button class="button primary" type="submit">Submit Update for Review</button><button class="button" type="button" data-resource-cancel>Cancel</button></div></form>`}</section>`;
+    const toggle=$('[data-resource-toggle]',root), form=$('[data-resource-form]',root);
+    toggle?.addEventListener('click',()=>{toggle.hidden=true;form.hidden=false;form.querySelector('input')?.focus();});
+    $('[data-resource-cancel]',root)?.addEventListener('click',()=>{form.hidden=true;toggle.hidden=false;message('',false,form);});
+    form?.addEventListener('submit',async event=>{
+      event.preventDefault(); message('',false,form); busy(form,true,'Submitting…');
+      try {
+        const result=await api.request('/api/v1/account/resource-update',{method:'POST',body:{github_url:form.github_url.value,huggingface_url:form.huggingface_url.value,paper_url:form.paper_url.value,supplemental:form.supplemental.value}});
+        alert(window.WorldOracleI18n?.localize(result.message)||result.message); location.reload();
+      } catch(error) { message(error.message,true,form); busy(form,false); }
+    });
   }
 
   async function changePassword() {
