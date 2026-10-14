@@ -7,7 +7,7 @@
   const escape = value => String(value ?? '').replace(/[&<>"']/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character]));
   const tracks = {main:'Main Track', policy:'Policy Track', long_horizon:'Long-Horizon Track'};
   const platforms = {agibot_g2:'AgiBot G2', yam:'YAM', human_hands:'Human Hands'};
-  const statuses = {draft:'Draft', submitted:'Submitted', under_review:'Under Review', needs_changes:'Needs Changes', accepted:'Accepted', rejected:'Rejected', withdrawn:'Withdrawn'};
+  const statuses = {draft:'Draft', submitted:'Submitted', under_review:'Under Review', needs_changes:'Needs Changes', accepted:'Accepted', finished:'Finished', rejected:'Rejected', withdrawn:'Withdrawn'};
   function message(text, error = false, root = document) {
     const node = $('[data-message]', root); if (!node) return;
     node.textContent = text || ''; node.hidden = !text; node.classList.toggle('error', error);
@@ -19,10 +19,10 @@
     button.disabled = value; button.textContent = value ? label : button.dataset.label;
   }
   async function loadAccount() {
-    const {email, team, models, can_submit, submission_reason, quota, must_change_password, resources, resource_update} = await api.request('/api/v1/account');
+    const {email, team, models, can_submit, submission_reason, quota, must_change_password, resources, resource_update, account_type} = await api.request('/api/v1/account');
     document.querySelectorAll('[data-account-email]').forEach(node => { node.textContent = email; });
     if (must_change_password && page !== 'change-password') location.replace(new URL('../change-password/', location.href));
-    return {email, team, models, can_submit, submission_reason, quota, resources, resource_update};
+    return {email, team, models, can_submit, submission_reason, quota, resources, resource_update, account_type};
   }
   document.querySelectorAll('[data-logout]').forEach(button => button.addEventListener('click', api.logout));
 
@@ -44,23 +44,33 @@
 
   async function dashboard() {
     if (!api.requireSession()) return;
-    const [account, result] = await Promise.all([loadAccount(), api.request('/api/v1/submissions')]);
+    const [account, initial] = await Promise.all([loadAccount(), api.request('/api/v1/submissions')]);
     $('[data-team]').textContent = account.team?.team_name || 'Registration Pending';
     $('[data-model]').textContent = account.team?.model_name || account.email;
     const note = $('[data-account-state]');
-    note.textContent = account.can_submit ? "Each weekly cycle starts from this account's first formal submission. Every Track receives 2 submissions, with 6 total across all Tracks." : account.submission_reason;
+    note.textContent = account.can_submit
+      ? (account.account_type === 'internal'
+          ? 'Internal account · Evaluations use idle capacity, stay behind all regular participants, and never update the public leaderboard. Up to 3 active submissions are allowed.'
+          : "Each weekly cycle starts from this account's first formal submission. Every Track receives 2 submissions, with 6 total across all Tracks.")
+      : account.submission_reason;
     const quota = $('[data-quota-overview]');
     if (quota && account.quota) {
       const limits = account.quota;
-      const reset = limits.resets_at
-        ? new Intl.DateTimeFormat(undefined, {dateStyle:'medium', timeStyle:'short'}).format(new Date(limits.resets_at * 1000))
-        : 'The first formal submission starts the seven-day cycle.';
-      $('[data-quota-reset]', quota).textContent = limits.resets_at ? `Resets ${reset}` : reset;
-      Object.entries(limits.remaining_tracks || {}).forEach(([key, value]) => {
-        const node = quota.querySelector(`[data-quota-track="${key}"]`);
-        if (node) node.textContent = `${value} / ${limits.track_limit}`;
-      });
-      $('[data-quota-total]', quota).textContent = `${limits.remaining_total} / ${limits.total_limit}`;
+      if (limits.unlimited) {
+        $('[data-quota-reset]', quota).textContent = `No weekly limit · maximum ${limits.active_limit || 3} active submissions`;
+        quota.querySelectorAll('[data-quota-track]').forEach(node => { node.textContent = 'Unlimited'; });
+        $('[data-quota-total]', quota).textContent = '3 active max';
+      } else {
+        const reset = limits.resets_at
+          ? new Intl.DateTimeFormat(undefined, {dateStyle:'medium', timeStyle:'short'}).format(new Date(limits.resets_at * 1000))
+          : 'The first formal submission starts the seven-day cycle.';
+        $('[data-quota-reset]', quota).textContent = limits.resets_at ? `Resets ${reset}` : reset;
+        Object.entries(limits.remaining_tracks || {}).forEach(([key, value]) => {
+          const node = quota.querySelector(`[data-quota-track="${key}"]`);
+          if (node) node.textContent = `${value} / ${limits.track_limit}`;
+        });
+        $('[data-quota-total]', quota).textContent = `${limits.remaining_total} / ${limits.total_limit}`;
+      }
       quota.hidden = false;
     }
     const create = $('[data-new-submission]'); create.hidden = !account.can_submit;
@@ -70,23 +80,39 @@
       catch (error) { message(error.message, true); create.disabled = false; }
     });
     const list = $('[data-submission-list]');
-    if (!result.submissions.length) { list.innerHTML = '<div class="empty"><span class="empty-symbol">↗</span><h2>Your First Submission Starts Here.</h2><p>Create a draft and save your progress one step at a time.</p></div>'; return; }
-    list.innerHTML = result.submissions.map(item => {
-      const meta = item.metadata;
-      const editable = ['draft','needs_changes'].includes(item.status);
-      const encodedId = encodeURIComponent(item.id);
-      const href = editable ? `../edit/?id=${encodedId}&step=1` : `../view/?id=${encodedId}`;
-      const current = item.current_stage || {key:item.status, label:statuses[item.status] || item.status, progress:null};
-      const progress = current.key === 'evaluating'
-        ? `<progress max="100" value="${Number(current.progress) || 0}" aria-label="Overall evaluation progress">${Number(current.progress) || 0}%</progress><small>${Number(current.progress) || 0}%</small>`
-        : '';
-      return `<article class="submission-item"><div><span class="badge ${escape(item.status)}">${escape(statuses[item.status] || item.status)}</span><h2><a href="${href}">${escape(meta.model_name || 'Untitled Draft')}</a></h2><p class="muted">${escape(tracks[meta.benchmark_track] || 'Track not selected')} · ${escape(platforms[meta.embodiment] || 'Platform not selected')}</p><code>${escape(item.id.slice(0,8))}</code></div><div class="submission-actions"><a class="button" href="${href}">${editable ? 'Continue Draft' : 'View Submission'} →</a>${item.status === 'draft' ? `<button type="button" data-delete="${escape(item.id)}">Delete Draft</button>` : ''}<div class="submission-result"><span>Current Stage</span><strong>${escape(current.label)}</strong>${progress}</div></div></article>`;
-    }).join('');
-    list.querySelectorAll('[data-delete]').forEach(button => button.addEventListener('click', async () => {
-      if (!confirm('Delete this draft? Its audit record and uploaded materials may be retained privately.')) return;
-      try { await api.request(`/api/v1/submissions/${encodeURIComponent(button.dataset.delete)}`, {method:'DELETE', body:{}}); button.closest('.submission-item').remove(); }
-      catch (error) { message(error.message, true); }
-    }));
+    let submissions = initial.submissions, sortKey = 'created';
+    const submittedAt = item => item.submitted_at || item.created;
+    const number = value => value == null ? '—' : Number(value).toFixed(2);
+    const sortRows = rows => [...rows].sort((a,b) => {
+      if (sortKey === 'single' || sortKey === 'multi') {
+        const key = sortKey === 'single' ? 'single_view' : 'multi_view';
+        const left = a.summary_scores?.[key], right = b.summary_scores?.[key];
+        if (left == null && right == null) return submittedAt(b) - submittedAt(a);
+        if (left == null) return 1; if (right == null) return -1;
+        return right - left || submittedAt(b) - submittedAt(a);
+      }
+      return submittedAt(b) - submittedAt(a);
+    });
+    const render = () => {
+      if (!submissions.length) { list.innerHTML = '<div class="empty"><span class="empty-symbol">↗</span><h2>Your First Submission Starts Here.</h2><p>Create a draft and save your progress one step at a time. Each user may keep up to three drafts.</p></div>'; return; }
+      const rows = sortRows(submissions).map(item => {
+        const meta=item.metadata, editable=['draft','needs_changes'].includes(item.status), encodedId=encodeURIComponent(item.id);
+        const href=editable?`../edit/?id=${encodedId}&step=1`:`../view/?id=${encodedId}`;
+        const current=item.current_stage||{key:item.status,label:statuses[item.status]||item.status,progress:null};
+        const progress=current.key==='evaluating'?`<progress max="100" value="${Number(current.progress)||0}" aria-label="Overall evaluation progress"></progress><small>${Number(current.progress)||0}%</small>`:'';
+        const queue=current.key==='submitted'&&item.queue_ahead!=null?`<strong>${Number(item.queue_ahead)}</strong><small>${Number(item.queue_ahead)===1?'team':'teams'} ahead</small>`:'—';
+        const submitted=new Intl.DateTimeFormat(undefined,{dateStyle:'medium',timeStyle:'short'}).format(new Date(submittedAt(item)*1000));
+        return `<tr class="submission-sheet-row" tabindex="0" data-href="${href}"><td><time>${escape(submitted)}</time><code>${escape(item.id.slice(0,8))}</code></td><td>${escape(tracks[meta.benchmark_track]||'Not selected')}</td><td>${escape(platforms[meta.embodiment]||'Not selected')}</td><td class="score-cell">${item.version?`V${escape(item.version)}`:'—'}</td><td><span class="badge ${escape(current.key)}">${escape(current.label)}</span>${progress}</td><td class="queue-cell">${queue}</td><td class="score-cell">${number(item.summary_scores?.single_view)}</td><td class="score-cell">${number(item.summary_scores?.multi_view)}</td><td>${item.status==='draft'?`<button class="table-action danger" type="button" data-delete="${escape(item.id)}">Delete</button>`:`<a class="table-action" href="${href}">Details →</a>`}</td></tr>`;
+      }).join('');
+      list.innerHTML=`<div class="submission-sheet-wrap"><table class="submission-sheet"><thead><tr><th><button type="button" data-sort="created" aria-sort="${sortKey==='created'?'descending':'none'}">Submitted ${sortKey==='created'?'↓':''}</button></th><th>Track</th><th>Platform</th><th>Version</th><th>Stage</th><th>Queue</th><th><button type="button" data-sort="single" aria-sort="${sortKey==='single'?'descending':'none'}">SV Score ${sortKey==='single'?'↓':''}</button></th><th><button type="button" data-sort="multi" aria-sort="${sortKey==='multi'?'descending':'none'}">MV Score ${sortKey==='multi'?'↓':''}</button></th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`;
+      list.querySelectorAll('[data-sort]').forEach(button=>button.addEventListener('click',()=>{sortKey=button.dataset.sort;render();}));
+      list.querySelectorAll('[data-href]').forEach(row=>{row.addEventListener('click',event=>{if(!event.target.closest('a,button'))location.assign(row.dataset.href);});row.addEventListener('keydown',event=>{if(event.key==='Enter')location.assign(row.dataset.href);});});
+      list.querySelectorAll('[data-delete]').forEach(button=>button.addEventListener('click',async event=>{event.stopPropagation();if(!confirm('Delete this draft? Its audit record and uploaded materials may be retained privately.'))return;try{await api.request(`/api/v1/submissions/${encodeURIComponent(button.dataset.delete)}`,{method:'DELETE',body:{}});submissions=submissions.filter(item=>item.id!==button.dataset.delete);render();}catch(error){message(error.message,true);}}));
+    };
+    render();
+    if (submissions.some(item=>item.current_stage?.key==='submitted')) setInterval(async()=>{
+      try { submissions=(await api.request('/api/v1/submissions')).submissions;render(); } catch (_) {}
+    },10000);
   }
 
   async function editor() {
@@ -126,7 +152,13 @@
     const sid = new URLSearchParams(location.search).get('id'); if (!sid) { location.replace('../dashboard/'); return; }
     const encodedId = encodeURIComponent(sid);
     const {submission:item}=await api.request(`/api/v1/submissions/${encodedId}`), meta=item.metadata, root=$('[data-detail]');
-    root.innerHTML=`<div class="page-heading"><div><p class="eyebrow">Submission ${escape(sid.slice(0,8))}</p><h1>${escape(meta.model_name||'Untitled Draft')}</h1><span class="badge ${escape(item.status)}">${escape(statuses[item.status]||item.status)}</span></div><a class="text-link" href="../dashboard/">← My Submissions</a></div><div class="wizard-layout"><div class="panel"><h2>Submission Details</h2><dl class="summary"><dt>Track</dt><dd>${escape(tracks[meta.benchmark_track]||'Not set')}</dd><dt>Platform</dt><dd>${escape(platforms[meta.embodiment]||'Not set')}</dd><dt>Package</dt><dd>${escape(item.package_name||'Not uploaded')}</dd>${item.package_hash?`<dt>SHA-256</dt><dd><code>${escape(item.package_hash)}</code></dd>`:''}</dl><h3>Submission Notes</h3><p class="user-text">${escape(meta.notes||'No notes provided.')}</p><div class="actions">${['draft','needs_changes'].includes(item.status)?`<a class="button primary" href="../edit/?id=${encodedId}&step=1">Edit Submission →</a>`:''}${item.has_package?'<button class="button" type="button" data-download>Download Package</button>':''}</div>${!['draft','accepted','rejected','withdrawn'].includes(item.status)?'<button class="text-button danger" type="button" data-withdraw>Withdraw Submission</button>':''}<p class="notice error" data-message hidden></p></div><aside class="panel"><h2>Submission History</h2><ol class="timeline">${item.events.map(event=>`<li><span class="badge ${escape(event.status)}">${escape(statuses[event.status]||event.status)}</span><p>${escape(event.note)}</p></li>`).join('')}</ol></aside></div>`;
+    const current=item.current_stage||{key:item.status,label:statuses[item.status]||item.status};
+    const final=['accepted','finished'].includes(current.key), summary=item.summary_scores||{}, scores=item.run?.scores||{};
+    const score=value=>value==null?'—':Number(value).toFixed(2);
+    const queue=item.queue_ahead==null?'—':`${Number(item.queue_ahead)} ${Number(item.queue_ahead)===1?'team':'teams'} ahead`;
+    const timeline=(item.timeline||item.events||[]).map(event=>{const date=new Intl.DateTimeFormat(undefined,{dateStyle:'medium',timeStyle:'medium'}).format(new Date(event.created*1000));return `<li><span class="badge ${escape(event.stage||event.status)}">${escape(event.label||statuses[event.status]||event.status)}</span><time>${escape(date)}</time><p>${escape(event.note||'')}</p></li>`;}).join('');
+    const result=final?`<section class="result-score-panel"><h3>Evaluation Results</h3><div class="result-score-totals"><div><span>Single-View Score</span><strong>${score(summary.single_view)}</strong></div><div><span>Multi-View Score</span><strong>${score(summary.multi_view)}</strong></div></div><dl class="summary"><dt>Physical Correctness</dt><dd>${score(scores.physical)}</dd><dt>Interaction Region Fidelity</dt><dd>${score(scores.key_area)}</dd><dt>Spatial Consistency</dt><dd>${score(scores.spatial)}</dd><dt>Multi-View Consistency</dt><dd>${score(scores.multiview)}</dd></dl></section>`:'';
+    root.innerHTML=`<div class="page-heading"><div><p class="eyebrow">Submission ${escape(sid.slice(0,8))}</p><h1>${escape(meta.model_name||'Untitled Draft')}</h1><span class="badge ${escape(current.key)}">${escape(current.label)}</span></div><a class="text-link" href="../dashboard/">← My Submissions</a></div><div class="wizard-layout"><div class="panel"><h2>Submission Details</h2><dl class="summary"><dt>Track</dt><dd>${escape(tracks[meta.benchmark_track]||'Not set')}</dd><dt>Platform</dt><dd>${escape(platforms[meta.embodiment]||'Not set')}</dd><dt>Version</dt><dd>${item.version?`V${escape(item.version)}`:'Assigned after Accepted / Finished'}</dd><dt>Current Stage</dt><dd>${escape(current.label)}</dd>${current.key==='submitted'?`<dt>Live Queue</dt><dd>${escape(queue)}</dd>`:''}<dt>Package</dt><dd>${escape(item.package_name||'Not uploaded')}</dd>${item.package_hash?`<dt>SHA-256</dt><dd><code>${escape(item.package_hash)}</code></dd>`:''}</dl>${result}<h3>Submission Notes</h3><p class="user-text">${escape(meta.notes||'No notes provided.')}</p><div class="actions">${['draft','needs_changes'].includes(item.status)?`<a class="button primary" href="../edit/?id=${encodedId}&step=1">Edit Submission →</a>`:''}${item.has_package?'<button class="button" type="button" data-download>Download Package</button>':''}</div>${!['draft','accepted','finished','rejected','withdrawn'].includes(item.status)?'<button class="text-button danger" type="button" data-withdraw>Withdraw Submission</button>':''}<p class="notice error" data-message hidden></p></div><aside class="panel"><h2>Stage Timeline</h2><ol class="timeline">${timeline}</ol></aside></div>`;
     $('[data-download]',root)?.addEventListener('click',async()=>{try{const response=await api.request(`/api/v1/submissions/${encodedId}/download`,{raw:true});const blob=await response.blob(),url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=`worldoracle-${sid.slice(0,8)}.zip`;link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}catch(error){message(error.message,true,root);}});
     $('[data-withdraw]',root)?.addEventListener('click',async()=>{if(!confirm('Withdraw this submission?'))return;try{await api.request(`/api/v1/submissions/${encodedId}/withdraw`,{method:'POST',body:{}});location.reload();}catch(error){message(error.message,true,root);}});
   }
