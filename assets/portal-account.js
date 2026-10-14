@@ -18,6 +18,108 @@
     if (!button.dataset.label) button.dataset.label = button.textContent;
     button.disabled = value; button.textContent = value ? label : button.dataset.label;
   }
+  function enhancePlatformSelect(select) {
+    if (!select || select.dataset.platformEnhanced === 'true') return null;
+    select.dataset.platformEnhanced = 'true';
+    select.classList.add('platform-select-native');
+    select.setAttribute('aria-hidden','true');
+    select.tabIndex = -1;
+
+    const control = document.createElement('div');
+    control.className = 'platform-select-control';
+    const trigger = document.createElement('button');
+    trigger.type = 'button';
+    trigger.className = 'platform-select-trigger';
+    trigger.setAttribute('aria-haspopup','listbox');
+    trigger.setAttribute('aria-expanded','false');
+    const value = document.createElement('span');
+    value.className = 'platform-select-value';
+    const chevron = document.createElement('span');
+    chevron.className = 'platform-select-chevron';
+    chevron.setAttribute('aria-hidden','true');
+    trigger.append(value,chevron);
+
+    const menu = document.createElement('div');
+    menu.className = 'platform-select-menu';
+    menu.setAttribute('role','listbox');
+    menu.setAttribute('aria-label','Platform');
+    menu.hidden = true;
+    const items = [...select.options].map(option => {
+      const item = document.createElement('button');
+      item.type = 'button';
+      item.className = 'platform-select-option';
+      item.dataset.value = option.value;
+      item.setAttribute('role','option');
+      const mark = document.createElement('span');
+      mark.className = 'platform-select-mark';
+      mark.setAttribute('aria-hidden','true');
+      const label = document.createElement('span');
+      label.textContent = option.textContent;
+      item.append(mark,label);
+      menu.append(item);
+      return item;
+    });
+    control.append(trigger,menu);
+    select.insertAdjacentElement('afterend',control);
+
+    const availableItems = () => items.filter(item => !item.disabled && !item.hidden);
+    const sync = () => {
+      const selected = select.options[select.selectedIndex];
+      value.textContent = selected?.textContent || 'Select a platform';
+      trigger.disabled = select.disabled;
+      items.forEach((item,index) => {
+        const option = select.options[index];
+        const active = index === select.selectedIndex;
+        item.disabled = Boolean(option.disabled);
+        item.hidden = Boolean(option.hidden);
+        item.classList.toggle('is-selected',active);
+        item.setAttribute('aria-selected',String(active));
+        item.setAttribute('aria-disabled',String(Boolean(option.disabled)));
+      });
+    };
+    const close = (restoreFocus=false) => {
+      menu.hidden = true;
+      control.classList.remove('is-open');
+      trigger.setAttribute('aria-expanded','false');
+      if (restoreFocus) trigger.focus();
+    };
+    const open = (focusSelected=false) => {
+      if (trigger.disabled) return;
+      menu.hidden = false;
+      control.classList.add('is-open');
+      trigger.setAttribute('aria-expanded','true');
+      if (focusSelected) (items[select.selectedIndex]?.disabled ? availableItems()[0] : items[select.selectedIndex])?.focus();
+    };
+    const choose = item => {
+      if (!item || item.disabled || item.hidden) return;
+      select.value = item.dataset.value;
+      select.dispatchEvent(new Event('change',{bubbles:true}));
+      sync(); close(true);
+    };
+    trigger.addEventListener('click',()=>menu.hidden?open(false):close(false));
+    trigger.addEventListener('keydown',event=>{
+      if (!['ArrowDown','ArrowUp'].includes(event.key)) return;
+      event.preventDefault(); open(true);
+    });
+    items.forEach(item=>{
+      item.addEventListener('click',()=>choose(item));
+      item.addEventListener('keydown',event=>{
+        if (event.key === 'Escape') { event.preventDefault(); close(true); return; }
+        if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); choose(item); return; }
+        if (!['ArrowDown','ArrowUp','Home','End'].includes(event.key)) return;
+        event.preventDefault();
+        const available = availableItems();
+        const index = available.indexOf(item);
+        const next = event.key === 'Home' ? 0 : event.key === 'End' ? available.length - 1 :
+          (index + (event.key === 'ArrowDown' ? 1 : -1) + available.length) % available.length;
+        available[next]?.focus();
+      });
+    });
+    select.addEventListener('change',sync);
+    document.addEventListener('pointerdown',event=>{ if (!control.contains(event.target)) close(false); });
+    sync();
+    return {sync,close};
+  }
   async function loadAccount() {
     const {email, team, models, can_submit, submission_reason, quota, must_change_password, resources, resource_update, account_type} = await api.request('/api/v1/account');
     document.querySelectorAll('[data-account-email]').forEach(node => { node.textContent = email; });
@@ -138,8 +240,8 @@
     const root = $('[data-editor]'), meta = item.metadata;
     if (step === 1) {
       root.innerHTML = `<h2>Model and Track</h2><p class="muted">This account is permanently bound to one organizer-approved model.</p><form data-step-form><fieldset class="track-choice"><legend>Choose Your Benchmark Track</legend>${Object.entries(tracks).map(([key,label],index)=>`<label class="track-option"><input type="radio" name="benchmark_track" value="${key}" ${meta.benchmark_track===key?'checked':''} required><span class="track-card-copy"><span class="track-number">Track ${index+1}</span><strong>${label}</strong></span></label>`).join('')}</fieldset><div class="field-grid"><div class="locked-field"><span>Registered Model</span><output>${escape(meta.model_name || 'Organizer approval required')}</output></div><label>Platform<select name="embodiment" required data-platform>${Object.entries(platforms).map(([key,label])=>`<option value="${key}" ${meta.embodiment===key?'selected':''}>${label}</option>`).join('')}</select></label></div><label>Submission Notes <small class="muted">Optional</small><textarea name="notes" rows="4" maxlength="4000">${escape(meta.notes || '')}</textarea></label><p class="notice error" data-message hidden></p><div class="form-actions"><button class="button primary" type="submit">Save and Continue →</button></div></form>`;
-      const form = $('[data-step-form]', root), platform = $('[data-platform]', root);
-      const sync = () => { const policy = form.benchmark_track.value === 'policy'; [...platform.options].forEach(option => option.disabled = policy && option.value !== 'agibot_g2'); if (policy) platform.value='agibot_g2'; };
+      const form = $('[data-step-form]', root), platform = $('[data-platform]', root), platformMenu = enhancePlatformSelect(platform);
+      const sync = () => { const policy = form.benchmark_track.value === 'policy'; [...platform.options].forEach(option => { option.disabled = policy && option.value !== 'agibot_g2'; option.hidden = option.disabled; }); if (policy) platform.value='agibot_g2'; platformMenu?.sync(); };
       form.addEventListener('change', sync); sync();
       form.addEventListener('submit', async event => { event.preventDefault(); busy(form,true); try { await api.request(`/api/v1/submissions/${encodeURIComponent(sid)}`, {method:'PATCH', body:{benchmark_track:form.benchmark_track.value, embodiment:platform.value, notes:form.notes.value}}); location.assign(`?id=${encodeURIComponent(sid)}&step=2`); } catch(error){message(error.message,true,root);} finally{busy(form,false);} });
     } else if (step === 2) {
