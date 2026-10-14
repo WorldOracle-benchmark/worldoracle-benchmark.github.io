@@ -5,7 +5,7 @@
   if (!api || !page) return;
   const $ = (selector, root = document) => root.querySelector(selector);
   const escape = value => String(value ?? '').replace(/[&<>"']/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character]));
-  const tracks = {main:'Main Track', policy:'Policy Track', long_horizon:'Long-Horizon Track'};
+  const tracks = {main:'WorldOracle-Core', policy:'WorldOracle-Policy', long_horizon:'WorldOracle-Long'};
   const platforms = {agibot_g2:'AgiBot G2', yam:'YAM', human_hands:'Human Hands'};
   const statuses = {draft:'Draft', submitted:'Submitted', under_review:'Under Review', needs_changes:'Needs Changes', accepted:'Accepted', finished:'Finished', rejected:'Rejected', withdrawn:'Withdrawn'};
   function message(text, error = false, root = document) {

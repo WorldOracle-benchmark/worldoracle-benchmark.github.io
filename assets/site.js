@@ -550,7 +550,7 @@ function initializeBoard(board, entries) {
   const layoutDemos=JSON.parse(document.getElementById('leaderboard-layout-demos')?.textContent || '[]');
   layoutDemos.forEach(row=>{if(!entries.some(e=>String(e.id)===row.id))entries.push(row);});
   const platforms = { agibot_g2: 'AgiBot G2', yam: 'YAM', human_hands: 'Human Hand' };
-  const regimes = { '30s': '30s', full: 'Long Horizon' };
+  const regimes = { '30s': 'WorldOracle-Core', full: 'WorldOracle-Long' };
   const fullLayout=Boolean(board.querySelector('[data-sort-metric]'));
   const hasContributor=Boolean(board.querySelector('.col-contributor'));
   const hasView=Boolean(board.querySelector('.col-view'));
@@ -591,7 +591,7 @@ function initializeBoard(board, entries) {
     const active = [...svg.querySelectorAll('[data-radar-series]')].find(g=>g.dataset.radarSeries===id);
     if (active) svg.append(active);
     const selectedModel=current.find(m=>String(m.id)===id)||null;
-    const trackName=regime==='full'?'Long-Horizon Track':'Main Track';
+    const trackName=regime==='full'?'WorldOracle-Long':'WorldOracle-Core';
     updateComparisonHeading(board,trackName,platforms[platform],selectedModel);
     updateModelPreview(board,selectedModel);
     board.querySelector('[data-board-status]').textContent = platforms[platform]+' · '+regimes[regime]+' · '+(selectedModel?'Highlighting '+selectedModel.model_name:'All models shown equally.');
@@ -753,7 +753,7 @@ function initializeBoard(board, entries) {
   render();
 }
 
-// Policy Track results use the same PSC / KIAF / ISA / MVAC score axes as the other Tracks.
+// WorldOracle-Policy results use the same PSC / KIAF / ISA / MVAC score axes as the other Tracks.
 function initializePolicy(models){
  const policyContainer=document.querySelector('[data-policy-charts]');
  if(!policyContainer)return;
@@ -820,7 +820,7 @@ function initializePolicy(models){
   const active=selected===null?null:groups[selected];
   if(active)svg.append(active);
   const selectedModel=selected===null?null:models[selected];
-  updateComparisonHeading(document.getElementById('policy-track'),'Policy Track','AgiBot G2',selectedModel);
+  updateComparisonHeading(document.getElementById('policy-track'),'WorldOracle-Policy','AgiBot G2',selectedModel);
   updateModelPreview(document.getElementById('policy-track'),selectedModel);
  }
  const certificationFilter=document.querySelector('[data-policy-certification-filter]');
@@ -867,7 +867,7 @@ function initializePolicy(models){
   });
   models.forEach((model,index)=>{groups[index].style.display=visible.includes(model)?'':'none';});
   selected=null;groups.forEach(group=>group.classList.remove('is-selected','is-muted'));
-  updateComparisonHeading(document.getElementById('policy-track'),'Policy Track','AgiBot G2',null);
+  updateComparisonHeading(document.getElementById('policy-track'),'WorldOracle-Policy','AgiBot G2',null);
   updateModelPreview(document.getElementById('policy-track'),null);
  }
  certificationFilter?.addEventListener('change',event=>{certification=event.target.value;renderPolicyRows();});
@@ -950,13 +950,13 @@ function initializeLeaderboardHighlights(entries){
  const nextButton=carousel.querySelector('[data-highlight-next]');
  if(!track)return;
  const configurations=[
-  ['30s','agibot_g2','Main Track','AgiBot G2','main'],
-  ['30s','yam','Main Track','YAM','main'],
-  ['30s','human_hands','Main Track','Human Hand','main'],
-  ['policy','agibot_g2','Policy Track','AgiBot G2','policy'],
-  ['full','agibot_g2','Long-Horizon Track','AgiBot G2','long'],
-  ['full','yam','Long-Horizon Track','YAM','long'],
-  ['full','human_hands','Long-Horizon Track','Human Hand','long']
+  ['30s','agibot_g2','WorldOracle-Core','AgiBot G2','main'],
+  ['30s','yam','WorldOracle-Core','YAM','main'],
+  ['30s','human_hands','WorldOracle-Core','Human Hand','main'],
+  ['policy','agibot_g2','WorldOracle-Policy','AgiBot G2','policy'],
+  ['full','agibot_g2','WorldOracle-Long','AgiBot G2','long'],
+  ['full','yam','WorldOracle-Long','YAM','long'],
+  ['full','human_hands','WorldOracle-Long','Human Hand','long']
  ];
  const make=(tag,className,text)=>{const node=document.createElement(tag);if(className)node.className=className;if(text!==undefined)node.textContent=text;return node;};
  let metric='single';

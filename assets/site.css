@@ -1702,7 +1702,7 @@ html.scroll-reveal-ready [data-scroll-reveal].is-revealed {
   .hero-layout:not(.full-board-layout) .board-table td{padding-right:3px;padding-left:3px}
 }
 
-/* Leaderboard consistency v14 — Main Track is the canonical table system for
+/* Leaderboard consistency v14 — WorldOracle-Core is the canonical table system for
    Policy and Long-Horizon. Remove every legacy column-width and rank-row leak. */
 .full-leaderboard-page .board-view{text-decoration:none!important;text-underline-offset:0!important}
 .full-leaderboard-page #leaderboard .board-table .col-rank,

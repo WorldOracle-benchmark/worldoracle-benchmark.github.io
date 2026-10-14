@@ -167,7 +167,7 @@ if (accountMenu) {
   });
 }
 
-// Policy Track is G2-only; retain the user's platform when switching back.
+// WorldOracle-Policy is G2-only; retain the user's platform when switching back.
 const platformSelect = document.querySelector('[data-platform-select]');
 if (platformSelect) {
   const choices = [...document.querySelectorAll('input[name="benchmark_track"]')];
@@ -185,8 +185,8 @@ if (platformSelect) {
     else if (policyActive) platformSelect.value = previousPlatform;
     policyActive = policy;
     document.querySelector('[data-track-help]').textContent = policy
-      ? 'Policy Track: upload complete prediction videos on policy-rollout actions. AgiBot G2 only; PO / KRO / IA / MVC where supported.'
-      : 'Upload prediction videos on recorded actions. PO / KRO / IA / MVC where supported; Main evaluates 30s, Long-Horizon evaluates full trajectories.';
+      ? 'WorldOracle-Policy: upload complete prediction videos on policy-rollout actions. AgiBot G2 only; PO / KRO / IA / MVC where supported.'
+      : 'Upload prediction videos on recorded actions. PO / KRO / IA / MVC where supported; WorldOracle-Core evaluates 30s, WorldOracle-Long evaluates full trajectories.';
   };
   choices.forEach(input => input.addEventListener('change', syncTrackPlatform));
   window.addEventListener('pageshow', syncTrackPlatform);
