@@ -80,10 +80,14 @@
       catch (error) { message(error.message, true); create.disabled = false; }
     });
     const list = $('[data-submission-list]');
-    let submissions = initial.submissions, sortKey = 'created';
+    let submissions = initial.submissions;
+    const trackOrder = ['main', 'policy', 'long_horizon'];
+    const sortKeys = {main:'created', policy:'created', long_horizon:'created'};
     const submittedAt = item => item.submitted_at || item.created;
     const number = value => value == null ? '—' : Number(value).toFixed(2);
-    const sortRows = rows => [...rows].sort((a,b) => {
+    const displayTrack = item => trackOrder.includes(item.metadata?.benchmark_track)
+      ? item.metadata.benchmark_track : 'main';
+    const sortRows = (rows, sortKey) => [...rows].sort((a,b) => {
       if (sortKey === 'single' || sortKey === 'multi') {
         const key = sortKey === 'single' ? 'single_view' : 'multi_view';
         const left = a.summary_scores?.[key], right = b.summary_scores?.[key];
@@ -93,19 +97,25 @@
       }
       return submittedAt(b) - submittedAt(a);
     });
-    const render = () => {
-      if (!submissions.length) { list.innerHTML = '<div class="empty"><span class="empty-symbol">↗</span><h2>Your First Submission Starts Here.</h2><p>Create a draft and save your progress one step at a time. Each user may keep up to three drafts.</p></div>'; return; }
-      const rows = sortRows(submissions).map(item => {
+    const renderTable = trackKey => {
+      const sortKey = sortKeys[trackKey];
+      const trackSubmissions = submissions.filter(item => displayTrack(item) === trackKey);
+      const rows = sortRows(trackSubmissions, sortKey).map(item => {
         const meta=item.metadata, editable=['draft','needs_changes'].includes(item.status), encodedId=encodeURIComponent(item.id);
         const href=editable?`../edit/?id=${encodedId}&step=1`:`../view/?id=${encodedId}`;
         const current=item.current_stage||{key:item.status,label:statuses[item.status]||item.status,progress:null};
         const progress=current.key==='evaluating'?`<progress max="100" value="${Number(current.progress)||0}" aria-label="Overall evaluation progress"></progress><small>${Number(current.progress)||0}%</small>`:'';
         const queue=current.key==='submitted'&&item.queue_ahead!=null?`<strong>${Number(item.queue_ahead)}</strong><small>${Number(item.queue_ahead)===1?'team':'teams'} ahead</small>`:'—';
         const submitted=new Intl.DateTimeFormat(undefined,{dateStyle:'medium',timeStyle:'short'}).format(new Date(submittedAt(item)*1000));
-        return `<tr class="submission-sheet-row" tabindex="0" data-href="${href}"><td><time>${escape(submitted)}</time><code>${escape(item.id.slice(0,8))}</code></td><td>${escape(tracks[meta.benchmark_track]||'Not selected')}</td><td>${escape(platforms[meta.embodiment]||'Not selected')}</td><td class="score-cell">${item.version?`V${escape(item.version)}`:'—'}</td><td><span class="badge ${escape(current.key)}">${escape(current.label)}</span>${progress}</td><td class="queue-cell">${queue}</td><td class="score-cell">${number(item.summary_scores?.single_view)}</td><td class="score-cell">${number(item.summary_scores?.multi_view)}</td><td>${item.status==='draft'?`<button class="table-action danger" type="button" data-delete="${escape(item.id)}">Delete</button>`:`<a class="table-action" href="${href}">Details →</a>`}</td></tr>`;
+        const platform = trackKey === 'policy' ? platforms.agibot_g2 : (platforms[meta.embodiment]||'Not selected');
+        return `<tr class="submission-sheet-row" tabindex="0" data-href="${href}"><td><time>${escape(submitted)}</time><code>${escape(item.id.slice(0,8))}</code></td><td>${escape(tracks[meta.benchmark_track]||'Not selected')}</td><td>${escape(platform)}</td><td class="score-cell">${item.version?`V${escape(item.version)}`:'—'}</td><td><span class="badge ${escape(current.key)}">${escape(current.label)}</span>${progress}</td><td class="queue-cell">${queue}</td><td class="score-cell">${number(item.summary_scores?.single_view)}</td><td class="score-cell">${number(item.summary_scores?.multi_view)}</td><td>${item.status==='draft'?`<button class="table-action danger" type="button" data-delete="${escape(item.id)}">Delete</button>`:`<a class="table-action" href="${href}">Details →</a>`}</td></tr>`;
       }).join('');
-      list.innerHTML=`<div class="submission-sheet-wrap"><table class="submission-sheet"><thead><tr><th><button type="button" data-sort="created" aria-sort="${sortKey==='created'?'descending':'none'}">Submitted ${sortKey==='created'?'↓':''}</button></th><th>Track</th><th>Platform</th><th>Version</th><th>Stage</th><th>Queue</th><th><button type="button" data-sort="single" aria-sort="${sortKey==='single'?'descending':'none'}">SV Score ${sortKey==='single'?'↓':''}</button></th><th><button type="button" data-sort="multi" aria-sort="${sortKey==='multi'?'descending':'none'}">MV Score ${sortKey==='multi'?'↓':''}</button></th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`;
-      list.querySelectorAll('[data-sort]').forEach(button=>button.addEventListener('click',()=>{sortKey=button.dataset.sort;render();}));
+      const body = rows || `<tr class="submission-sheet-empty-row"><td colspan="9">No submissions in this Track.</td></tr>`;
+      return `<div class="submission-sheet-wrap submission-track-sheet" data-submission-track="${trackKey}"><table class="submission-sheet"><thead><tr><th><button type="button" data-track="${trackKey}" data-sort="created" aria-sort="${sortKey==='created'?'descending':'none'}">Submitted ${sortKey==='created'?'↓':''}</button></th><th>Track</th><th>Platform</th><th>Version</th><th>Stage</th><th>Queue</th><th><button type="button" data-track="${trackKey}" data-sort="single" aria-sort="${sortKey==='single'?'descending':'none'}">SV Score ${sortKey==='single'?'↓':''}</button></th><th><button type="button" data-track="${trackKey}" data-sort="multi" aria-sort="${sortKey==='multi'?'descending':'none'}">MV Score ${sortKey==='multi'?'↓':''}</button></th><th></th></tr></thead><tbody>${body}</tbody></table></div>`;
+    };
+    const render = () => {
+      list.innerHTML=trackOrder.map(renderTable).join('');
+      list.querySelectorAll('[data-sort]').forEach(button=>button.addEventListener('click',()=>{sortKeys[button.dataset.track]=button.dataset.sort;render();}));
       list.querySelectorAll('[data-href]').forEach(row=>{row.addEventListener('click',event=>{if(!event.target.closest('a,button'))location.assign(row.dataset.href);});row.addEventListener('keydown',event=>{if(event.key==='Enter')location.assign(row.dataset.href);});});
       list.querySelectorAll('[data-delete]').forEach(button=>button.addEventListener('click',async event=>{event.stopPropagation();if(!confirm('Delete this draft? Its audit record and uploaded materials may be retained privately.'))return;try{await api.request(`/api/v1/submissions/${encodeURIComponent(button.dataset.delete)}`,{method:'DELETE',body:{}});submissions=submissions.filter(item=>item.id!==button.dataset.delete);render();}catch(error){message(error.message,true);}}));
     };
