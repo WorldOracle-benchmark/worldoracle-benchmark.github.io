@@ -178,8 +178,16 @@
       event.preventDefault(); message('',false,form); busy(form,true,'Submitting…');
       try {
         const result=await api.request('/api/v1/account/resource-update',{method:'POST',body:{github_url:form.github_url.value,huggingface_url:form.huggingface_url.value,paper_url:form.paper_url.value,supplemental:form.supplemental.value}});
-        alert(window.WorldOracleI18n?.localize(result.message)||result.message); location.reload();
-      } catch(error) { message(error.message,true,form); busy(form,false); }
+        const notice=window.WorldOracleI18n?.localize(result.message)||result.message;
+        if(window.WorldOracleProfileToast) window.WorldOracleProfileToast(notice,{type:'success',title:window.WorldOracleI18n?.localize('Update submitted')||'Update submitted'});
+        else message(notice,false,form);
+        window.setTimeout(()=>location.reload(),2800);
+      } catch(error) {
+        const notice=window.WorldOracleI18n?.localize(error.message)||error.message;
+        if(window.WorldOracleProfileToast) window.WorldOracleProfileToast(notice,{type:'error',title:window.WorldOracleI18n?.localize('Update not submitted')||'Update not submitted'});
+        else message(notice,true,form);
+        busy(form,false);
+      }
     });
   }
 

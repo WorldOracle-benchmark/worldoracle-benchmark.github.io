@@ -852,6 +852,8 @@
     'Resource updates enter organizer review before certification and open-source labels change on the public leaderboard.': '公开资源更新需经主办方审核，审核通过后排行榜中的认证与开源标识才会更新。',
     'Enter a valid public HTTP/HTTPS Code Repository URL to reveal Model Weights.': '填写有效的公开 HTTP/HTTPS 代码仓库地址后，模型权重字段才会显示。',
     'Enter a valid public HTTP/HTTPS URL.': '请输入有效的公开 HTTP/HTTPS 地址。',
+    'Update submitted': '更新已提交', 'Update not submitted': '更新提交失败',
+    'Dismiss notification': '关闭通知',
     'Registration Review': '注册审核',
     'Every version remains bound to this account and model for audit.': '每个版本都会绑定当前账号与模型，并保留用于审计。',
     'Unavailable': '不可用',

@@ -276,6 +276,72 @@
     transform .42s cubic-bezier(.2,.78,.24,1),
     visibility 0s;
 }
+.profile-toast-region{
+  position:fixed;
+  top:92px;
+  right:max(22px,calc((100vw - 1240px)/2 + 28px));
+  z-index:80;
+  display:grid;
+  width:min(390px,calc(100vw - 36px));
+  pointer-events:none;
+}
+.profile-toast{
+  position:relative;
+  display:grid;
+  grid-template-columns:34px minmax(0,1fr) 28px;
+  gap:12px;
+  align-items:start;
+  padding:16px 14px 16px 16px;
+  overflow:hidden;
+  border:1px solid #c9e1db;
+  border-radius:12px;
+  background:rgba(255,255,255,.97);
+  box-shadow:0 18px 55px rgba(8,43,65,.18),0 3px 12px rgba(8,43,65,.08);
+  opacity:0;
+  pointer-events:auto;
+  transform:translate3d(18px,-6px,0) scale(.985);
+  transition:opacity .22s ease,transform .3s cubic-bezier(.2,.8,.2,1);
+  backdrop-filter:blur(16px);
+}
+.profile-toast::before{
+  content:"";
+  position:absolute;
+  inset:0 auto 0 0;
+  width:3px;
+  background:#1b9b7b;
+}
+.profile-toast.is-error{border-color:#ead2ce}
+.profile-toast.is-error::before{background:#bd493d}
+.profile-toast.is-visible{opacity:1;transform:none}
+.profile-toast-icon{
+  display:grid;
+  place-items:center;
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  background:#e9f7f2;
+  color:#157b64;
+  font-size:15px;
+  font-weight:800;
+}
+.profile-toast.is-error .profile-toast-icon{background:#fff0ed;color:#a63b32}
+.profile-toast-copy{min-width:0}
+.profile-toast-copy strong{display:block;margin:1px 0 4px;font-size:12px;letter-spacing:-.01em}
+.profile-toast-copy p{margin:0;color:#647988;font-size:11px;line-height:1.55;overflow-wrap:anywhere}
+.profile-toast-close{
+  display:grid;
+  place-items:center;
+  width:28px;
+  height:28px;
+  padding:0;
+  border:0;
+  border-radius:7px;
+  background:transparent;
+  color:#8293a0;
+  font-size:20px;
+  line-height:1;
+}
+.profile-toast-close:hover{background:#eef4f7;color:#38546a}
 .settings-history{
   margin:0 0 60px;
   padding-top:4px;
@@ -310,9 +376,11 @@
   .settings-details dt{padding:14px 0 4px;border-bottom:0}
   .settings-details dd{padding:0 0 14px}
   .settings-security-row .button{width:100%}
+  .profile-toast-region{top:86px;right:18px}
 }
 @media(prefers-reduced-motion:reduce){
   .settings-sidebar nav a,
   .resource-update-form .profile-dependent-field,
-  .resource-update-form .profile-dependent-field.is-visible{transition:none}
+  .resource-update-form .profile-dependent-field.is-visible,
+  .profile-toast{transition:none}
 }

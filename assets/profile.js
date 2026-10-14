@@ -12,6 +12,46 @@
     return node;
   };
 
+  let activeToast = null;
+  let toastTimer = null;
+  const showToast = (message, options = {}) => {
+    let region = document.querySelector('[data-profile-toast-region]');
+    if (!region) {
+      region = make('div', 'profile-toast-region');
+      region.dataset.profileToastRegion = '';
+      region.setAttribute('aria-live', 'polite');
+      region.setAttribute('aria-atomic', 'true');
+      document.body.append(region);
+    }
+
+    if (toastTimer) window.clearTimeout(toastTimer);
+    activeToast?.remove();
+    const type = options.type === 'error' ? 'error' : 'success';
+    const title = options.title || (type === 'error' ? 'Update not submitted' : 'Update submitted');
+    const toast = make('section', `profile-toast is-${type}`);
+    toast.setAttribute('role', type === 'error' ? 'alert' : 'status');
+    const icon = make('span', 'profile-toast-icon', type === 'error' ? '!' : '✓');
+    icon.setAttribute('aria-hidden', 'true');
+    const copy = make('div', 'profile-toast-copy');
+    copy.append(make('strong', '', title), make('p', '', message));
+    const close = make('button', 'profile-toast-close', '×');
+    close.type = 'button';
+    close.setAttribute('aria-label', 'Dismiss notification');
+    const dismiss = () => {
+      toast.classList.remove('is-visible');
+      window.setTimeout(() => toast.remove(), 220);
+      if (activeToast === toast) activeToast = null;
+    };
+    close.addEventListener('click', dismiss);
+    toast.append(icon, copy, close);
+    region.append(toast);
+    activeToast = toast;
+    window.requestAnimationFrame(() => toast.classList.add('is-visible'));
+    toastTimer = window.setTimeout(dismiss, options.duration || 4800);
+    return toast;
+  };
+  window.WorldOracleProfileToast = showToast;
+
   const valueFor = (summary, labels) => {
     const terms = [...summary.querySelectorAll('dt')];
     const term = terms.find(item => labels.includes(item.textContent.trim()));
