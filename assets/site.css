@@ -3334,6 +3334,44 @@ html.scroll-reveal-ready [data-scroll-reveal].is-revealed {
 .full-leaderboard-page .leaderboard-highlight-metric button{
   height:30px;border-radius:14px
 }
+
+/* Sliding toggle v44 — the selection surface follows the active option while
+   preserving the existing control geometry, typography, and colour system. */
+.full-leaderboard-page :is(.leaderboard-highlight-metric,.leaderboard-filter-toggle).has-sliding-indicator{
+  position:relative;isolation:isolate
+}
+.full-leaderboard-page :is(.leaderboard-highlight-metric,.leaderboard-filter-toggle).has-sliding-indicator button{
+  position:relative;z-index:1;transition:color .24s ease,background-color .18s ease
+}
+.full-leaderboard-page .toggle-sliding-indicator{
+  position:absolute;z-index:0;top:0;left:0;display:block;pointer-events:none;
+  transition:transform .34s cubic-bezier(.22,.78,.24,1),width .34s cubic-bezier(.22,.78,.24,1),height .34s cubic-bezier(.22,.78,.24,1)
+}
+.full-leaderboard-page .toggle-sliding-indicator.is-measuring,
+.full-leaderboard-page .toggle-sliding-indicator:not(.is-ready){transition:none!important}
+.full-leaderboard-page .leaderboard-highlights-heading .leaderboard-highlight-metric .toggle-sliding-indicator{
+  position:absolute;z-index:0;
+  border-radius:14px;background:linear-gradient(135deg,#123b56,#1d6f99);box-shadow:0 5px 14px rgba(19,73,104,.25)
+}
+.full-leaderboard-page .leaderboard-highlight-metric.has-sliding-indicator button:first-of-type{
+  grid-column:1;grid-row:1
+}
+.full-leaderboard-page .leaderboard-highlight-metric.has-sliding-indicator button:last-of-type{
+  grid-column:2;grid-row:1
+}
+.full-leaderboard-page .leaderboard-highlight-metric.has-sliding-indicator button[aria-pressed="true"]{
+  background:transparent;box-shadow:none
+}
+.full-leaderboard-page .leaderboard-filter-toggle .toggle-sliding-indicator{
+  border-radius:2px;background:#eaf2fb;box-shadow:none
+}
+.full-leaderboard-page .leaderboard-filter-toggle.has-sliding-indicator button.is-active,
+.full-leaderboard-page .leaderboard-filter-toggle.has-sliding-indicator button.is-active:hover{
+  background:transparent;box-shadow:none
+}
+@media(prefers-reduced-motion:reduce){
+  .full-leaderboard-page .toggle-sliding-indicator{transition:none}
+}
 .full-leaderboard-page .leaderboard-highlight-tag span,
 .full-leaderboard-page .leaderboard-highlight-tag strong{
   min-height:23px;padding:0 9px

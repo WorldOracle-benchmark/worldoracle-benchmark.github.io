@@ -382,14 +382,66 @@ function appendRankTrophy(cell,rank){
   const trophy=document.createElement('span');trophy.className='metric-trophy rank-trophy rank-trophy-'+rank;trophy.setAttribute('aria-hidden','true');cell.append(trophy);
 }
 
+function initializeSlidingToggle(group) {
+  if (!group) return () => {};
+  let indicator = group.querySelector('.toggle-sliding-indicator');
+  if (!indicator) {
+    indicator = document.createElement('span');
+    indicator.className = 'toggle-sliding-indicator';
+    indicator.setAttribute('aria-hidden', 'true');
+    group.prepend(indicator);
+  }
+  group.classList.add('has-sliding-indicator');
+
+  let frame = 0;
+  const moveTo = (button, animate = true) => {
+    if (!button || !button.isConnected) return;
+    window.cancelAnimationFrame(frame);
+    frame = window.requestAnimationFrame(() => {
+      indicator.classList.toggle('is-measuring', !animate || !indicator.classList.contains('is-ready'));
+      indicator.style.width = `${button.offsetWidth}px`;
+      indicator.style.height = `${button.offsetHeight}px`;
+      indicator.style.transform = `translate3d(${button.offsetLeft}px, ${button.offsetTop}px, 0)`;
+      if (!indicator.classList.contains('is-ready')) {
+        void indicator.offsetWidth;
+        indicator.classList.add('is-ready');
+      }
+      if (!animate) {
+        void indicator.offsetWidth;
+        indicator.classList.remove('is-measuring');
+      } else {
+        indicator.classList.remove('is-measuring');
+      }
+    });
+  };
+
+  const activeButton = () => group.querySelector('button.is-active, button[aria-pressed="true"]');
+  const realign = () => moveTo(activeButton(), false);
+  if ('ResizeObserver' in window) {
+    const observer = new ResizeObserver(realign);
+    observer.observe(group);
+    group.querySelectorAll('button').forEach((button) => observer.observe(button));
+  } else {
+    window.addEventListener('resize', realign);
+  }
+  moveTo(activeButton(), false);
+  return moveTo;
+}
+
 function initializeFilterButtons(root) {
   root.querySelectorAll('[data-filter-buttons]').forEach(group=>{
     const select=group.parentElement.querySelector('select');
     if(!select)return;
-    const sync=()=>group.querySelectorAll('[data-filter-value]').forEach(button=>{
-      const active=button.dataset.filterValue===select.value;
-      button.classList.toggle('is-active',active);button.setAttribute('aria-pressed',String(active));
-    });
+    const slideTo=initializeSlidingToggle(group);
+    const sync=()=>{
+      let activeButton=null;
+      group.querySelectorAll('[data-filter-value]').forEach(button=>{
+        const active=button.dataset.filterValue===select.value;
+        button.classList.toggle('is-active',active);button.setAttribute('aria-pressed',String(active));
+        if(active)activeButton=button;
+      });
+      slideTo(activeButton);
+    };
     group.querySelectorAll('[data-filter-value]').forEach(button=>button.addEventListener('click',()=>{
       select.value=button.dataset.filterValue;sync();select.dispatchEvent(new Event('change',{bubbles:true}));
     }));
@@ -893,6 +945,7 @@ function initializeLeaderboardHighlights(entries){
  if(!carousel)return;
  const track=carousel.querySelector('[data-highlight-track]');
  const metricButtons=[...carousel.querySelectorAll('[data-highlight-metric]')];
+ const slideMetricTo=initializeSlidingToggle(carousel.querySelector('.leaderboard-highlight-metric'));
  const previousButton=carousel.querySelector('[data-highlight-prev]');
  const nextButton=carousel.querySelector('[data-highlight-next]');
  if(!track)return;
@@ -993,6 +1046,7 @@ function initializeLeaderboardHighlights(entries){
  metricButtons.forEach(button=>button.addEventListener('click',()=>{
   metric=button.dataset.highlightMetric==='multi'?'multi':'single';
   metricButtons.forEach(item=>item.setAttribute('aria-pressed',String(item===button)));
+  slideMetricTo(button);
   render();
  }));
  previousButton?.addEventListener('click',()=>move(-1,true));
@@ -1010,6 +1064,7 @@ function initializeLeaderboardHighlights(entries){
  carousel.addEventListener('focusout',event=>{if(carousel.contains(event.relatedTarget))return;paused=false;start();});
  document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();else start();});
  reducedMotion.addEventListener?.('change',start);
+ slideMetricTo(metricButtons.find(button=>button.getAttribute('aria-pressed')==='true'),false);
  render();
 }
 
