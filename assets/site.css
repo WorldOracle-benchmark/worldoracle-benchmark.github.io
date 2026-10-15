@@ -4090,3 +4090,19 @@ body.full-leaderboard-page #long-horizon .board-table {
     height:auto!important;min-height:0!important;
   }
 }
+
+/* Final News color contract: text is neutral; only actionable links use blue. */
+.full-leaderboard-page .leaderboard-news-feed li > time,
+.full-leaderboard-page .leaderboard-news-feed li.is-current > time,
+.full-leaderboard-page .leaderboard-news-feed li > p,
+.full-leaderboard-page .leaderboard-news-feed li > p > strong,
+.full-leaderboard-page .leaderboard-news-feed li > p > span{
+  color:#252d35!important;
+}
+.full-leaderboard-page .leaderboard-news-feed li > p > strong > a{
+  color:#397de9!important;
+  text-decoration:underline;
+  text-decoration-thickness:1px;
+  text-underline-offset:2px;
+}
+.full-leaderboard-page .leaderboard-news-feed li > p > strong > a:hover{color:#175fc1!important}
