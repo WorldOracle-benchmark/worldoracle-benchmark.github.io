@@ -4121,6 +4121,23 @@ body.full-leaderboard-page #long-horizon .board-results > .board-table-scroll{
   box-sizing:border-box;
   margin:0 30px!important;
 }
+
+/* News-only masthead v49 — keep the editorial feed at its original desktop
+   width after temporarily hiding the ranking preview, and center the card. */
+.full-leaderboard-page .leaderboard-masthead.leaderboard-news.is-news-only{
+  width:70%;
+  grid-template-columns:minmax(0,1fr);
+  margin-right:auto;
+  margin-left:auto;
+}
+.full-leaderboard-page .leaderboard-masthead.leaderboard-news.is-news-only .leaderboard-news-intro{
+  width:100%;
+  box-sizing:border-box;
+  border-right:0;
+}
+@media(max-width:1050px){
+  .full-leaderboard-page .leaderboard-masthead.leaderboard-news.is-news-only{width:100%}
+}
 @media(max-width:780px){
   body.full-leaderboard-page #leaderboard .board-results > .board-table-scroll,
   body.full-leaderboard-page #policy-track .policy-board-results > .policy-table-scroll,
