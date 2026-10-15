@@ -122,12 +122,12 @@ const outcomeTasks = {
   "pickfruit": {
     "title": "Pick Fruit",
     "success": {
-      "title": "Fruit in the Basket",
-      "description": "The mango is placed in the basket and remains inside."
+      "title": "Fruit Placed in the Bowl",
+      "description": "The yellow lemon is placed in the bowl and remains inside."
     },
     "failure": {
-      "title": "Missed Grasp",
-      "description": "The gripper withdraws while the mango remains in the basket."
+      "title": "Placement Miss",
+      "description": "The placement attempt ends with both fruits still on the table."
     }
   },
   "hangtowel": {
@@ -168,6 +168,7 @@ const outcomeButtons = [...document.querySelectorAll('[data-outcome-task]')];
 const outcomeCards = [...document.querySelectorAll('[data-outcome-card]')];
 const outcomeStatus = document.querySelector('[data-outcome-status]');
 const outcomeReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+const outcomeAssetVersion = '20261015-validation-v1';
 let currentOutcomeTask = 'pickfruit';
 
 function showOutcomeTask(task) {
@@ -184,8 +185,8 @@ function showOutcomeTask(task) {
     const clip = next[kind];
     const player = card.querySelector('[data-outcome-video]');
     player.pause();
-    player.poster = 'assets/outcomes/' + task + '-' + kind + '.jpg';
-    player.src = 'assets/outcomes/' + task + '-' + kind + '.mp4';
+    player.poster = 'assets/outcomes/' + task + '-' + kind + '.jpg?v=' + outcomeAssetVersion;
+    player.src = 'assets/outcomes/' + task + '-' + kind + '.mp4?v=' + outcomeAssetVersion;
     const playerLabel = next.title + ' — ' + (kind === 'success' ? 'Success' : 'Failure') + ' GT Action Excerpt';
     if (window.WorldOracleI18n) window.WorldOracleI18n.setLocalizedAttribute(player, 'aria-label', playerLabel);
     else player.setAttribute('aria-label', playerLabel);
