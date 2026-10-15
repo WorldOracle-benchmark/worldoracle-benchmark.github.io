@@ -2,7 +2,7 @@
 
 The Project Page motion gallery is built only from episodes listed in the public validation manifest. No held-out test episode, test-set ground truth, or test-set path is included in these assets.
 
-Every exported clip is an 8.0 seconds silent H.264 MP4 at 480 × 360. Frame windows are inclusive and were selected to show visible interaction dynamics rather than static lead-in or trailing footage.
+Every exported clip is an 8.0 seconds silent H.264 MP4 at 640 × 480. Frame windows are inclusive and were selected to show visible interaction dynamics rather than static lead-in or trailing footage.
 
 | Platform | Asset | Public validation episode | View | Frames | Source FPS |
 | --- | --- | --- | --- | ---: | ---: |
