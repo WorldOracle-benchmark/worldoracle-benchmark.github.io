@@ -1066,41 +1066,8 @@ function initializeLeaderboardHighlights(entries){
  render();
 }
 
-function appendScrollTestEntries(entries){
- const params=new URLSearchParams(window.location.search);
- if(params.get('mock')!=='scroll')return;
- const combinations=[
-  ['30s','agibot_g2'],['30s','yam'],['30s','human_hands'],
-  ['policy','agibot_g2'],
-  ['full','agibot_g2'],['full','yam'],['full','human_hands']
- ];
- const colors=['#476f89','#6c6589','#537f76','#8a694e','#5e748f','#7b647c'];
- combinations.forEach(([regime,platform],combinationIndex)=>{
-  for(let index=1;index<=18;index+=1){
-   const multi=index%3===0;
-   const base=24-(index%9)-combinationIndex*.35;
-   const values=[base,base+1.2,base+2.4,multi?base+3.6:null,null];
-   const single=(values[0]+values[1]+values[2])/3;
-   const multiview=multi?(values[0]+values[1]+values[2]+values[3])/4:null;
-   entries.push({
-    id:`scroll-mock-${regime}-${platform}-${index}`,
-    model_name:`Scroll Test ${String(index).padStart(2,'0')}`,
-    platform,regime,view_mode:multi?'multi':'single',values,
-    score:single,single_score:single,multiview_score:multiview,
-    color:colors[(index+combinationIndex)%colors.length],
-    contributor:'Scroll test only',organization:'Scroll test only',team_name:'Scroll test only',
-    certified:false,model_public:false,demo:true,policy_participated:regime==='policy',
-    github_url:'',huggingface_url:'',paper_url:'',preview:null,
-    updated_at:'2026-10-15T00:00:00Z'
-   });
-  }
- });
- document.body.dataset.leaderboardMock='scroll';
-}
-
 async function initializePublicLeaderboards(){
  const loaded=await loadPublicLeaderboard();
- appendScrollTestEntries(loaded.entries);
  initializeLeaderboardHighlights(loaded.entries);
  document.querySelectorAll('.benchmark-board').forEach(board=>initializeBoard(board,loaded.entries));
  const embeddedPolicy=JSON.parse(document.getElementById('policy-results-data')?.textContent||'[]');
