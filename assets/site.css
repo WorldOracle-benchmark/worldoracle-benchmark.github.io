@@ -4126,7 +4126,7 @@ body.full-leaderboard-page #long-horizon .board-results > .board-table-scroll{
    Both columns share one natural row height; the comparison workspace now
    begins in the former guide rail and retains its sticky scroll behavior. */
 .full-leaderboard-page .leaderboard-masthead.leaderboard-news.has-reading-guide{
-  width:100%;height:auto;grid-template-columns:minmax(0,3fr) minmax(360px,2fr);
+  width:100%;height:auto;grid-template-columns:minmax(0,7fr) minmax(320px,3fr);
   align-items:stretch;margin-right:0;margin-left:0;
 }
 .full-leaderboard-page .leaderboard-masthead.leaderboard-news.has-reading-guide .leaderboard-news-intro{
@@ -4140,7 +4140,7 @@ body.full-leaderboard-page #long-horizon .board-results > .board-table-scroll{
 }
 .full-leaderboard-page .leaderboard-news-guide .leaderboard-rail-label{margin:0 0 16px}
 .full-leaderboard-page .leaderboard-news-guide ol{
-  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 16px;margin:0;
+  display:grid;grid-template-columns:minmax(0,1fr);gap:11px;margin:0;
 }
 .full-leaderboard-page .leaderboard-news-guide li{
   min-width:0;grid-template-columns:30px minmax(0,1fr);padding:0;
@@ -4153,7 +4153,7 @@ body.full-leaderboard-page #long-horizon .board-results > .board-table-scroll{
 @media(max-width:1320px){
   .full-leaderboard-page .leaderboard-shell>.leaderboard-rail{display:none}
   .full-leaderboard-page .leaderboard-news-guide{display:flex!important;grid-template-columns:none;gap:0}
-  .full-leaderboard-page .leaderboard-news-guide ol{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .full-leaderboard-page .leaderboard-news-guide ol{grid-template-columns:minmax(0,1fr)}
   .full-leaderboard-page .leaderboard-news-guide .leaderboard-rail-note{display:block;margin-top:auto}
 }
 @media(max-width:1050px){
@@ -4161,6 +4161,7 @@ body.full-leaderboard-page #long-horizon .board-results > .board-table-scroll{
   .full-leaderboard-page .leaderboard-masthead.leaderboard-news.has-reading-guide .leaderboard-news-intro{
     border-right:0;border-bottom:1px solid #dce5eb;
   }
+  .full-leaderboard-page .leaderboard-news-guide ol{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media(max-width:560px){
   .full-leaderboard-page .leaderboard-news-guide{padding:18px 16px}
