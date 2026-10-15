@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/portal.css?v=20261014-participant-notices-v1">
-  <script src="../assets/i18n.js?v=20261015-entry-weights-v1" defer></script><script src="../assets/unified-nav.js?v=20261013-i18n-v5" defer></script><script src="../assets/portal.js?v=20261014-track-names-v1" defer></script>
+  <script src="../assets/i18n.js?v=20261015-validator-parity-v1" defer></script><script src="../assets/unified-nav.js?v=20261013-i18n-v5" defer></script><script src="../assets/portal.js?v=20261014-track-names-v1" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to Content</a>
@@ -146,9 +146,9 @@ shasum -a 256 submission.zip</code></pre>
           <p class="eyebrow">05 · Submission wizard</p>
           <h2>Validate and Submit</h2>
           <p>Run the public structural-validation template locally before uploading:</p>
-          <div class="actions"><a class="button" href="../assets/validate_package.py" download>Download Validation Template</a></div>
+          <div class="actions"><a class="button" href="../assets/validate_package.py?v=20261015-validator-parity-v1" download="validate_package.py">Download Validation Template</a></div>
           <pre><code>python validate_package.py submission.zip</code></pre>
-          <p>The public template checks ZIP safety, manifest fields, declared frame rate, file references, and view completeness. Ground-truth episode lists, private evaluation criteria, metric implementations, service paths, and credentials remain outside the public template. After upload, the evaluation service repeats the structural checks and applies private admission checks.</p>
+          <p>The public template checks ZIP safety, manifest fields, official task names, file references, view completeness, and the actual H.264 codec, frame rate, duration, dimensions, and first decoded frame. It requires <code>ffprobe</code> and <code>ffmpeg</code>. Authoritative test-set coverage, full-frame alignment, evaluation criteria, metric implementations, service paths, and credentials remain service-side checks. After upload, the evaluation service repeats the public checks before evaluation.</p>
           <p>In the submission portal, follow four steps:</p>
           <ol>
             <li><strong>Model and Track:</strong> check your assigned model, choose a Track and platform, and optionally add submission notes.</li>
