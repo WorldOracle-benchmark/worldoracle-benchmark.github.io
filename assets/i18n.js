@@ -187,6 +187,8 @@
     'WorldOracle-SV dimensions + Multi-View Action Coherence': 'WorldOracle-SV 三项指标 + 多视角动作一致性',
     'The WorldOracle-Core evaluates the human-operated distribution over the first 30 seconds, using sampled frames and outcome keyframes from paired real-world executions.': 'WorldOracle-Core在人工操作分布上评测前 30 秒，使用配对真实世界执行中的采样帧和结果关键帧。',
     'The table reports Physical State Correctness (PSC), Key Interaction Area Fidelity (KIAF), Interaction Spatial Alignment (ISA), and Multi-View Action Coherence (MVAC, where supported). Single-View Score is the mean of PSC, KIAF and ISA. Multi-View Score adds MVAC with equal weight. A dash means unsupported or not evaluated.': '表格展示物理状态正确性（PSC）、关键交互区域保真度（KIAF）、交互空间对齐（ISA）和多视角动作一致性（MVAC，模型支持时）。单视角分数为 PSC、KIAF 和 ISA 的平均值，多视角分数再等权加入 MVAC。“-”表示不支持或未评测。',
+    'Human Hand supports Single-View evaluation only. Multi-View Score and MVAC are not available.': 'Human Hand 仅支持单视角评测，不提供多视角分数与 MVAC。',
+    'Not supported for Human Hand': 'Human Hand 不支持此项',
     'All published values are held-out test-set results. Models are compared only within the same embodiment and temporal regime.': '所有已发布分数均来自保留测试集。模型只在相同具身形态和时间范围内进行比较。',
     'The WorldOracle-Policy uses recorded action trajectories collected while a policy interacts with the physical AgiBot G2 robot in closed loop. During evaluation, each trajectory is replayed open loop by the ACWM and compared with its paired real execution.': 'WorldOracle-Policy使用策略与真实 AgiBot G2 机器人闭环交互时记录的动作轨迹。评测时，ACWM 开环重放每条轨迹，并与其配对的真实执行进行比较。',
     'The WorldOracle-Long evaluates every available frame and outcome keyframe in complete human-operated episodes, exposing how execution coherence changes as rollout errors accumulate.': 'WorldOracle-Long评测完整人工操作 episode 中所有可用帧和结果关键帧，用于观察预测误差累积时执行一致性的变化。',

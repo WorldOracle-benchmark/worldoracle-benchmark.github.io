@@ -935,6 +935,10 @@ html.scroll-reveal-ready [data-scroll-reveal].is-revealed {
 .full-leaderboard-page .track-description{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:5px 32px}
 .full-leaderboard-page .track-description>p{margin:0;color:#40564f;font-size:13px;line-height:1.75}
 .full-leaderboard-page .track-description>p.extra-note{color:#72837e;font-size:11px;line-height:1.72}
+.full-leaderboard-page .track-description>p.human-hand-multiview-note{
+  align-self:center;margin:0;padding:9px 12px;border-left:2px solid #7aa8bd;border-radius:0 7px 7px 0;
+  color:#55717f;background:#f1f7fa
+}
 .full-leaderboard-page .track-description>p[data-board-disclaimer]{grid-column:1 / -1;margin-top:8px;padding:10px 12px;border-radius:9px;color:#5c746d;background:#f1f7f4}
 .full-leaderboard-page .policy-results-panel>p{color:#40564f;font-size:13px;line-height:1.75}
 .full-leaderboard-page .policy-results-panel>.extra-note{padding-top:9px;color:#72837e;font-size:11px}
@@ -971,6 +975,11 @@ html.scroll-reveal-ready [data-scroll-reveal].is-revealed {
 .full-leaderboard-page .board-table th button i,.full-leaderboard-page .policy-table button i{width:7px;height:7px;margin:0}
 .board-table tbody th button small,.policy-table tbody th button small{display:none}
 .board-table tbody td.metric-unavailable,.policy-table tbody td.metric-unavailable{color:#83948f!important;background:transparent!important;text-decoration:none!important}
+.board-table tbody td.metric-unavailable .metric-not-supported,
+.policy-table tbody td.metric-unavailable .metric-not-supported{
+  display:inline-grid;width:18px;height:18px;border:1px solid #c8d4da;border-radius:50%;place-items:center;
+  color:#82949d;font:700 13px/1 var(--board-sans);vertical-align:middle
+}
 .full-leaderboard-page .board-rank{display:inline-grid;place-items:center;min-width:28px;height:28px;border:1px solid #d4e0dc;border-radius:8px;background:#fff;font-size:9px;font-weight:800}
 .full-leaderboard-page .board-table tbody .rank-1 .board-rank{color:#88620e;border-color:#ead9a3;background:#fff6d8}
 .full-leaderboard-page .model-preview{margin:0 30px 28px;padding:0;grid-template-columns:260px minmax(0,1fr);gap:0;overflow:hidden;border-color:#cddcd6;border-radius:15px;background:#f5f9f7}

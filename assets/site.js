@@ -667,9 +667,22 @@ function initializeBoard(board, entries) {
       row.append(th);
       if(hasView){const viewCell=cell('td',model.view_mode==='multi'?'MV':'SV');viewCell.classList.add('board-view');viewCell.title=model.view_mode==='multi'?'Multi-View':'Single-View';row.append(viewCell);}
       if(hasContributor){const contributorCell=cell('td',contributor(model));contributorCell.classList.add('board-contributor');row.append(contributorCell);}
-      tableValues(model).forEach(v=>{
-        const td=cell('td',v===null?'-':v.toFixed(2));
-        if(v===null){td.classList.add('metric-unavailable');td.setAttribute('aria-label','Not evaluated');}
+      tableValues(model).forEach((v,metricIndex)=>{
+        const humanHandMultiViewUnavailable=platform==='human_hands'&&v===null&&(metricIndex===1||metricIndex===5);
+        const td=cell('td',v===null?'':v.toFixed(2));
+        if(v===null){
+          td.classList.add('metric-unavailable');
+          if(humanHandMultiViewUnavailable){
+            const unavailable=cell('span','×');
+            unavailable.classList.add('metric-not-supported');
+            unavailable.setAttribute('aria-hidden','true');
+            td.append(unavailable);
+            td.setAttribute('aria-label','Not supported for Human Hand');
+          }else{
+            td.textContent='-';
+            td.setAttribute('aria-label','Not evaluated');
+          }
+        }
         row.append(td);
       });
       if(hasCertification)appendLeaderboardCertification(row,model);
@@ -715,6 +728,8 @@ function initializeBoard(board, entries) {
       ? 'Demo scores are illustrative, not benchmark measurements. Platform availability follows existing result artifacts; view labels describe evaluated outputs, not every capability of a model.'
       : current.length ? 'Verified held-out test-set retest results. Unavailable metrics are shown as dashes in the table and plotted at zero on the radar only.'
       : 'No verified model-result artifacts have been confirmed for this selection. Models are not included solely because the paper lists a planned experiment.';
+    const humanHandNote=board.querySelector('[data-human-hand-note]');
+    if(humanHandNote)humanHandNote.hidden=platform!=='human_hands';
     board.querySelectorAll('[data-board-platform]').forEach(b=>{const on=b.dataset.boardPlatform===platform;b.classList.toggle('is-active',on);b.setAttribute('aria-pressed',String(on));});
     chart();focus(null);
   }
@@ -927,11 +942,9 @@ function initializeLeaderboardHighlights(entries){
  const configurations=[
   ['30s','agibot_g2','WorldOracle-Core','AgiBot G2','main'],
   ['30s','yam','WorldOracle-Core','YAM','main'],
-  ['30s','human_hands','WorldOracle-Core','Human Hand','main'],
   ['policy','agibot_g2','WorldOracle-Policy','AgiBot G2','policy'],
   ['full','agibot_g2','WorldOracle-Long','AgiBot G2','long'],
-  ['full','yam','WorldOracle-Long','YAM','long'],
-  ['full','human_hands','WorldOracle-Long','Human Hand','long']
+  ['full','yam','WorldOracle-Long','YAM','long']
  ];
  const make=(tag,className,text)=>{const node=document.createElement(tag);if(className)node.className=className;if(text!==undefined)node.textContent=text;return node;};
  let metric='single';
