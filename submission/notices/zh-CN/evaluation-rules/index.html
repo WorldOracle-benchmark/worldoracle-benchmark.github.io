@@ -7,6 +7,8 @@
   <link rel="icon" href="../../../../assets/favicon.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../../../assets/portal.css?v=20261014-participant-notices-zh-v1">
+  <script>try{localStorage.setItem('worldoracle-language-v2','zh-CN')}catch(e){}document.cookie='worldoracle-language-v2=zh-CN; Path=/; Max-Age=31536000; SameSite=Lax';</script>
+  <script src="../../../../assets/i18n.js?v=20261016-zh-editorial-v4" defer></script>
   <script src="../../../../assets/unified-nav.js?v=20261013-i18n-v5" defer></script><script src="../../../../assets/portal.js?v=20261014-track-names-v1" defer></script>
 </head>
 <body><a class="skip" href="#main">跳转至正文</a>
@@ -15,12 +17,12 @@
   <main id="main" class="shell"><div class="notice-hub">
     <aside class="notice-nav"><p class="eyebrow">参与者须知</p><a href="../account-terms/">账号使用条款</a><a href="../privacy/">隐私说明</a><a href="../submission-materials/">提交材料说明</a><a aria-current="page" href="./">评测与榜单规则</a><a href="../integrity-review/">评测完整性与复核</a></aside>
     <article class="notice-document"><p class="eyebrow">评测</p><h1>评测与榜单规则</h1><p class="policy-meta"><span>版本 1.0</span><span>2026 年 10 月 15 日</span><a class="notice-language-switch" href="../../evaluation-rules/"><span>ENG</span><span aria-hidden="true">/</span><strong>中文</strong></a></p>
-      <p>本规则规定正式评测、额度使用及榜单成绩替换方式。</p>
-      <h2>赛道与提交额度</h2><p>每次正式提交进入一个 Track 和一个支持的平台。审核通过的账号在滚动七天窗口内，每个 Track 可评测两次，所有 Track 合计可评测六次。第一次正式提交启动共享窗口。</p>
-      <h2>正式评测</h2><p>上传校验检查提交包结构和安全性。正式入队扣除额度并启动基准评测。用户可见阶段依次为 Draft、Submitted、Evaluating、Review 和 Accepted。</p>
-      <h2>VLM 评测器版本</h2><p>论文报告 GPT-5.5 VLM 评测器生成的分数。在线 Leaderboard 对重新评测的基线和新提交统一使用 GPT-5.6 Luna，以保证在线条目可比。评测器版本差异可能导致论文分数与在线分数不同。</p>
-      <h2>榜单成绩更新</h2><p>对于同一模型、同一赛道和同一平台，每次 Accepted 提交都会与当前公开的完整榜单行进行比较。当新结果的最终 Single-View Score 或最终 Multi-View Score 中任意一项严格更高时，新结果将整体替换该行。缺失的分数按 0 参与比较；不同提交之间不会拼接分数或组成指标。</p><ul><li><strong>前单视角、后单视角：</strong>仅当新的 Single-View Score 更高时更新。</li><li><strong>前三视角、后单视角：</strong>仅当新的 Single-View Score 更高时更新；更新后的榜单行不再保留 Multi-View Score。</li><li><strong>前单视角、后三视角：</strong>当前缺失的 Multi-View Score 按 0 计算，因此三视角结果会更新榜单行。</li><li><strong>前三视角、后三视角：</strong>新的 Single-View Score 或 Multi-View Score 任意一项更高即更新。</li></ul>
-      <p class="policy-note">评测服务与 Submission Guide 中的提交包规范共同决定准入和评分。</p>
+      <p>本规则说明正式评测、额度计算以及榜单成绩替换方式。</p>
+      <h2>赛道与提交额度</h2><p>每次正式提交只能选择一个赛道和一个受支持的具身平台。审核通过的账号在滚动七天窗口内，每个赛道最多评测两次，所有赛道合计最多评测六次。第一次正式提交会启动该共享计时窗口。</p>
+      <h2>正式评测</h2><p>上传校验会检查提交包的结构与安全性。提交正式进入评测队列后才会扣除额度并启动评测。参评者可见的状态依次为：草稿、已提交、评测中、复核中和已通过。</p>
+      <h2>VLM 评测器版本</h2><p>论文中报告的分数由 GPT-5.5 VLM 评测器生成。在线榜单对重新评测的基线和新提交统一使用 GPT-5.6 Luna，确保在线结果可直接比较。由于评测器版本不同，论文中的分数可能与在线榜单不完全一致。</p>
+      <h2>榜单成绩更新</h2><p>对于同一模型、同一赛道和同一具身平台，每次已通过的提交都会与当前已公开的完整榜单记录进行比较。如果新结果的最终单视角总分或三视角总分中任意一项严格更高，将以新结果整体替换原榜单记录。缺失的总分在比较时按 0 计算；不会拼接不同提交的总分或分项指标。</p><ul><li><strong>单视角替换单视角：</strong>仅当新的单视角总分更高时更新。</li><li><strong>单视角替换三视角：</strong>仅当新的单视角总分更高时更新；替换后的榜单记录不再保留三视角总分。</li><li><strong>三视角替换单视角：</strong>原记录缺失的三视角总分按 0 计算，因此三视角结果会更新榜单记录。</li><li><strong>三视角替换三视角：</strong>新的单视角总分或三视角总分中任意一项更高即更新。</li></ul>
+      <p class="policy-note">评测准入与评分同时受评测服务规则和《提交指南》中提交包规范的约束。</p>
       <div class="actions"><a class="button" href="../../../">查看提交指南</a><a class="button" href="../../../../leaderboard.html">查看榜单</a></div>
     </article>
   </div></main><footer class="footer"><span class="footer-brand"><img src="../../../../assets/worldoracle-logo.png" alt="" width="24" height="24"><span>World<span>Oracle</span></span></span><span>参与者须知</span></footer>

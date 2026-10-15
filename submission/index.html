@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/portal.css?v=20261014-participant-notices-v1">
-  <script src="../assets/i18n.js?v=20261015-validator-context-v3" defer></script><script src="../assets/unified-nav.js?v=20261013-i18n-v5" defer></script><script src="../assets/portal.js?v=20261014-track-names-v1" defer></script>
+  <script src="../assets/i18n.js?v=20261016-zh-editorial-v4" defer></script><script src="../assets/unified-nav.js?v=20261013-i18n-v5" defer></script><script src="../assets/portal.js?v=20261014-track-names-v1" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to Content</a>
@@ -86,12 +86,12 @@
             <li><strong>WorldOracle-Long:</strong> one ZIP below <strong>12 GiB</strong>. Submit every complete episode using recorded actions and preserve its full duration.</li>
           </ul>
           <div class="callout">Frame rate is platform-specific: AgiBot G2 and YAM use 30 FPS (900 frames for WorldOracle-Core); Human Hand uses 15 FPS (450 frames for WorldOracle-Core). Preserve the native frame rate and do not duplicate frames.</div>
-          <p>The size limit applies to both the uploaded ZIP and its declared expanded contents. Packages may contain up to 20,000 entries. Admission rejects ZIP symlinks, encrypted entries, duplicate or unsafe paths, and wrapper directories above <code>manifest.json</code>.</p>
+          <p>The size limit applies to both the uploaded ZIP and its declared expanded contents. Packages may contain up to 20,000 entries. Admission rejects ZIP symlinks, encrypted entries, duplicate or unsafe paths, and packages where <code>manifest.json</code> is not at the ZIP root.</p>
           <p>Identify every video by its official <code>task / episode_id / view</code> values in <code>manifest.json</code>. Frame indices start at zero and remain contiguous; synchronized views share the same frame count, frame rate, and duration. Submit every required trajectory as provided. Task-specific success filtering and silent trajectory replacement are prohibited.</p>
           <p>Use schema <code>preview-2</code>. Set <code>benchmark_track</code> to <code>main</code>, <code>policy</code>, or <code>long_horizon</code> to match the form. Set <code>evaluation.horizon</code> to <code>30s</code>, <code>policy</code>, or <code>full</code>; use <code>action_source: policy</code> for WorldOracle-Policy and <code>action_source: recorded</code> for the other Tracks; and set <code>view_mode</code> to <code>single</code> or <code>multi</code>. The schema accepts only its documented top-level fields.</p>
 
           <h3>Single-view input directory format</h3>
-          <pre><code>submission.zip
+          <pre data-i18n-translate><code>submission.zip
 ├── manifest.json              # Required; metadata and prediction index
 ├── README.md                  # Required; reproduction and alignment details
 ├── predictions/               # One top-head MP4 per required episode
@@ -101,7 +101,7 @@
           <p>Set <code>evaluation.view_mode</code> to <code>single</code>. Required view: <code>top_head.mp4</code>. Each episode contains exactly one prediction.</p>
 
           <h3>Three-view input directory format</h3>
-          <pre><code>submission.zip
+          <pre data-i18n-translate><code>submission.zip
 ├── manifest.json              # Required; metadata and prediction index
 ├── README.md                  # Required; reproduction and alignment details
 ├── predictions/               # Three synchronized MP4 files per episode
@@ -133,7 +133,7 @@ ffmpeg -nostdin -hide_banner -loglevel error -y \
           <p><code>2830k</code> sets the target file size; <code>preset slow</code> improves compression efficiency at that rate. Average bitrate keeps package size more predictable than CRF. Estimate the total as <code>bitrate × the sum of all video durations ÷ 8</code>, plus MP4 and ZIP overhead. Apply one bitrate to every view and episode. If the ZIP exceeds the Track limit, lower that bitrate uniformly and record the value in <code>README.md</code>.</p>
 
           <h3>Package and verify</h3>
-          <pre><code># Run from the directory containing manifest.json, README.md and predictions/
+          <pre data-i18n-translate><code># Run from the directory containing manifest.json, README.md and predictions/
 zip -0 -r submission.zip manifest.json README.md predictions/
 unzip -t submission.zip
 shasum -a 256 submission.zip</code></pre>

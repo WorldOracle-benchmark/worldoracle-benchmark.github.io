@@ -595,10 +595,10 @@
     'My Submissions': '我的提交', 'My Team': '我的队伍', 'Register': '注册',
     'Automatic Evaluation · Best Completed Results': '自动评测 · 榜单展示各模型的最佳完成结果',
     'Register & Verify': '注册并验证邮箱', 'Join Approved Team': '加入已审核队伍', 'Eligibility & Teams': '参评资格与队伍',
-    'Researchers and model developers can register a verified personal account. Formal submissions require an approved team, an organizer-approved model, and a team role with submission permission. Both open-weight and closed-source approaches may participate.': '研究人员和模型开发者可以注册并验证个人账号。发起正式提交前，所在队伍和待提交模型必须通过主办方审核，且当前成员需具有提交权限。开源权重和闭源方法均可参评。',
+    'Researchers and model developers can register a verified personal account. Formal submissions require an approved team, an organizer-approved model, and a team role with submission permission. Both open-weight and closed-source approaches may participate.': '研究人员和模型开发者可以注册并验证个人账号。发起正式提交前，所在队伍和待提交模型必须通过组织方审核，且当前成员需具有提交权限。开源权重和闭源方法均可参评。',
     'WorldOracle uses one evaluation framework across two data distributions: human-operated trajectories and policy rollouts collected on a real robot. The benchmark covers AgiBot G2, YAM, and human-hand embodiments. Choose WorldOracle-Core, WorldOracle-Policy, or WorldOracle-Long and submit prediction videos; no separate protocol selection is needed.': 'WorldOracle 使用一套统一评测框架，覆盖两种数据分布：人工操作轨迹，以及在真实机器人上采集的策略轨迹。基准包含 AgiBot G2、YAM 和 Human Hand 三种本体。请选择WorldOracle-Core、WorldOracle-Policy或WorldOracle-Long，并提交预测视频；无需另外选择评测协议。',
     'An uploaded package is not yet a verified benchmark result. Every formal submission receives a Track-specific submission number. A successful V number is assigned only after every required metric passes, and only an improved result replaces the model\'s current leaderboard best.': '上传提交包不等于已获得有效评测结果。每次正式提交都会获得该赛道独立的提交编号；只有全部必需指标通过后才会分配成功 V 版本号，且只有更好的成绩会替换该模型在榜单上的当前最佳结果。',
-    'Choose one organizer-approved model registered to your team, then select the Track and platform and optionally add submission notes. Each formal attempt receives the next team submission number within its Track. V1, V2, and so on are assigned per team model only after successful evaluations; failed attempts never consume a V number.': '先选择一个登记在当前队伍名下且已通过主办方审核的模型，再选择赛道和平台，并可选填提交说明。每次正式尝试都会获得当前队伍在该赛道中的下一个提交编号。V1、V2 等版本号仅在评测成功后，按队伍内模型分别分配；失败尝试不占用 V 版本号。',
+    'Choose one organizer-approved model registered to your team, then select the Track and platform and optionally add submission notes. Each formal attempt receives the next team submission number within its Track. V1, V2, and so on are assigned per team model only after successful evaluations; failed attempts never consume a V number.': '先选择一个登记在当前队伍名下且已通过组织方审核的模型，再选择赛道和平台，并可选填提交说明。每次正式尝试都会获得当前队伍在该赛道中的下一个提交编号。V1、V2 等版本号仅在评测成功后，按队伍内模型分别分配；失败尝试不占用 V 版本号。',
     'Track limits and required coverage': '赛道上限与必需覆盖范围',
     'WorldOracle-Core:': 'WorldOracle-Core：', 'WorldOracle-Policy:': 'WorldOracle-Policy：', 'WorldOracle-Long:': 'WorldOracle-Long：',
     'one ZIP below': '提交一个小于', '3 GiB': '3 GiB', '12 GiB': '12 GiB',
@@ -652,7 +652,7 @@
     'Track admission checks inspect video headers and decode the first frame, enforce the platform frame rate (30 FPS for AgiBot G2 and YAM; 15 FPS for Human Hand), validate view counts, synchronization, and WorldOracle-Core’s 30-second limit. They do not decode every frame, verify the complete official episode list, assess data leakage, recompute metrics, or establish result validity. The evaluation completes automatically only after every metric declared by the validated package has a valid result.': '赛道入队检查会读取视频头并解码首帧，强制核对平台帧率（AgiBot G2 和 YAM 为 30 FPS，人手平台为 15 FPS），同时检查视角数量、同步性和WorldOracle-Core 30 秒上限。这一阶段不会解码所有帧、核验完整官方 episode 列表、评估数据泄漏、重新计算指标，或判定结果有效性。只有通过校验的提交包所声明的每一项指标都产生有效结果后，评测才会自动完成。',
     'Complete policy-rollout trajectories · PO, KRO, IA and MVC where supported · AgiBot G2.': '完整的策略轨迹 · 评测 PO、KRO、IA，以及受支持时的 MVC · AgiBot G2。',
     'Confirm and Submit:': '确认并提交：',
-    '. After submission, the system runs package checks and the metrics required by the selected Track. Organizers may request changes or reject an invalid submission, but there is no final approval stage after all required metrics pass.': '中查看评测进度。提交后，系统会执行提交包检查，并计算所选赛道需要的指标。主办方可以要求修改或拒绝无效提交；所有必需指标通过后，不再另设最终人工审批环节。',
+    '. After submission, the system runs package checks and the metrics required by the selected Track. Organizers may request changes or reject an invalid submission, but there is no final approval stage after all required metrics pass.': '中查看评测进度。提交后，系统会执行提交包检查，并计算所选赛道需要的指标。组织方可以要求修改或拒绝无效提交；所有必需指标通过后，不再另设最终人工审批环节。',
     'Official evaluation quotas are not yet defined. Local abuse limits are currently 20 new drafts and 10 upload attempts per account per day; these are portal limits, not benchmark evaluation allowances. Every formal attempt is numbered within its Track, while V numbers count successful evaluations only.': '正式评测额度尚未最终确定。当前平台为防止滥用，限制每个账号每日最多新建 20 个草稿并尝试上传 10 次；这些只是平台操作限制，不代表基准评测额度。每次正式尝试都会在所属赛道内编号，V 版本号则只计数成功评测。',
 
     'Individual Registration': '个人注册', 'Register First.': '先完成注册。', 'Team Up Next.': '再加入或创建队伍。',
@@ -683,7 +683,7 @@
     'A verified personal account is required. Formal submissions additionally require an approved team and an authorized team role.': '登录前需先完成个人邮箱验证。发起正式提交还需所在队伍通过审核，并由队长授予提交权限。',
     'Use your unique nickname ID, not your email address.': '请使用唯一昵称 ID 登录，不要输入邮箱地址。',
     'Need an account?': '还没有账号？', 'Change Your Password': '修改密码',
-    'using your current password. If you have forgotten it, contact the organizers.': '需要先验证当前密码。如果已忘记密码，请联系主办方。',
+    'using your current password. If you have forgotten it, contact the organizers.': '需要先验证当前密码。如果已忘记密码，请联系组织方。',
     'Resend email verification': '重新发送验证邮件', 'Request Verification Email': '发送验证邮件',
 
     'No Approved Team': '尚未加入已审核队伍', 'Team': '队伍', 'Submissions.': '提交记录。',
@@ -707,15 +707,15 @@
     'Create Team': '创建队伍', 'Apply by Team ID': '通过队伍 ID 申请加入', 'Team ID': '队伍 ID',
     'Your Role': '你的角色', 'Formal Quota': '正式提交额度', 'Legacy unlimited': '历史账号（不限额）',
     'Open Team Console →': '进入队伍管理 →', 'No Team Yet.': '尚未加入队伍。',
-    'Create a team for organizer review, accept an invitation sent to this verified email, or apply using a team ID.': '你可以创建队伍并提交主办方审核，接受发送到已验证邮箱的邀请，或使用队伍 ID 申请加入。',
-    'Create a team for organizer review, accept an in-platform invitation sent to your participant ID, or apply using a team ID.': '你可以创建队伍并提交主办方审核，接受发送到昵称 ID 的站内邀请，或使用队伍 ID 申请加入。',
+    'Create a team for organizer review, accept an invitation sent to this verified email, or apply using a team ID.': '你可以创建队伍并提交组织方审核，接受发送到已验证邮箱的邀请，或使用队伍 ID 申请加入。',
+    'Create a team for organizer review, accept an in-platform invitation sent to your participant ID, or apply using a team ID.': '你可以创建队伍并提交组织方审核，接受发送到昵称 ID 的站内邀请，或使用队伍 ID 申请加入。',
     'Pending Invitations': '待处理邀请', 'Role:': '角色：',
     'Open the secure invitation link delivered by email to accept. You can decline here after signing in with the invited verified email.': '请通过邮件中的安全链接接受邀请。使用被邀请的已验证邮箱登录后，也可在这里拒绝。',
     'This invitation was sent to your unique participant ID. Accepting it adds this account to the team.': '这条邀请发送给了你的唯一昵称 ID。接受后，当前账号会加入该队伍。',
     'Decline Invitation': '拒绝邀请', 'Join Requests': '入队申请', 'Withdraw': '撤回',
 
     'Register Team': '注册队伍', 'Team Registration': '队伍注册', 'Establish a': '创建一个', 'Participating Entity.': '参评队伍。',
-    'Single-person teams are supported. Institutional identity, representative authority and model relationship are manually reviewed before formal quota is granted.': '支持单人队伍。主办方将人工核验机构身份、代表权限以及队伍与模型的关系，通过后才会分配正式提交额度。',
+    'Single-person teams are supported. Institutional identity, representative authority and model relationship are manually reviewed before formal quota is granted.': '支持单人队伍。组织方将人工核验机构身份、代表权限以及队伍与模型的关系，通过后才会分配正式提交额度。',
     '← Back to My Team': '← 返回我的队伍', '← My Team': '← 返回我的队伍', 'Team Application': '队伍申请', 'Team Name': '队伍名称',
     'Team Type': '队伍类型', 'Country / Region': '国家 / 地区', 'Institution(s) / Independent Entity': '所属机构 / 独立研究者主体',
     'Use full legal or academic names consistent with the responsible email domain.': '请填写完整的法定或学术机构名称，并与负责人邮箱域名保持一致。',
@@ -729,7 +729,7 @@
     'Message to Captain': '给队长的留言', 'Send Join Request ↗': '发送入队申请 ↗',
     'Team Invitation': '队伍邀请', 'You were invited as': '你被邀请担任', '. Accepting binds this verified account to the team.': '。接受后，当前已验证账号将加入该队伍。',
     'Accept Invitation': '接受邀请', 'Decline': '拒绝', 'Authority Review': '代表权限核验',
-    'This team is awaiting organizer review. Formal submissions remain locked until approval and quota allocation.': '该队伍正在等待主办方审核。审核通过并分配额度前，无法发起正式提交。',
+    'This team is awaiting organizer review. Formal submissions remain locked until approval and quota allocation.': '该队伍正在等待组织方审核。审核通过并分配额度前，无法发起正式提交。',
     'Members': '队员', 'Authority Verified': '代表权限已核验', 'Captain': '队长', 'Submission Member': '提交成员', 'Collaborator': '协作成员',
     'Member submission quota': '成员可用提交额度', 'Update': '更新', 'Remove': '移除', 'Invite by Verified Email': '通过已验证邮箱邀请',
     'Invite by Participant ID': '通过昵称 ID 邀请', 'Unique Nickname ID': '唯一昵称 ID',
@@ -739,7 +739,7 @@
     'Register Model for Review': '登记模型并提交审核', 'Model Name': '模型名称', 'Project / Paper / Repository URL': '项目 / 论文 / 代码仓库链接',
     'Ownership / Authorization Relationship': '所有权 / 授权关系', 'Version / Reproduction State': '版本 / 复现状态', 'Register Model': '登记模型',
     'Pending Join Requests': '待处理的入队申请', 'Approve': '通过', 'Reject': '拒绝', 'Transfer Captain': '转交队长',
-    'Only an active member whose representative authority has been verified by organizers may receive the role. The successor must confirm before the current captain can exit.': '只能将队长转交给代表权限已经主办方核验的在队成员。接任者确认后，原队长才可退出。',
+    'Only an active member whose representative authority has been verified by organizers may receive the role. The successor must confirm before the current captain can exit.': '只能将队长转交给代表权限已经组织方核验的在队成员。接任者确认后，原队长才可退出。',
     'Verified Successor': '已通过权限核验的接任者', 'Request Transfer': '发起转交', 'Captain Transfer Pending': '队长转交待确认',
     'Confirm Captain Responsibility': '确认接任队长', 'Leave Team': '退出队伍',
 
@@ -764,10 +764,10 @@
     'leaving, removal or demotion takes effect on later web, API and CLI/Skill requests. Historical submissions, attribution and audit records remain.': '退出、移除或降权后，后续的网页、API 和 CLI/Skill 请求会立即按新权限校验。历史提交、署名和审计记录仍会保留。',
     'Captain transfer:': '队长转交：', 'Immediate enforcement:': '权限变更立即生效：',
 
-    'Choose an organizer-approved model registered to your team. Each model and version remains attributable to its submitting member and participating entity.': '请选择已登记在当前队伍名下、且已通过主办方审核的模型。每个模型和版本都会记录对应的提交成员和参评队伍。',
+    'Choose an organizer-approved model registered to your team. Each model and version remains attributable to its submitting member and participating entity.': '请选择已登记在当前队伍名下、且已通过组织方审核的模型。每个模型和版本都会记录对应的提交成员和参评队伍。',
     'WorldOracle-Policy: upload complete prediction videos on policy-rollout actions. AgiBot G2 only; PO / KRO / IA / MVC where supported.': 'WorldOracle-Policy：请上传基于策略轨迹动作生成的完整预测视频。当前仅支持 AgiBot G2，评测 PO、KRO、IA，以及在模型支持多视角时评测 MVC。',
-    'Approved Team Model': '已审核的队伍模型', 'Team captains register models; organizers verify ownership or authorization before submission.': '队长负责登记模型，主办方会在提交前核验模型所有权或授权关系。',
-    'Anything you want the organizers to know about this submission.': '如果有需要主办方了解的补充信息，请在此填写。',
+    'Approved Team Model': '已审核的队伍模型', 'Team captains register models; organizers verify ownership or authorization before submission.': '队长负责登记模型，组织方会在提交前核验模型所有权或授权关系。',
+    'Anything you want the organizers to know about this submission.': '如果有需要组织方了解的补充信息，请在此填写。',
     'One ZIP containing the preview-2 manifest, README, and the materials for .': '请上传一个 ZIP，其中包含 preview-2 格式的 manifest、README 和当前赛道所需材料。',
     'Choose Your Package': '选择提交包', 'Confirmed upload progress': '已确认的上传进度', 'Pause Upload': '暂停上传', 'Cancel Upload': '取消上传',
     'Keep Current Package and Continue →': '保留当前提交包并继续 →',
@@ -776,7 +776,7 @@
     'Submission Details': '提交详情', 'Successful Version': '成功版本', 'Track Submission': '赛道提交编号',
     'Edit Submission →': '编辑提交 →', 'Download Package': '下载提交包', 'Withdraw Submission': '撤回提交',
     'Withdraw this submission? It will no longer be editable. Materials are retained for audit.': '确定撤回该提交吗？撤回后将无法继续编辑，但材料会保留用于审计。',
-    'Raise a Dispute': '提交异议', 'Result or process concern': '请说明你对评测结果或流程的疑问', 'Send to Organizers': '发送给主办方',
+    'Raise a Dispute': '提交异议', 'Result or process concern': '请说明你对评测结果或流程的疑问', 'Send to Organizers': '发送给组织方',
     'Disputes': '异议记录', 'Resolution:': '处理结果：',
 
     'Registrations & Teams': '注册与队伍', 'Eligibility Operations': '参评资格管理', 'Account Console': '账号管理',
@@ -786,9 +786,9 @@
     'Verify after manual check': '人工核验后标记为已验证', 'Representative Authority': '代表权限', 'Member': '成员', 'Role': '角色', 'Authority': '代表权限',
     'Revoke': '撤销', 'Verify': '验证', 'No active members.': '暂无在队成员。', 'Model Review': '模型审核', 'Relationship': '归属 / 授权关系',
     'Submission Disputes': '提交异议', 'Team / Submitter': '队伍 / 提交人', 'Concern': '异议内容', 'Resolution': '处理结果',
-    'Organizer resolution': '请填写主办方的处理结果', 'Resolve': '标记为已处理', 'Reopen': '重新打开', 'No submission disputes.': '暂无提交异议。',
+    'Organizer resolution': '请填写组织方的处理结果', 'Resolve': '标记为已处理', 'Reopen': '重新打开', 'No submission disputes.': '暂无提交异议。',
     'Private Workspace': '内部工作区', 'Restricted to official operators.': '仅限授权运营人员访问。', 'Changes are recorded for audit.': '所有变更都会留存审计记录。',
-    '/ Operations': '/ 运营后台', 'Organizer Access Only': '仅限主办方访问',
+    '/ Operations': '/ 运营后台', 'Organizer Access Only': '仅限组织方访问',
     'Private operations · Evaluation updates require an operator or trusted worker report.': '内部运营后台 · 评测状态仅能由授权运营人员或可信工作进程更新。',
     'Metric Evaluation Progress': '指标评测进度', 'Metric evaluation progress': '指标评测进度',
     'Legacy Score (Modern Scores Are Computed)': '历史分数（新版分数由系统自动计算）', 'Track / Duration': '赛道 / 时长',
@@ -817,7 +817,7 @@
     'This participant is already an active team member.': '该用户已经是当前队伍成员。',
     'This participant already belongs to another approved team.': '该用户已经属于另一个审核通过的队伍。',
     'Invitation sent in WorldOracle. The participant can accept it from My Team.': '站内邀请已发送，对方可在“我的队伍”页面接受。',
-    'Invitation recorded. Email delivery status is available to organizers.': '邀请已记录，主办方可查看邮件投递状态。',
+    'Invitation recorded. Email delivery status is available to organizers.': '邀请已记录，组织方可查看邮件投递状态。',
     'Use the invited, verified email account.': '请使用被邀请且已验证的邮箱账号操作。',
     'Use the invited participant account.': '请使用收到邀请的参评者账号操作。',
     'Leave your current approved team before accepting another.': '接受其他队伍前，请先退出当前已审核通过的队伍。',
@@ -827,7 +827,7 @@
     'Transfer captain responsibility before leaving.': '请先转交队长职责，再退出队伍。', 'Representative authority has not been verified.': '该成员的代表权限尚未通过核验。',
     'Provide a model name, valid optional URL, and ownership/authorization relationship.': '请填写模型名称和所有权/授权关系；如填写链接，请确保链接有效。',
     'That model is already registered for this team.': '该模型已登记在当前队伍名下。', 'Submit the draft before raising an evaluation dispute.': '草稿尚未正式提交，暂时无法对评测结果提出异议。',
-    'Describe the disputed result or process in 10–4,000 characters.': '请用 10–4,000 个字符说明对评测结果或流程的异议。', 'Dispute recorded for organizer review.': '异议已记录，等待主办方处理。',
+    'Describe the disputed result or process in 10–4,000 characters.': '请用 10–4,000 个字符说明对评测结果或流程的异议。', 'Dispute recorded for organizer review.': '异议已记录，等待组织方处理。',
     'Quota cannot be lower than submissions already used or member quota already allocated.': '队伍额度不能低于已使用的提交次数或已分配给成员的额度。',
     'Record a short resolution before closing the dispute.': '关闭异议前，请填写简要的处理结果。',
 
@@ -842,22 +842,29 @@
     'Profile settings': '个人资料设置', 'Profile sections': '个人资料分区',
     'Manage the identity, review status, public resources, and security of this submission account.': '管理当前提交账号的身份信息、审核状态、公开资源与安全设置。',
     'Account Identity': '账号身份',
-    'Organizer-approved details used to identify this model across submissions and public benchmark records.': '经主办方审核的信息，用于在提交记录和公开榜单中识别该模型。',
-    'The model identity is locked after organizer approval.': '主办方审核通过后，模型身份将被锁定。',
+    'Organizer-approved details used to identify this model across submissions and public benchmark records.': '经组织方审核的信息，用于在提交记录和公开榜单中识别该模型。',
+    'The model identity is locked after organizer approval.': '组织方审核通过后，模型身份将被锁定。',
     'Displayed with this model on public benchmark records.': '将在公开评测记录中与该模型一同展示。',
-    'Submission access follows the organizer review state.': '提交权限取决于主办方审核状态。',
+    'Submission access follows the organizer review state.': '提交权限取决于组织方审核状态。',
     'Review Status': '审核状态', 'Password & Security': '密码与安全',
     'Use a unique password for this account and update it whenever access changes.': '请为此账号使用独立密码，并在访问权限发生变化时及时更新。',
     'Account password': '账号密码',
     'Changing the password signs future requests with the new credential; your submission history remains unchanged.': '修改密码后，后续请求将使用新凭据；已有提交历史不会受到影响。',
     'Maintain the paper, code, and model-weight links associated with this registered model.': '管理与当前已登记模型关联的论文、代码与模型权重链接。',
-    'Resource updates enter organizer review before certification and open-source labels change on the public leaderboard.': '公开资源更新需经主办方审核，审核通过后排行榜中的认证与开源标识才会更新。',
+    'Resource updates enter organizer review before certification and open-source labels change on the public leaderboard.': '公开资源更新需经组织方审核，审核通过后排行榜中的认证与开源标识才会更新。',
     'Enter a valid public HTTP/HTTPS Code Repository URL to reveal Model Weights.': '填写有效的公开 HTTP/HTTPS 代码仓库地址后，模型权重字段才会显示。',
     'Enter a valid public HTTP/HTTPS URL.': '请输入有效的公开 HTTP/HTTPS 地址。',
     'Update submitted': '更新已提交', 'Update not submitted': '更新提交失败',
     'Latest: updating': '最新状态：更新中',
     'updating': '更新中',
     'Dismiss notification': '关闭通知',
+    'Signing in…': '正在登录…',
+    'Submitting…': '正在提交…',
+    'Download Package': '下载提交包',
+    'Withdraw Submission': '撤回提交',
+    'Not evaluated': '未评测',
+    'Policy-Rollout Results Radar': '策略执行轨迹评测结果雷达图',
+    'Public code and model weights are available; individual links are not included in this record.': '已公开代码和模型权重，但本条记录未附具体链接。',
     'Registration Review': '注册审核',
     'Every version remains bound to this account and model for audit.': '每个版本都会绑定当前账号与模型，并保留用于审计。',
     'Unavailable': '不可用',
@@ -882,13 +889,13 @@
     'All models': '全部模型', 'All Models': '全部模型', 'Open Source': '已开源', 'Not Open Source': '未开源',
     'All source states': '全部开源状态', 'Rolling Seven-Day Quota': '滚动 7 天提交额度',
     'Model Materials': '模型资料', 'Save Materials for Review': '保存并提交审核',
-    'This account is permanently bound to one organizer-approved team and model. Every version remains attributable to that registered team, organization, and model.': '当前账号固定绑定一个经主办方审核的队伍和模型。此后提交的每个版本都会归属到该队伍、机构和模型名下。',
+    'This account is permanently bound to one organizer-approved team and model. Every version remains attributable to that registered team, organization, and model.': '当前账号固定绑定一个经组织方审核的队伍和模型。此后提交的每个版本都会归属到该队伍、机构和模型名下。',
     'Register a separate team account to submit a different model.': '如需提交其他模型，请另行注册新的队伍账号。',
     'Each account represents one participating team and is permanently bound to one model. The same model may submit multiple versions to WorldOracle-Core, WorldOracle-Policy and WorldOracle-Long. Register a separate account for every different model. One organization may hold several model accounts only when each account names a distinct model.': '每个账号代表一个参评队伍，并固定绑定一个模型。同一模型可在WorldOracle-Core、WorldOracle-Policy和WorldOracle-Long提交多个版本；提交不同模型时必须另行注册账号。同一机构可以注册多个账号，但每个账号必须对应不同模型。',
     'Institutional email is preferred.': '优先使用机构邮箱。',
     'Gmail, 163 and other general providers require stronger supporting evidence. Temporary, untraceable, impersonated or duplicate identities are normally rejected.': '使用 Gmail、163 等公共邮箱时，需要补充更充分的身份证明。临时邮箱、无法追溯的身份、冒用身份或重复注册通常不会通过审核。'
     , 'Each account represents one participating team and is permanently bound to one model. The same model may submit versions to WorldOracle-Core, WorldOracle-Policy and WorldOracle-Long.': '每个账号代表一个参评队伍，并固定绑定一个模型。同一模型可以分别向WorldOracle-Core、WorldOracle-Policy和WorldOracle-Long提交不同版本。'
-    , 'Register → verify email → organizer review → submit.': '注册 → 验证邮箱 → 主办方审核 → 开始提交。'
+    , 'Register → verify email → organizer review → submit.': '注册 → 验证邮箱 → 组织方审核 → 开始提交。'
     , 'New model, new account. Historical submissions remain bound to this account, model name and version.': '如需提交其他模型，请另行注册账号。历史提交始终归属于原账号、模型名称和版本。'
     , 'Read Eligibility & Review Rules ↗': '查看参评资格与审核规则 ↗'
     , 'Public submitting-entity name.': '公开展示的参评主体名称。'
@@ -908,8 +915,8 @@
     , 'A Weights link must belong to this registered model or method and is published only after organizer review.': 'Weights 链接必须属于本账号登记的模型或方法，并经官方审核后才会公开。'
     , 'Expired after the latest Accepted leaderboard update': '最近一次 Accepted 成绩更新榜单后已失效'
     , 'Weights verification expired.': 'Weights 验证已失效。'
-    , 'The latest Accepted submission updated the leaderboard. Submit the weights used by that accepted result; the link returns after organizer approval.': '最近一次 Accepted 提交已更新榜单。请提交该榜单成绩实际使用的权重；经主办方审核后，Weights 链接才会重新显示。'
-    , 'Any valid public model resource can qualify the model as Certified after organizer verification. Open-source status requires both public Code and Weights. Add a valid Code Repository URL to reveal Model Weights. Resource links may use any public HTTP/HTTPS host. A Weights link must point to the weights used by the exact model or method registered by this account and is published only after organizer review.': '任意一项有效公开资源经主办方核验后，模型即可获得“已认证”标识。开源状态要求同时具备公开代码和公开权重；填写有效代码仓库地址后才会显示权重栏。Weights 链接必须对应本账号登记模型或方法在本次参评中使用的权重，并经官方审核后才会公开。'
+    , 'The latest Accepted submission updated the leaderboard. Submit the weights used by that accepted result; the link returns after organizer approval.': '最近一次 Accepted 提交已更新榜单。请提交该榜单成绩实际使用的权重；经组织方审核后，Weights 链接才会重新显示。'
+    , 'Any valid public model resource can qualify the model as Certified after organizer verification. Open-source status requires both public Code and Weights. Add a valid Code Repository URL to reveal Model Weights. Resource links may use any public HTTP/HTTPS host. A Weights link must point to the weights used by the exact model or method registered by this account and is published only after organizer review.': '任意一项有效公开资源经组织方核验后，模型即可获得“已认证”标识。开源状态要求同时具备公开代码和公开权重；填写有效代码仓库地址后才会显示权重栏。Weights 链接必须对应本账号登记模型或方法在本次参评中使用的权重，并经官方审核后才会公开。'
     , 'Optional': '选填', 'Optional · private': '选填 · 不公开'
     , 'I accept the registration and participation terms and confirm that all submitted identity and model information is accurate.': '我同意注册与参评条款，并确认填写的主体身份和模型信息真实、准确。'
     , 'I have read the privacy notice and authorize storage of private review information and audit records.': '我已阅读隐私说明，并同意平台保存审核所需的非公开信息和审计记录。'
@@ -927,14 +934,14 @@
     , 'Register the team account and bound model.': '注册队伍账号，并绑定唯一模型。'
     , 'Verify the registration email using the delivered link.': '通过收到的链接完成邮箱验证。'
     , 'Sign in while the account waits for manual review; formal submission remains locked.': '邮箱验证后可以登录查看审核状态；人工审核通过前不能正式提交。'
-    , 'Organizers check email, organization, model ownership and supplied model materials.': '主办方会核验邮箱、所属机构、模型归属和所提供的模型资料。'
+    , 'Organizers check email, organization, model ownership and supplied model materials.': '组织方会核验邮箱、所属机构、模型归属和所提供的模型资料。'
     , 'Approval unlocks all three Tracks. Rejection is sent in English with a reason; update the materials and reapply.': '审核通过后可参加全部三条赛道。若未通过，系统会用英文发送原因；补充或修改材料后可重新申请。'
     , 'An approved account may submit even without code or a paper. A verified model-related GitHub repository or public paper/technical report qualifies the account as a': '账号审核通过后，即使暂未公开代码或论文，也可以提交评测。与模型相关的 GitHub 仓库或公开论文／技术报告经核验后，账号会标记为'
     , '. A verified GitHub, HuggingFace or arXiv/paper link qualifies it for the': '。GitHub、Hugging Face 或 arXiv／论文链接任一项经核验后，模型会标记为'
-    , 'WorldOracle checks email-domain/organization consistency, repeated domains, duplicate model names and public-resource links, package SHA-256, prediction-video fingerprints and unusual registration/submission frequency. Approved model names are protected against direct reuse. Accounts, materials, versions, risk flags and review actions remain auditable. Organizers may request evidence, suspend submission access or remove results for serious violations.': 'WorldOracle 会检查邮箱域名与机构是否一致、域名是否异常重复、模型名称和公开资料链接是否重复、提交包 SHA-256、预测视频指纹，以及异常的注册或提交频率。已审核模型名称不可被其他账号直接复用。账号、资料、版本、风险标记和审核操作都会保留审计记录；如有严重违规，主办方可要求补充证明、暂停提交权限或移除结果。'
-    , 'Register one account for one participating team and one fixed model. After email verification and organizer review, that model can submit multiple versions to WorldOracle-Core, WorldOracle-Policy, and WorldOracle-Long. Open-weight and closed-source approaches may both participate; public resources and certification are disclosed separately on the leaderboard.': '每个参评队伍为一个固定模型注册一个账号。完成邮箱验证并通过主办方审核后，该模型可以向WorldOracle-Core、WorldOracle-Policy和WorldOracle-Long提交多个版本。公开权重和闭源方案均可参评；排行榜会分别披露模型资料公开情况与认证状态。'
+    , 'WorldOracle checks email-domain/organization consistency, repeated domains, duplicate model names and public-resource links, package SHA-256, prediction-video fingerprints and unusual registration/submission frequency. Approved model names are protected against direct reuse. Accounts, materials, versions, risk flags and review actions remain auditable. Organizers may request evidence, suspend submission access or remove results for serious violations.': 'WorldOracle 会检查邮箱域名与机构是否一致、域名是否异常重复、模型名称和公开资料链接是否重复、提交包 SHA-256、预测视频指纹，以及异常的注册或提交频率。已审核模型名称不可被其他账号直接复用。账号、资料、版本、风险标记和审核操作都会保留审计记录；如有严重违规，组织方可要求补充证明、暂停提交权限或移除结果。'
+    , 'Register one account for one participating team and one fixed model. After email verification and organizer review, that model can submit multiple versions to WorldOracle-Core, WorldOracle-Policy, and WorldOracle-Long. Open-weight and closed-source approaches may both participate; public resources and certification are disclosed separately on the leaderboard.': '每个参评队伍为一个固定模型注册一个账号。完成邮箱验证并通过组织方审核后，该模型可以向WorldOracle-Core、WorldOracle-Policy和WorldOracle-Long提交多个版本。公开权重和闭源方案均可参评；排行榜会分别披露模型资料公开情况与认证状态。'
     , 'An uploaded package is not yet a verified benchmark result. Formal queue entry consumes the rolling quota. A successful V number is assigned only after every required metric passes, and only an improved result replaces the model\'s current leaderboard best.': '上传完成不等于评测结果已经有效。提交正式进入队列时才扣除滚动额度；所有必需指标通过后才会获得成功版本号，且只有更好的成绩会替换该模型当前的榜单最佳结果。'
-    , 'The portal automatically uses the single organizer-approved model bound to this account. Select the Track and platform and optionally add submission notes. Each queue entry receives the next account submission number within its Track. V1, V2, and so on are assigned only after successful evaluations; failed attempts never consume a V number.': '提交平台会自动使用当前账号唯一绑定且经主办方审核的模型。您只需选择赛道和平台，并可选填写提交说明。每次正式入队都会在对应赛道中获得新的提交序号；V1、V2 等成功版本号只在评测通过后生成，失败尝试不占用 V 版本号。'
+    , 'The portal automatically uses the single organizer-approved model bound to this account. Select the Track and platform and optionally add submission notes. Each queue entry receives the next account submission number within its Track. V1, V2, and so on are assigned only after successful evaluations; failed attempts never consume a V number.': '提交平台会自动使用当前账号唯一绑定且经组织方审核的模型。您只需选择赛道和平台，并可选填写提交说明。每次正式入队都会在对应赛道中获得新的提交序号；V1、V2 等成功版本号只在评测通过后生成，失败尝试不占用 V 版本号。'
     , 'Track limits and required coverage': '赛道容量与覆盖要求'
     , 'Each prediction entry must include': '每条预测记录必须包含'
     , '. The standard output is H.264 MP4,': '。标准输出格式为 H.264 MP4，像素格式为'
@@ -953,17 +960,17 @@
     , 'All': '全部', 'Certified': '认证', 'Non-certified': '非认证'
     , 'Public': '有公开资源', 'Not public': '暂无公开资源'
     , 'Public Resources': '有公开资源', 'No Public Resources': '暂无公开资源'
-    , 'The model name is immutable. Contact organizers if the registered model identity is wrong.': '模型名称不可更改。如登记的模型身份有误，请联系主办方。'
-    , 'Add or repair public evidence at any time. Organizers verify resources before certification/resource labels change; existing scores do not need reevaluation.': '您可以随时补充或修正公开材料。主办方核验后才会更新认证和公开资源标识，已有成绩无需重新评测。'
+    , 'The model name is immutable. Contact organizers if the registered model identity is wrong.': '模型名称不可更改。如登记的模型身份有误，请联系组织方。'
+    , 'Add or repair public evidence at any time. Organizers verify resources before certification/resource labels change; existing scores do not need reevaluation.': '您可以随时补充或修正公开材料。组织方核验后才会更新认证和公开资源标识，已有成绩无需重新评测。'
     , 'verified registration email, password, accepted registration terms and privacy notice.': '已验证邮箱、密码，以及注册条款和隐私告知的确认记录。'
-    , 'Organizers check the email, organization and supplied model materials.': '主办方会核验邮箱、所属机构和提交的模型资料。'
+    , 'Organizers check the email, organization and supplied model materials.': '组织方会核验邮箱、所属机构和提交的模型资料。'
     , 'An approved account may submit even without code or a paper. A verified model-related GitHub repository or public paper/technical report qualifies the account as a': '账号审核通过后，即使暂未公开代码或论文，也可以提交评测。与模型相关的 GitHub 仓库或公开论文／技术报告经核验后，账号会标记为'
     , '. A verified GitHub, HuggingFace or arXiv/paper link adds the': '。GitHub、Hugging Face 或 arXiv／论文链接任一项经核验后，模型会获得'
-    , 'label. This means at least one organizer-verified public resource is available; it does not assert an open-source license. Organizers may revoke labels if links fail, resources are unrelated, or submitted artifacts do not match the registered model.': '标识。这表示至少有一项公开资源已经主办方核验，但不代表该模型采用开源许可证。如果链接失效、资料与模型无关，或提交产物与登记模型不一致，主办方可以撤销相应标识。'
+    , 'label. This means at least one organizer-verified public resource is available; it does not assert an open-source license. Organizers may revoke labels if links fail, resources are unrelated, or submitted artifacts do not match the registered model.': '标识。这表示至少有一项公开资源已经组织方核验，但不代表该模型采用开源许可证。如果链接失效、资料与模型无关，或提交产物与登记模型不一致，组织方可以撤销相应标识。'
     , 'Each approved model account receives a rolling seven-day allowance of 2 formal evaluations per Track and 6 across all three Tracks. Drafts and failed uploads do not consume quota. Quota is consumed when a submission formally enters the evaluation queue. Failures caused by benchmark infrastructure are refunded. Only the best valid version for each model and Track is shown, while every historical version remains in the private account audit.': '每个审核通过的模型账号采用滚动 7 天额度：每个赛道最多正式评测 2 次，三个赛道合计最多 6 次。草稿和上传失败不占额度；提交正式进入评测队列时才计数。由评测基础设施导致的失败会退还额度。每个模型在每个赛道只公开最佳有效版本，但所有历史版本会保留在账号审计记录中。'
-    , 'Certification requires an organizer-verified GitHub repository or paper/technical report. “Public Resources” means at least one verified public GitHub, Hugging Face, or paper link is available; it does not assert an open-source license.': '“认证队伍”要求至少有一个经主办方核验的 GitHub 仓库或论文／技术报告。“有公开资源”表示至少存在一个经核验的 GitHub、Hugging Face 或论文链接，但不等同于采用开源许可证。'
+    , 'Certification requires an organizer-verified GitHub repository or paper/technical report. “Public Resources” means at least one verified public GitHub, Hugging Face, or paper link is available; it does not assert an open-source license.': '“认证队伍”要求至少有一个经组织方核验的 GitHub 仓库或论文／技术报告。“有公开资源”表示至少存在一个经核验的 GitHub、Hugging Face 或论文链接，但不等同于采用开源许可证。'
     , 'The registration email is private. Public team, model, organization and verified resource labels appear on model records.': '注册邮箱不会公开；队伍名称、模型名称、所属机构和经核验的资源标识会展示在模型档案中。'
-    , 'Sign-in requires a verified registration email. Formal submission additionally requires organizer approval of the team, model identity and registration materials.': '登录前须完成邮箱验证；正式提交前还需通过主办方对参评队伍、模型身份和注册资料的审核。'
+    , 'Sign-in requires a verified registration email. Formal submission additionally requires organizer approval of the team, model identity and registration materials.': '登录前须完成邮箱验证；正式提交前还需通过组织方对参评队伍、模型身份和注册资料的审核。'
     , 'Complete all required team, model, organization and email fields.': '请完整填写队伍、模型、所属机构和邮箱等必填项。'
     , 'Provide valid optional material links.': '请检查选填资料链接是否为有效的 HTTP/HTTPS 地址。'
   });
@@ -977,20 +984,20 @@
     'Register Model Account': '创建提交账号',
     'Register once.': '一次注册。',
     'Evaluate continuously.': '持续评测。',
-    'Each submission account represents one team and one model. Email verification and organizer review protect the leaderboard from unauthorised or unverifiable entries.': '每个提交账号对应一个队伍和一个模型。邮箱验证与主办方审核用于防止未经授权或无法核验的结果进入榜单。',
+    'Each submission account represents one team and one model. Email verification and organizer review protect the leaderboard from unauthorised or unverifiable entries.': '每个提交账号对应一个队伍和一个模型。邮箱验证与组织方审核用于防止未经授权或无法核验的结果进入榜单。',
     'Review-based access': '审核后开放',
     'Account workflow': '账号流程',
-    'Registration → email verification → organizer review → submission access.': '注册 → 验证邮箱 → 主办方审核 → 开放提交权限。',
+    'Registration → email verification → organizer review → submission access.': '注册 → 验证邮箱 → 组织方审核 → 开放提交权限。',
     'Complete public-resource information makes identity and model verification faster.': '公开资料越完整，队伍身份和模型核验越顺利。',
     'Create Submission Account ↗': '创建提交账号 ↗',
-    'Register': '注册', 'Verify email': '验证邮箱', 'Organizer review': '主办方审核', 'Submit': '提交',
+    'Register': '注册', 'Verify email': '验证邮箱', 'Organizer review': '组织方审核', 'Submit': '提交',
     'On this page': '本页内容', 'Eligibility': '参评资格', 'Public resources': '公开资料', 'Submission limits': '提交额度', 'Tracks': '赛道',
     'One account, one registered model.': '一个账号对应一个已登记模型。',
-    'Create a separate submission account for every model your team enters. Team name, model name, organization and verified email are required. Accounts receive no submission quota until organizer review is complete.': '队伍每提交一个模型，都需要单独创建一个提交账号。队伍名称、模型名称、所属机构和已验证邮箱均为必填项；主办方审核通过前，账号不会获得正式提交额度。',
+    'Create a separate submission account for every model your team enters. Team name, model name, organization and verified email are required. Accounts receive no submission quota until organizer review is complete.': '队伍每提交一个模型，都需要单独创建一个提交账号。队伍名称、模型名称、所属机构和已验证邮箱均为必填项；组织方审核通过前，账号不会获得正式提交额度。',
     'More complete information makes approval easier.': '信息越完整，越有利于通过审核。',
     'Use an institutional address where possible and provide public resources that clearly belong to the registered model.': '请尽量使用机构邮箱，并提供能够明确对应已登记模型的公开资料。',
     'Evidence shown clearly on the leaderboard.': '公开资料将在榜单中清晰标注。',
-    'GitHub repositories, model weights and papers are optional during registration. Organizers verify each submitted resource before the Certified Team and Public Resources labels are assigned.': '注册时可选填 GitHub 仓库、模型权重和论文。只有在主办方逐项核验后，榜单才会显示“认证队伍”和“有公开资源”标识。',
+    'GitHub repositories, model weights and papers are optional during registration. Organizers verify each submitted resource before the Certified Team and Public Resources labels are assigned.': '注册时可选填 GitHub 仓库、模型权重和论文。只有在组织方逐项核验后，榜单才会显示“认证队伍”和“有公开资源”标识。',
     'A shared rolling quota.': '统一的滚动提交额度。',
     'After approval, each account may submit up to two evaluations per Track and six evaluations total in a rolling seven-day window. The account may submit new versions of its registered model, but may not switch to a different model identity.': '审核通过后，每个账号在滚动 7 天内，每个赛道最多正式评测 2 次，三个赛道合计最多 6 次。账号可以提交已登记模型的新版本，但不能更换为其他模型。',
     'One account across all eligible Tracks.': '一个账号可参与所有符合条件的赛道。',
@@ -999,8 +1006,8 @@
     'Extended prediction windows with multi-segment evaluation.': '面向更长预测窗口进行多片段评测。',
     'Ready to begin?': '准备开始？', 'Create a submission account.': '创建提交账号。', 'Register ↗': '立即注册 ↗',
     'One Registered Model.': '一个已登记模型。',
-    'Create one submission account for each model your team enters. After email verification and organizer approval, the registered model can submit multiple versions to every eligible Track.': '每个模型需单独创建一个提交账号。完成邮箱验证并通过主办方审核后，该模型可向所有符合条件的赛道提交多个版本。',
-    'Create account → verify email → organizer review → submit.': '创建账号 → 验证邮箱 → 主办方审核 → 开始提交。',
+    'Create one submission account for each model your team enters. After email verification and organizer approval, the registered model can submit multiple versions to every eligible Track.': '每个模型需单独创建一个提交账号。完成邮箱验证并通过组织方审核后，该模型可向所有符合条件的赛道提交多个版本。',
+    'Create account → verify email → organizer review → submit.': '创建账号 → 验证邮箱 → 组织方审核 → 开始提交。',
     'Each submission account is tied to one team and one model. Create a separate account for a different model; previous submissions and versions remain attached to the original account.': '每个提交账号仅绑定一个队伍和一个模型。如需提交其他模型，请另行创建账号；已有提交和版本始终归属原账号。',
     'Review Eligibility & Approval Rules ↗': '查看参评资格与审核规则 ↗',
     'Complete information helps us review your application faster': '信息越完整，审核越顺利',
@@ -1021,19 +1028,19 @@
     'This page is hosted on GitHub Pages. Registration data is sent securely to the WorldOracle evaluation service.': '本页面托管在 GitHub Pages；注册数据将通过加密连接发送至 WorldOracle 评测服务。',
     'Registration Received': '注册信息已提交', 'Check your email.': '请查收验证邮件。',
     'Open the verification link within 24 hours.': '请在 24 小时内打开验证链接。',
-    'Registration saved. Verify the registered email to enter organizer review.': '注册信息已保存。请验证注册邮箱，完成后将进入主办方审核。',
-    'After email verification, your account enters organizer review.': '邮箱验证完成后，账号将进入主办方审核。',
+    'Registration saved. Verify the registered email to enter organizer review.': '注册信息已保存。请验证注册邮箱，完成后将进入组织方审核。',
+    'After email verification, your account enters organizer review.': '邮箱验证完成后，账号将进入组织方审核。',
     'Submission access is enabled after approval.': '审核通过后，账号将获得提交权限。',
-    'Open the verification link within 24 hours. After verification, the application enters organizer review.': '请在 24 小时内打开验证链接。完成验证后，申请将进入主办方审核。',
+    'Open the verification link within 24 hours. After verification, the application enters organizer review.': '请在 24 小时内打开验证链接。完成验证后，申请将进入组织方审核。',
     'Return to Project Page': '返回项目主页',
     'Verify your email.': '验证邮箱。',
-    'Confirm this address to place the submission account into organizer review. Verification links expire after 24 hours and can be used only once.': '确认邮箱后，提交账号将进入主办方审核。验证链接 24 小时后失效，且只能使用一次。',
+    'Confirm this address to place the submission account into organizer review. Verification links expire after 24 hours and can be used only once.': '确认邮箱后，提交账号将进入组织方审核。验证链接 24 小时后失效，且只能使用一次。',
     'For safety, verification only happens after you press the button below.': '为避免邮件系统误触发，只有点击下方按钮后才会完成验证。',
     'Verify Email': '验证邮箱', 'Verifying…': '正在验证…', 'Creating account…': '正在创建账号…',
     'Please check the highlighted fields.': '请检查标红字段。',
     'This email is already registered. Sign in or use a different email address.': '该邮箱已注册。请直接登录，或改用其他邮箱地址。',
     'That team name is already registered. Use a different team name.': '该队伍名称已注册，请使用其他队伍名称。',
-    'That model name is already registered by a pending or approved account. Use a different model name or contact the organizers.': '该模型名称已被待审核或已通过的账号注册。请使用其他模型名称，或联系主办方核实。',
+    'That model name is already registered by a pending or approved account. Use a different model name or contact the organizers.': '该模型名称已被待审核或已通过的账号注册。请使用其他模型名称，或联系组织方核实。',
     'That model name is already registered for this team.': '该模型名称已登记在当前队伍名下。',
     'That team name conflicts with an existing account identifier. Use a different team name.': '该队伍名称与已有账号标识冲突，请使用其他队伍名称。',
     'Another registration was saved at the same time and conflicts with this request. Reload the page and try again.': '提交期间有另一条注册记录同时写入并产生冲突。请刷新页面后重试。',
@@ -1053,16 +1060,16 @@
     'The registration service could not be reached. Check your connection and try again.': '暂时无法连接注册服务，请检查网络后重试。',
     'This verification link is incomplete. Request a new verification email from the sign-in page.': '验证链接不完整，请在登录页面重新发送验证邮件。',
     'This verification link is invalid or expired.': '验证链接无效或已过期。',
-    'Email verified. Your submission account is awaiting organizer review.': '邮箱验证成功，提交账号正在等待主办方审核。',
+    'Email verified. Your submission account is awaiting organizer review.': '邮箱验证成功，提交账号正在等待组织方审核。',
     'The verification service could not be reached. Check your connection and try again.': '暂时无法连接验证服务，请检查网络后重试。',
     'Submit Your Model.': '提交模型。',
     'Track Every Evaluation.': '跟踪每次评测。',
     'Prepare submissions for every eligible Track and follow each evaluation from one workspace.': '在一个工作区准备各赛道的提交，并跟踪每次评测。',
-    'Sign-in requires a verified registration email. Formal submission additionally requires organizer approval of the team, model identity and registration information.': '登录前须完成注册邮箱验证；正式提交前，还需通过主办方对队伍、模型身份和注册信息的审核。',
+    'Sign-in requires a verified registration email. Formal submission additionally requires organizer approval of the team, model identity and registration information.': '登录前须完成注册邮箱验证；正式提交前，还需通过组织方对队伍、模型身份和注册信息的审核。',
     'New to WorldOracle?': '首次参与 WorldOracle？',
     'Create a submission account': '创建提交账号',
     'Change your password': '修改密码',
-    'with your current password. If you forgot it, contact the organizers.': '修改时需要验证当前密码；如已忘记，请联系主办方。',
+    'with your current password. If you forgot it, contact the organizers.': '修改时需要验证当前密码；如已忘记，请联系组织方。',
     'Resend verification email': '重新发送验证邮件',
     'Send verification email': '发送验证邮件',
     'Contributor': '贡献方',
@@ -1107,21 +1114,21 @@
     'Declarations:': '声明：',
     'confirm authenticity, permissions, and the absence of secrets.': '确认材料真实、拥有相应权限，且不含任何机密信息。',
     'check the summary and enter the automatic evaluation queue.': '核对摘要后，正式进入自动评测队列。',
-    'Saved steps remain in your account. After an interruption, reopen the same draft and reselect the identical file to resume. Replacing the package resets its declarations to prevent mismatched submissions. After final submission, the record is read-only unless the organizers request changes.': '已保存的步骤会保留在账号中。上传中断后，重新打开同一草稿并选择完全相同的文件即可继续。更换提交包会重置相关声明，避免材料与声明不一致。正式提交后，除非主办方要求修改，否则该记录为只读状态。',
+    'Saved steps remain in your account. After an interruption, reopen the same draft and reselect the identical file to resume. Replacing the package resets its declarations to prevent mismatched submissions. After final submission, the record is read-only unless the organizers request changes.': '已保存的步骤会保留在账号中。上传中断后，重新打开同一草稿并选择完全相同的文件即可继续。更换提交包会重置相关声明，避免材料与声明不一致。正式提交后，除非组织方要求修改，否则该记录为只读状态。',
     'Track admission checks inspect video headers and decode the first frame, enforce the platform frame rate (30 FPS for AgiBot G2 and YAM; 15 FPS for Human Hand), validate view counts, synchronization, and WorldOracle-Core\'s 30-second limit. They do not decode every frame, assess data leakage, recompute metrics, or establish result validity.': '赛道入队检查会读取视频头并解码首帧，核对平台帧率（AgiBot G2 和 YAM 为 30 FPS，人手平台为 15 FPS），并检查视角数量、同步性和WorldOracle-Core 30 秒上限。这一阶段不会解码所有帧、评估数据泄漏、重新计算指标或判定结果有效性。',
     'Follow progress in My Submissions. The public stages are Draft, Submitted, Evaluating, Review, and Accepted. During Evaluating, the portal shows only overall progress and does not expose which metric is currently running.': '可在“我的提交”中查看进度。对用户展示的阶段依次为“草稿”“已提交”“评测中”“审核”和“已接受”。评测中仅显示整体进度，不会暴露当前正在计算的具体指标。',
     'Draft': '草稿', 'Submitted': '已提交', 'Evaluating': '评测中', 'Review': '审核', 'Accepted': '已接受',
     'What happens if someone bypasses checks or attempts to cheat?': '恶意绕过检查或作弊会如何处理？',
     'Deliberate attempts to bypass checks, scrape non-public benchmark data, manipulate the service, or cheat may place the related account, model, or team on the blacklist. Associated submissions may be removed and further access may be blocked.': '恶意绕过检查、爬取非公开评测数据、操纵平台服务或实施作弊，可能导致相关账号、模型或队伍被列入黑名单。关联提交可能被移除，后续访问和提交权限也可能被限制。',
     'Use N/A, with the reason and supported views. A missing or unsupported metric is not a measured zero.': '请填写 N/A，并说明原因和受支持的视角。缺失或不支持的指标不等于测得分数为 0。',
-    'No. Use this optional field for information you want the organizers to know about this submission, up to 4,000 characters.': '不是。该字段为选填，可补充希望主办方了解的本次提交信息，最多 4,000 个字符。',
+    'No. Use this optional field for information you want the organizers to know about this submission, up to 4,000 characters.': '不是。该字段为选填，可补充希望组织方了解的本次提交信息，最多 4,000 个字符。',
     'Each approved account may submit up to two evaluations per Track and six evaluations total in its rolling seven-day window. Failed or incomplete attempts do not consume a V number.': '每个已审核账号在滚动 7 天内，每个赛道最多正式评测 2 次，三个赛道合计最多 6 次。失败或未完成的尝试不会占用 V 版本号。',
     'The original ZIP and all other package files remain private. Only the declared comparison video for a model\'s accepted leaderboard-best result may be displayed publicly beside its score.': '原始 ZIP 和其他提交包文件均保持私有。只有模型已接受且成为榜单最佳的结果，其声明的对比视频才可能随分数公开展示。',
     'No. All three Track forms require prediction-video artifacts. Self-reported numbers alone are insufficient for evaluation.': '不可以。三个赛道都必须提交预测视频材料，仅提供自行汇总的分数不足以完成评测。',
     'An uploaded package is not yet a verified benchmark result. Formal queue entry consumes the rolling quota. A successful V number is assigned only after every required metric passes. For the same model, Track, and platform, an accepted result replaces the complete public row when either final aggregate score is strictly higher. A missing score is treated as 0, and scores from different submissions are never merged.': '上传完成不等于评测结果已经有效。提交正式进入队列时才扣除滚动额度；所有必需指标通过后才会获得成功版本号。对于同一模型、赛道和平台，当已接受结果的任意一项最终总分严格更高时，将整体替换公开榜单行。缺失分数按 0 计算，不同提交之间不会拼接分数。',
     'One email, one registered model.': '一个邮箱对应一个已登记模型。',
-    'Each registration email is bound to exactly one model. A team may register multiple models: choose Same Team, New Model and verify the email and password used to create the original team before adding a new model account. The team name remains shared public attribution, while every model account supplies its own model name, organization, registration email and password. Accounts receive no submission quota until organizer review is complete.': '每个注册邮箱只绑定一个模型。同一队伍可以登记多个模型：请选择“同队伍，新增模型”，并验证最初创建该队伍时使用的邮箱和密码，然后再添加新的模型账号。队伍名称作为共同的公开署名；每个模型账号需分别提供模型名称、所属机构、注册邮箱和密码。主办方审核完成前，账号不会获得正式提交额度。',
-    'Code, model weights and papers are optional during registration. Any valid public model resource can qualify the model as Certified after organizer verification. A model is marked Open Source only after both its public code repository and public model weights are verified. Resource URLs may use any public HTTP/HTTPS host.': '注册时可以选填代码、模型权重和论文。任意一项有效的公开模型资源经主办方核验后，模型即可获得“已认证”标识。只有公开代码仓库与公开模型权重均通过核验后，模型才会标记为“已开源”。资源地址可使用任意公开可访问的 HTTP/HTTPS 网站。',
+    'Each registration email is bound to exactly one model. A team may register multiple models: choose Same Team, New Model and verify the email and password used to create the original team before adding a new model account. The team name remains shared public attribution, while every model account supplies its own model name, organization, registration email and password. Accounts receive no submission quota until organizer review is complete.': '每个注册邮箱只绑定一个模型。同一队伍可以登记多个模型：请选择“同队伍，新增模型”，并验证最初创建该队伍时使用的邮箱和密码，然后再添加新的模型账号。队伍名称作为共同的公开署名；每个模型账号需分别提供模型名称、所属机构、注册邮箱和密码。组织方审核完成前，账号不会获得正式提交额度。',
+    'Code, model weights and papers are optional during registration. Any valid public model resource can qualify the model as Certified after organizer verification. A model is marked Open Source only after both its public code repository and public model weights are verified. Resource URLs may use any public HTTP/HTTPS host.': '注册时可以选填代码、模型权重和论文。任意一项有效的公开模型资源经组织方核验后，模型即可获得“已认证”标识。只有公开代码仓库与公开模型权重均通过核验后，模型才会标记为“已开源”。资源地址可使用任意公开可访问的 HTTP/HTTPS 网站。',
     'Registration type': '注册类型', 'New Account': '新账号', 'Same Team, New Model': '同队伍，新增模型',
     'Create a new account': '创建新账号', 'Same team, new model': '同队伍，新增模型',
     'Check team': '检查队伍', 'Checking…': '正在检查…',
@@ -1156,23 +1163,23 @@
     'Create a draft and save your progress one step at a time.': '创建草稿，并逐步保存提交进度。',
     'Cancel': '取消', 'Verify Team & Continue ↗': '验证队伍并继续 ↗',
     'Close team verification': '关闭队伍身份验证',
-    'Model account saved. Verify the new registration email to enter organizer review.': '模型账号已保存。请验证新的注册邮箱，完成后将进入主办方审核。'
+    'Model account saved. Verify the new registration email to enter organizer review.': '模型账号已保存。请验证新的注册邮箱，完成后将进入组织方审核。'
     , 'Enter the original team account email.': '请输入原队伍账号邮箱。'
     , 'Enter the original team account password.': '请输入原队伍账号密码。'
     , 'The original team email or password is incorrect, or the team email is not verified.': '原队伍邮箱或密码不正确，或者该队伍邮箱尚未完成验证。'
     , 'That team name is already registered. Choose Same Team, New Model to add another model.': '该队伍名称已登记；如需添加其他模型，请选择“同队伍，新增模型”。'
-    , 'Any valid public model resource can qualify the model as Certified after organizer verification. Open-source status requires both public Code and Weights. Add a valid Code Repository URL to reveal Model Weights. Resource links may use any public HTTP/HTTPS host.': '任意一项有效的公开模型资源经主办方核验后，模型即可获得“已认证”标识。开源状态要求同时具备公开代码和公开权重；填写有效的代码仓库地址后才会显示模型权重栏。资源链接可使用任意公开可访问的 HTTP/HTTPS 网站。'
+    , 'Any valid public model resource can qualify the model as Certified after organizer verification. Open-source status requires both public Code and Weights. Add a valid Code Repository URL to reveal Model Weights. Resource links may use any public HTTP/HTTPS host.': '任意一项有效的公开模型资源经组织方核验后，模型即可获得“已认证”标识。开源状态要求同时具备公开代码和公开权重；填写有效的代码仓库地址后才会显示模型权重栏。资源链接可使用任意公开可访问的 HTTP/HTTPS 网站。'
     , '3. Certification & Open-source Status': '3. 认证与开源状态'
     , 'An approved account may submit without publishing code or weights. A verified model-related code repository or public paper/technical report qualifies the account as a': '账号审核通过后，即使未公开代码或权重，也可以提交评测。任意与模型相关且经核验的公开代码仓库、论文或技术报告，均可使该账号标记为'
     , '. The model is marked': '。只有公开代码仓库和公开模型权重均通过核验，模型才会标记为'
-    , 'only when both its public code repository and public model weights are verified. Resource URLs may use any public HTTP/HTTPS host. Organizers may revoke labels if links fail, resources are unrelated, or submitted artifacts do not match the registered model.': '。资源地址可使用任意公开可访问的 HTTP/HTTPS 网站。如果链接失效、资源与模型无关，或提交材料与登记模型不一致，主办方可以撤销相关标识。'
+    , 'only when both its public code repository and public model weights are verified. Resource URLs may use any public HTTP/HTTPS host. Organizers may revoke labels if links fail, resources are unrelated, or submitted artifacts do not match the registered model.': '。资源地址可使用任意公开可访问的 HTTP/HTTPS 网站。如果链接失效、资源与模型无关，或提交材料与登记模型不一致，组织方可以撤销相关标识。'
     , 'First 30 seconds · PSC, KIAF and ISA for every submission · MVAC for three-view submissions.': '前 30 秒 · 所有提交均评测 PSC、KIAF 和 ISA · 三视角提交额外评测 MVAC。'
     , 'Complete policy-rollout trajectories · PSC, KIAF and ISA for every submission · MVAC for three-view submissions · AgiBot G2.': '完整策略轨迹 · 所有提交均评测 PSC、KIAF 和 ISA · 三视角提交额外评测 MVAC · AgiBot G2。'
     , 'Full prescribed trajectories · PSC, KIAF and ISA for every submission · MVAC for three-view submissions.': '规定的完整轨迹 · 所有提交均评测 PSC、KIAF 和 ISA · 三视角提交额外评测 MVAC。'
     , 'First 30 seconds of human-operated trajectories. PSC, KIAF and ISA are evaluated for every submission; MVAC is added for three-view submissions.': '人类操作轨迹的前 30 秒。所有提交均评测 PSC、KIAF 和 ISA；三视角提交额外评测 MVAC。'
     , 'Complete policy-rollout trajectories on AgiBot G2. PSC, KIAF and ISA are evaluated for every submission; MVAC is added for three-view submissions.': 'AgiBot G2 上的完整策略轨迹。所有提交均评测 PSC、KIAF 和 ISA；三视角提交额外评测 MVAC。'
     , 'Full prescribed trajectories. PSC, KIAF and ISA are evaluated for every submission; MVAC is added for three-view submissions.': '规定的完整轨迹。所有提交均评测 PSC、KIAF 和 ISA；三视角提交额外评测 MVAC。'
-    , 'The portal automatically uses the single organizer-approved model bound to this account. Select the Track and platform and optionally add submission notes. Each queue entry receives the next account submission number within its Track.': '提交平台会自动使用当前账号唯一绑定且经主办方审核的模型。请选择赛道和平台，并可选填写提交说明。每次正式入队都会获得该赛道中的下一个账号提交序号。'
+    , 'The portal automatically uses the single organizer-approved model bound to this account. Select the Track and platform and optionally add submission notes. Each queue entry receives the next account submission number within its Track.': '提交平台会自动使用当前账号唯一绑定且经组织方审核的模型。请选择赛道和平台，并可选填写提交说明。每次正式入队都会获得该赛道中的下一个账号提交序号。'
     , 'Single-view input directory format': '单视角输入目录格式'
     , 'Three-view input directory format': '三视角输入目录格式'
     , 'Set evaluation.view_mode to single. Every submitted episode contains exactly one top_head.mp4 prediction.': '请将 evaluation.view_mode 设置为 single。每个提交的 episode 必须且只能包含一个 top_head.mp4 预测视频。'
@@ -1250,11 +1257,435 @@
     , 'Integrity & Review': '评测完整性与复核'
   });
 
+  // Final editorial pass for the public site. These overrides keep technical
+  // identifiers intact while making the surrounding Chinese read naturally.
+  Object.assign(zh, {
+    'Skip to Leaderboard': '跳至榜单',
+    'Leaderboard': '榜单',
+    'Full Leaderboard': '完整榜单',
+    'Leaderboard Tracks': '榜单赛道',
+    'Ground Truth': '真实世界参考数据',
+    'Real-World Ground Truth': '真实世界参考数据',
+    'Embodiments': '具身平台',
+    'Three Embodiments. One Evaluation Framework.': '三种具身平台，同一套评测框架。',
+    'Top View': '顶部视角',
+    'Left View': '左侧视角',
+    'Right View': '右侧视角',
+    'Egocentric View': '第一视角',
+    'Top View · Left View · Right View': '顶部视角 · 左侧视角 · 右侧视角',
+    'AgiBot G2 Top View': 'AgiBot G2 顶部视角',
+    'AgiBot G2 Left View': 'AgiBot G2 左侧视角',
+    'AgiBot G2 Right View': 'AgiBot G2 右侧视角',
+    'YAM Top View': 'YAM 顶部视角',
+    'YAM Left View': 'YAM 左侧视角',
+    'YAM Right View': 'YAM 右侧视角',
+    'Human Hand Egocentric View': 'Human Hand 第一视角',
+    'Single-View Score': '单视角总分',
+    'Multi-View Score': '三视角总分',
+    'SV Score': '单视角总分',
+    'MV Score': '三视角总分',
+    'Single-View': '单视角',
+    'Multi-View': '三视角',
+    'Multi-View Action Coherence': '三视角动作一致性',
+    'Multi-View Consistency': '三视角一致性',
+    'Multi-View · Demo': '三视角 · 演示',
+    'Single-View · Demo': '单视角 · 演示',
+    'Single-View · Layout Demo': '单视角 · 布局演示',
+    'Open the matched episode': '查看统一对比样例',
+    'Compare models on the same held-out episode.': '在同一个保留测试集样例上对比不同模型。',
+    'The same held-out episode is shown for like-for-like visual comparison.': '同一赛道和平台统一展示同一个保留测试集样例，便于进行公平的可视化对比。',
+    'Matched previews': '统一样例预览',
+    'Comparison episode unavailable': '暂无统一对比样例',
+    'This illustrative result does not have a submitted episode.': '该演示结果没有对应的提交样例。',
+    'No public comparison video is available for this legacy result.': '该历史结果暂无可公开的对比视频。',
+    'Click any model row to show the example.': '点击任意模型行即可查看对比样例。',
+    "Sampled episode from this model's evaluation materials.": '该样例节选自此模型的评测材料。',
+    'Loading published results…': '正在加载已发布的评测结果…',
+    'Rank by metric': '按评测指标排名',
+    'Policy-rollout scores': '策略执行轨迹得分',
+    'Enable JavaScript to load WorldOracle-Policy results and the radar chart.': '请启用 JavaScript，以加载 WorldOracle-Policy 评测结果和雷达图。',
+    'Active track visual comparison': '当前赛道可视化对比',
+    'WorldOracle Project Page': 'WorldOracle 项目主页',
+    'WorldOracle evaluates action-conditioned world models against paired real-world executions.': 'WorldOracle 通过配对的真实世界执行轨迹评测动作条件世界模型。',
+    'WorldOracle leaderboard: compare action-conditioned world models across platforms and evaluation durations.': 'WorldOracle 榜单：对比不同具身平台和评测时长下的动作条件世界模型。',
+    'WorldOracle submission eligibility, registration and evaluation guide.': 'WorldOracle 参评资格、账号注册与评测提交指南。',
+    'Create a WorldOracle model submission account.': '创建 WorldOracle 模型评测提交账号。',
+    'WorldOracle framework showing human-operated and policy-rollout distributions, action replay by an ACWM, and four evaluation dimensions': 'WorldOracle 评测框架：覆盖人工操作轨迹与策略执行轨迹两种数据分布，由 ACWM 重放动作轨迹，并从四个维度进行评测',
+    'AgiBot G2 synchronized Top, Left, and Right Views': 'AgiBot G2 同步顶部、左侧与右侧视角',
+    'YAM synchronized Top, Left, and Right Views': 'YAM 同步顶部、左侧与右侧视角',
+    'Selected WorldOracle-Core episode preview': '当前选中的 WorldOracle-Core 样例预览',
+    'Selected WorldOracle-Policy episode preview': '当前选中的 WorldOracle-Policy 样例预览',
+    'Selected WorldOracle-Long episode preview': '当前选中的 WorldOracle-Long 样例预览',
+    'Evaluation stages': '评测阶段',
+    'Privacy Notice': '隐私说明',
+    'Step': '第',
+    'of 4': '步，共 4 步',
+    'Finished': '已完成',
+    'Working…': '处理中…',
+    'Options': '选项',
+    'Select an option': '请选择',
+    'Registration Pending': '注册审核中',
+    'Organizer approval required': '需先通过组织方审核',
+    'View type not recorded': '未记录视角类型',
+    'Not selected': '未选择',
+    'Not set': '未设置',
+    'Not uploaded': '未上传',
+    'Not published': '未公开',
+    'Assigned after Accepted / Finished': '评测通过后分配',
+    'Contact the organizers for details.': '详情请联系组织方。',
+    'Delete this draft? Its audit record and uploaded materials may be retained privately.': '确定删除该草稿吗？出于审计需要，相关记录和已上传材料可能会被非公开保留。',
+    'Withdraw this submission?': '确定撤回本次提交吗？',
+    'Dismiss notification': '关闭通知',
+    'Profile settings': '账号设置',
+    'Profile sections': '账号设置分区',
+    'Every draft remains tied to the registered team and model. Unsupported metrics remain N/A and are never replaced by fabricated zeros.': '每份草稿都与已登记的队伍和模型绑定。不支持的指标始终标记为 N/A，不会用人为填充的零分代替。',
+    'I have read the': '我已阅读',
+    'and confirm that the information above is accurate.': '，并确认上述信息准确无误。',
+    'Registration has moved to': '注册入口已迁移至',
+    'Sign In / Register': '登录 / 注册',
+    'Registration moved': '注册入口已迁移',
+    'Prepare Submission': '准备提交',
+    'Verify Email': '验证邮箱',
+    'Submission Details': '提交详情',
+    'Create Submission Account': '创建提交账号',
+    'Account Profile': '账号资料',
+    'The original ZIP and all other package files remain private. When an accepted result becomes the model\'s leaderboard best, only the canonical preview is public:': '原始 ZIP 及提交包中的其他文件均保持非公开。当已通过的结果成为该模型的榜单最佳成绩时，仅公开统一对比预览：',
+    'for a single-view entry, or the synchronized three-view composite for a multi-view entry.': '（单视角提交），或同步三视角合成视频（三视角提交）。',
+    '. Authoritative test-set coverage, full-frame alignment, evaluation criteria, metric implementations, service paths, and credentials remain service-side checks. After upload, the evaluation service repeats the public checks before evaluation.': '。正式测试集覆盖情况、逐帧对齐、评测标准、指标实现、服务路径与凭据均由服务端检查。上传后，评测服务会先重复执行公开校验，再开始评测。',
+    'Use the encoding helper for one episode and view at a time:': '使用编码脚本逐个处理每条轨迹的各个视角：',
+    'is at the ZIP root. Every Track package must include the canonical comparison episode. A single-view submission publishes its': '位于 ZIP 根目录。每个赛道的提交包都必须包含指定的统一对比轨迹。单视角提交会公开其',
+    '. Each episode contains exactly one prediction.': '。每条轨迹仅包含一个预测视频。'
+  });
+
+  Object.assign(zh, {
+    'Benchmarking Action-Conditioned': '动作条件世界模型',
+    'World Models against Real-World': '与真实世界执行',
+    'Executions': '的基准评测',
+    'WorldOracle evaluates action-conditioned world models against paired real-world executions. Given the same initial observation and low-level action sequence, it asks whether a predicted rollout reproduces the real physical consequences and task-state transitions. The benchmark measures physical state correctness, interaction spatial alignment, key interaction area fidelity, and multi-view action coherence across different interaction dynamics and embodiments. Its evaluation suite includes long, multi-segment episodes with both successful and failed executions, revealing distinct model strengths and failure modes across varied action outcomes and behavior distributions.': 'WorldOracle 将动作条件世界模型的预测轨迹与配对的真实执行轨迹进行比较。在初始观测和底层动作序列完全相同的条件下，它检验预测轨迹能否复现真实的物理后果与任务状态变化。基准从物理状态正确性、交互空间对齐、关键交互区域保真度和三视角动作一致性四个维度进行评测，覆盖多种交互动力学和具身平台。评测集包含同时涵盖成功与失败结果的长时、多阶段轨迹，用于呈现不同模型在各类动作结果和行为分布下的优势与失效模式。',
+    'WorldOracle evaluates ACWMs against paired real-world executions from two data distributions: human-operated trajectories and policy rollouts collected on a real robot. For both distributions, each recorded action trajectory is replayed by the ACWM and compared with its paired real execution.': 'WorldOracle 在两种数据分布上将 ACWM 的预测与配对的真实执行轨迹进行比较：人工操作轨迹，以及策略在真实机器人上执行时采集的轨迹。在两种分布中，ACWM 都会重放已记录的动作轨迹，并与对应的真实执行结果比较。',
+    'Every reference is a recorded physical rollout—not a simulator-rendered target. Paired executions preserve both successful and failed outcomes across rigid, deformable, fluid, and articulated-object interactions.': '每条参考轨迹都来自真实物理执行，而非仿真器渲染的目标画面。配对数据同时保留了刚体、可变形物体、流体与关节物体交互中的成功和失败结果。',
+    'WorldOracle evaluates heterogeneous agents and action spaces using paired real-world execution references. AgiBot G2 and YAM support synchronized Top, Left, and Right views for three-view evaluation.': 'WorldOracle 使用配对的真实执行轨迹，在统一框架下评测不同具身平台与动作空间。AgiBot G2 和 YAM 均支持同步的顶部、左侧与右侧视角，可进行三视角评测。',
+    'Real-world data includes both successful actions and failed attempts. Explore recorded GT excerpts from four tasks—capturing not only what works, but also missed grasps, dropped objects, and spills.': '真实世界数据同时包含成功执行与失败尝试。以下四项任务的记录片段不仅展示成功结果，也包含抓取落空、物体掉落和液体洒漏等失败情况。',
+    'WorldOracle measures execution coherence along four complementary dimensions. The first three use the primary top-head view; multi-view action coherence uses all three synchronized views.': 'WorldOracle 从四个互补维度衡量执行一致性。前三项指标使用主视角（top_head），三视角动作一致性则同时使用三个同步视角。',
+    'At each interaction segment’s outcome keyframe, a VLM judges physical-state criteria annotated from the paired real-world keyframe. Criterion scores are averaged within segments and then across the episode.': '在每个交互片段的结果关键帧上，VLM 会根据配对真实世界关键帧中标注的物理状态条件进行判定。各条件得分先在片段内求平均，再在整条轨迹上求平均。',
+    'Robot-arm alignment is measured independently against the paired real execution in synchronized top, left-hand, and right-hand views, then aggregated. A frame scores highly only when motion is aligned in every view.': '系统会在同步的顶部、左侧和右侧视角中，分别将机械臂运动与配对的真实执行轨迹对齐，然后汇总三个视角的结果。只有动作在所有视角中均对齐时，该帧才会获得高分。',
+    'News': '最新动态',
+    'Reading the board': '榜单阅读指南',
+    'Choose an embodiment': '选择具身平台',
+    'Compare models only within the same physical setting.': '仅在同一物理平台内比较模型。',
+    'Inspect the dimensions': '查看分项指标',
+    'Higher is better; unavailable multi-view results remain unranked.': '各项分数均为越高越好；无三视角结果时，不参与对应指标的排名。',
+    'Evaluation unit': '评测单元',
+    'Paired real execution': '配对的真实执行轨迹',
+    'Predictions and references share the same initial observation and action trajectory.': '预测轨迹与参考轨迹使用完全相同的初始观测和动作序列。',
+    '30-second, policy-rollout, or complete-episode evaluation.': '可选择 30 秒预测、策略执行轨迹或完整轨迹评测。',
+    'The WorldOracle-Core evaluates the human-operated distribution over the first 30 seconds, using sampled frames and outcome keyframes from paired real-world executions.': 'WorldOracle-Core 评测人工操作轨迹的前 30 秒，并使用配对真实执行轨迹中的采样帧和结果关键帧进行比较。',
+    'The WorldOracle-Policy uses recorded action trajectories collected while a policy interacts with the physical AgiBot G2 robot in closed loop. During evaluation, each trajectory is replayed open loop by the ACWM and compared with its paired real execution.': 'WorldOracle-Policy 使用策略与真实 AgiBot G2 机器人进行闭环交互时采集的动作轨迹。评测时，ACWM 以开环方式重放每条轨迹，并与配对的真实执行结果进行比较。',
+    'The WorldOracle-Long evaluates every available frame and outcome keyframe in complete human-operated episodes, exposing how execution coherence changes as rollout errors accumulate.': 'WorldOracle-Long 评测完整人工操作轨迹中的所有可用帧与结果关键帧，用于观察预测误差逐步累积时，执行一致性如何变化。',
+    'The table reports Physical State Correctness (PSC), Key Interaction Area Fidelity (KIAF), Interaction Spatial Alignment (ISA), and Multi-View Action Coherence (MVAC, where supported). Single-View Score is the mean of PSC, KIAF and ISA. Multi-View Score adds MVAC with equal weight. A dash means unsupported or not evaluated.': '表格展示物理状态正确性（PSC）、关键交互区域保真度（KIAF）、交互空间对齐（ISA）和三视角动作一致性（MVAC，仅在支持时评测）。单视角总分为 PSC、KIAF 与 ISA 的平均值；三视角总分在此基础上等权加入 MVAC。“-”表示不支持或未评测。',
+    'Human Hand supports Single-View evaluation only. Multi-View Score and MVAC are not available.': 'Human Hand 仅支持单视角评测，不提供三视角总分和 MVAC。',
+    'WorldOracle compares every prediction with its paired real-world rollout. The first three dimensions use the primary top_head view; multi-view action coherence uses all three synchronized views.': 'WorldOracle 将每条预测轨迹与配对的真实执行轨迹进行比较。前三项指标使用主视角 top_head，三视角动作一致性使用全部三个同步视角。',
+    'Each submission account represents one team and one fixed model. Email verification and organizer approval unlock submissions to WorldOracle-Core, WorldOracle-Policy, and WorldOracle-Long. Both open-weight and closed-source models may participate; the leaderboard reports certification and public-resource status separately.': '每个提交账号对应一个参评队伍和一个固定模型。完成邮箱验证并通过组织方审核后，该模型可向 WorldOracle-Core、WorldOracle-Policy 和 WorldOracle-Long 提交评测。公开权重模型和闭源模型均可参评；榜单会分别展示认证状态和公开资源状态。',
+    'WorldOracle evaluates ACWMs on human-operated trajectories and policy rollouts collected on real robots. The same framework covers AgiBot G2, YAM, and Human Hand. Select a Track and platform, then submit the required prediction videos; the Track selection determines the evaluation protocol.': 'WorldOracle 在人工操作轨迹和真实机器人上采集的策略执行轨迹上评测 ACWM。同一套框架覆盖 AgiBot G2、YAM 和 Human Hand。选择赛道与具身平台后，上传对应的预测视频；系统会根据所选赛道确定评测协议。',
+    'Quota usage begins when a submission enters the formal evaluation queue. A Version number is assigned after every required metric passes. For the same model, Track, and platform, a new accepted result replaces the complete public row when either its final Single-View Score or Multi-View Score is strictly higher than the corresponding published score. An unavailable score is treated as 0, and scores from different submissions are never merged.': '提交进入正式评测队列时才会扣除额度。所有必需指标均成功完成后，系统会分配版本号。对于同一模型、赛道和具身平台，如果新通过的结果在单视角总分或三视角总分中任意一项严格高于当前已发布成绩，将以新结果整体替换原榜单记录。缺失的总分在比较时按 0 计算，不同提交的分数不会拼接。',
+    'First 30 seconds of human-operated trajectories. PSC, KIAF and ISA are evaluated for every submission; MVAC is added for three-view submissions.': '评测人工操作轨迹的前 30 秒。所有提交均评测 PSC、KIAF 和 ISA；三视角提交还会额外评测 MVAC。',
+    'Complete policy-rollout trajectories on AgiBot G2. PSC, KIAF and ISA are evaluated for every submission; MVAC is added for three-view submissions.': '评测 AgiBot G2 上的完整策略执行轨迹。所有提交均评测 PSC、KIAF 和 ISA；三视角提交还会额外评测 MVAC。',
+    'Full prescribed trajectories. PSC, KIAF and ISA are evaluated for every submission; MVAC is added for three-view submissions.': '评测规定的完整轨迹。所有提交均评测 PSC、KIAF 和 ISA；三视角提交还会额外评测 MVAC。',
+    'Each submission enters one Track and one platform. Use separate submissions to enter multiple Tracks. WorldOracle-Core and WorldOracle-Long support AgiBot G2, YAM, and Human Hand; WorldOracle-Policy supports AgiBot G2 policy rollouts.': '每次提交只对应一个赛道和一个具身平台；如需参加多个赛道，请分别提交。WorldOracle-Core 和 WorldOracle-Long 支持 AgiBot G2、YAM 与 Human Hand；WorldOracle-Policy 支持 AgiBot G2 策略执行轨迹。',
+    '. Submit the first 30 seconds of every required episode using recorded actions.': '。请使用已记录的动作，提交每条必需轨迹的前 30 秒预测。',
+    '. Submit every complete episode using recorded actions and preserve its full duration.': '。请使用已记录的动作提交每条完整轨迹，并保留其全部时长。',
+    ', plus MP4 and ZIP overhead. Apply one bitrate to every view and episode. If the ZIP exceeds the Track limit, lower that bitrate uniformly and record the value in': '，再加上 MP4 容器与 ZIP 封装开销。所有轨迹和视角的视频必须使用统一码率。如果 ZIP 超过所选赛道的容量上限，请对全部视频统一降低码率，并将调整后的数值记录在',
+    'Frame rate is platform-specific: AgiBot G2 and YAM use 30 FPS (900 frames for WorldOracle-Core); Human Hand uses 15 FPS (450 frames for WorldOracle-Core). Preserve the native frame rate and do not duplicate frames.': '帧率由具身平台决定：AgiBot G2 和 YAM 使用 30 FPS（WorldOracle-Core 共 900 帧）；Human Hand 使用 15 FPS（WorldOracle-Core 共 450 帧）。请保留原生帧率，不得通过复制帧提高帧率。',
+    'Keep the package limited to evaluation artifacts. Exclude passwords, API keys, private tokens, personal data, raw GT frames, caches, checkpoints, and unrelated experiment outputs.': '提交包中仅保留评测所需材料。请勿包含密码、API 密钥、私有令牌、个人信息、真实参考原始帧、缓存、模型检查点或与评测无关的实验输出。',
+    'Set --track to core, policy, or long; set --platform to agibot-g2, yam, or human-hand; and set --view-mode to single or multi. These required arguments must match both manifest.json and the portal form. Human Hand supports Single-View only.': '请将 --track 设为 core、policy 或 long；将 --platform 设为 agibot-g2、yam 或 human-hand；将 --view-mode 设为 single 或 multi。这三项必填参数必须同时与 manifest.json 及提交表单一致。Human Hand 仅支持单视角。',
+    'My Submissions reports five public stages: Draft, Submitted, Evaluating, Review, and Accepted. Evaluating shows overall progress while keeping individual metric execution private.': '“我的提交”页面展示五个公开阶段：草稿、已提交、评测中、复核中和已通过。“评测中”仅展示整体进度，不公开各项指标的内部执行过程。',
+    'Draft': '草稿',
+    'Submitted': '已提交',
+    'Evaluating': '评测中',
+    'Review': '复核中',
+    'Accepted': '已通过',
+    'Leaderboard replacement compares both final aggregate scores for the same model, Track, and platform. A new accepted result replaces the complete public row when either its Single-View Score or Multi-View Score is strictly higher. A missing score is treated as 0; component metrics are not compared for replacement, and scores from different submissions are not merged.': '对于同一模型、赛道和具身平台，榜单替换会比较两项最终总分。如果新通过的结果在单视角总分或三视角总分中任意一项严格更高，将以新结果整体替换原榜单记录。缺失的总分在比较时按 0 计算；替换时不比较分项指标，也不会拼接不同提交的分数。',
+    'replaces the row only when the new Single-View Score is higher.': '仅当新的单视角总分更高时替换榜单记录。',
+    'replaces the row only when the new Single-View Score is higher; the replacing row has no Multi-View Score.': '仅当新的单视角总分更高时替换；替换后的榜单记录不再包含三视角总分。',
+    'replaces the row because the published missing Multi-View Score is treated as 0.': '由于原榜单记录缺失的三视角总分按 0 计算，因此新的三视角结果会替换原记录。',
+    'replaces the row when either the new Single-View Score or Multi-View Score is higher.': '当新的单视角总分或三视角总分中任意一项更高时，替换原榜单记录。',
+    'Failed or incomplete attempts do not consume a V number.': '失败或未完成的尝试不会占用版本号。',
+    'Any valid public model resource can qualify the model as Certified after organizer verification. Open-source status requires both public Code and Weights. Add a valid Code Repository URL to reveal Model Weights. Resource links may use any public HTTP/HTTPS host. A Weights link must point to the weights used by the exact model or method registered by this account and is published only after organizer review.': '任意一项有效的公开模型资源经组织方核验后，都可使模型获得“已认证”标识。“已开源”状态要求同时具备公开代码和公开权重。填写有效的代码仓库链接后，模型权重栏才会显示。资源链接可使用任意公开可访问的 HTTP/HTTPS 站点。权重链接必须指向本账号已登记模型或方法实际使用的权重，并且只会在组织方审核通过后公开。',
+    'This must be the public weights used by the exact model or method registered for this account—not a base model, dependency, or unrelated checkpoint. Organizers verify the link before publication.': '该链接必须指向本账号已登记模型或方法实际使用的公开权重，不得使用基础模型、依赖模型或无关模型检查点的链接。组织方会在公开链接前进行核验。'
+  });
+
+  // Complete participant-facing Chinese copy. Keep product names, schema
+  // fields, command-line arguments, and metric abbreviations unchanged so the
+  // translated UI remains operationally precise rather than mechanically
+  // replacing technical identifiers.
+  Object.assign(zh, {
+    'Skip to Leaderboard': '跳至榜单',
+    'Leaderboard': '榜单',
+    'Full Leaderboard': '完整榜单',
+    'Research Submission Portal': '研究评测提交平台',
+    'Automatic Evaluation · Best Completed Results': '自动评测 · 展示最优完整结果',
+    'WorldOracle submission guide and research submission portal.': 'WorldOracle 提交指南与研究评测提交平台。',
+    'WorldOracle Project Page': 'WorldOracle 项目主页',
+    'Submission Process': '提交流程',
+    'Submission Steps': '提交步骤',
+    'Profile settings': '个人中心设置',
+    'Profile sections': '个人中心分区',
+    'Contribute to the Benchmark': '参与基准评测',
+    'Submission Guide.': '提交指南。',
+    'From a real-world rollout to a reproducible result.': '从真实执行轨迹到可复现的评测结果。',
+    'Prepare your materials, choose a track, and submit for evaluation.': '准备提交材料，选择赛道，然后提交评测。',
+    'Submit Your Results': '提交评测结果',
+    'Submit Your Results ↗': '提交评测结果 ↗',
+    'Preview Protocol': '预览版协议',
+    'One Framework. Three Evaluation Tracks.': '一套框架，三条评测赛道。',
+    'Explore the Tracks': '了解评测赛道',
+    'Explore the Tracks ↓': '了解评测赛道 ↓',
+    'Register Team & Model': '注册队伍与模型',
+    'Verify Email & Pass Review': '验证邮箱并通过审核',
+    'Submit for Evaluation': '提交评测',
+    'Track Your Results': '查看评测进度',
+    'On This Page': '本页目录',
+    'Open Submission Portal ↗': '打开提交平台 ↗',
+    '01 / Get Started': '01 / 开始之前',
+    '02 / Eligibility & Registration': '02 / 参评资格与注册',
+    '03 / Evaluation Tracks': '03 / 评测赛道',
+    '04 / Package Specification': '04 / 提交包规范',
+    '05 / Submission Wizard': '05 / 提交向导',
+    '06 / What Happens Next': '06 / 评测流程',
+    '07 / Fair and Reproducible': '07 / 公平与可复现',
+    'Eligibility & Registration': '参评资格与注册',
+    'Choose a Track': '选择评测赛道',
+    'Prepare Your Submission': '准备提交材料',
+    'Validate and Submit': '校验并提交',
+    'Evaluation and Publication': '评测与结果发布',
+    'Rules and FAQ': '规则与常见问题',
+    'Track limits and required coverage': '赛道容量上限与必需轨迹',
+    'one ZIP below': '一个小于',
+    '. Submit the complete policy-distribution rollout for AgiBot G2 and use': '的 ZIP。请提交 AgiBot G2 在策略数据分布下的完整执行轨迹，并在 manifest 中使用',
+    'in the manifest.': '。',
+    'The size limit applies to both the uploaded ZIP and its declared expanded contents. Packages may contain up to 20,000 entries. Admission rejects ZIP symlinks, encrypted entries, duplicate or unsafe paths, and packages where': '容量上限同时适用于上传的 ZIP 及其声明的解压内容。每个提交包最多包含 20,000 个条目。入队校验会拒绝 ZIP 软链接、加密条目、重复或不安全的路径，以及',
+    'is not at the ZIP root.': '未直接位于 ZIP 根目录的提交包。',
+    'Single-view input directory format': '单视角输入目录格式',
+    'Three-view input directory format': '三视角输入目录格式',
+    '. Each episode contains exactly one prediction.': '。每条轨迹必须且只能包含一个预测视频。',
+    'Use the encoding helper for one episode and view at a time:': '使用编码脚本逐条轨迹、逐个视角处理：',
+    'must be one flat frame directory for a single episode/view. It accepts contiguous': '必须是单条轨迹、单个视角对应的一层帧目录。脚本支持从 0 开始且编号连续的',
+    'files starting at zero, performs both ffmpeg passes automatically, and fails if the output frame count differs. An optional fourth argument changes the bitrate, for example': '文件，会自动完成两遍 ffmpeg 编码；如果输出帧数不一致，脚本会报错退出。可选的第四个参数用于修改码率，例如',
+    '. Arrange the resulting MP4 files in the task/episode/view paths declared by': '。创建提交 ZIP 前，请按照',
+    'before creating the submission ZIP.': '中声明的 task / episode / view 路径放置生成的 MP4 文件。',
+    'Package and verify': '打包与校验',
+    'Download Manifest Example': '下载 Manifest 示例',
+    'Download Encoding Script': '下载编码脚本',
+    'Package and Coverage Validation': '提交包与轨迹覆盖校验',
+    'In the submission portal, follow four steps:': '在提交平台中，按照以下四个步骤操作：',
+    'Model and Track:': '模型与赛道：',
+    'Upload Materials:': '上传材料：',
+    'Declarations:': '参评声明：',
+    'Confirm and Submit:': '确认并提交：',
+    'How should unavailable metrics be reported?': '不可用的指标应如何标注？',
+    'Are submission notes required?': '提交备注是否必填？',
+    'Can I submit repeatedly?': '可以多次提交吗？',
+    'Are my files public?': '我的提交文件会公开吗？',
+    'Can I upload only my aggregate scores?': '可以只上传汇总分数吗？',
+    'What happens if someone bypasses checks or attempts to cheat?': '如果有人绕过检查或试图作弊，会如何处理？',
+    'Who can help with access or large uploads?': '账号权限或大文件上传问题应联系谁？',
+    'No. Use this optional field for information you want the organizers to know about this submission, up to 4,000 characters.': '不是必填项。如有需要组织方了解的提交信息，可在此填写，最多 4,000 字符。',
+    'Each approved account may submit up to two evaluations per Track and six evaluations total in its rolling seven-day window.': '每个审核通过的账号在滚动七天窗口内，每个赛道最多可提交两次评测，全部赛道合计最多六次。',
+    'No. All three Track forms require prediction-video artifacts. Self-reported numbers alone are insufficient for evaluation.': '不可以。三个赛道都必须提交预测视频，仅提供自行填报的分数无法完成评测。',
+    'Deliberate attempts to bypass checks, scrape non-public benchmark data, manipulate the service, or cheat may place the related account, model, or team on the blacklist. Associated submissions may be removed and further access may be blocked.': '恶意绕过检查、爬取未公开的基准数据、攻击或操纵评测服务、以及作弊行为，可能导致相关账号、模型或队伍被列入黑名单。相关提交可能被移除，后续访问权限也可能被禁用。',
+    'Ready When You Are': '准备就绪后',
+    'Make Your Results Reproducible.': '让评测结果可复现。',
+
+    'Registration Pending': '等待完成注册',
+    'Model Submissions.': '模型提交记录。',
+    '+ New Submission': '+ 新建提交',
+    'Review Account Status →': '查看账号状态 →',
+    'Internal account · idle-capacity queue, no weekly quota, no public leaderboard publication, and at most 3 active submissions.': '内部账号 · 使用空闲算力队列，不受每周额度限制，结果不发布至公开榜单，最多同时保留 3 个活跃提交。',
+    'Complete email verification and organizer review to continue.': '请先完成邮箱验证并通过组织方审核。',
+    'Internal Evaluation Access': '内部评测权限',
+    'Weekly Submission Allowance': '每周提交额度',
+    'Idle-Capacity Evaluation': '空闲算力评测',
+    'Remaining Submissions': '剩余提交次数',
+    'Submitted ↓': '提交时间 ↓',
+    'Current Stage': '当前阶段',
+    'Queue': '队列',
+    'Details →': '查看详情 →',
+    'No submissions in this Track.': '该赛道暂无提交记录。',
+
+    'Prepare Your Submission.': '准备提交材料。',
+    '← My Submissions': '← 我的提交',
+    'Model and Track': '模型与赛道',
+    'Upload Materials': '上传材料',
+    'Declarations': '参评声明',
+    'Confirm and Submit': '确认并提交',
+    'Choose Your Benchmark Track': '选择评测赛道',
+    '30s · Recorded Actions': '30 秒 · 已记录动作',
+    'Policy Rollouts · AgiBot G2': '策略执行轨迹 · AgiBot G2',
+    'Full Trajectories · Recorded Actions': '完整轨迹 · 已记录动作',
+    'All three Tracks accept prediction videos. MVC applies only to multi-view outputs.': '三个赛道均接收预测视频；MVC 仅适用于三视角输出。',
+    'Registered Model': '已登记模型',
+    'Organizer approval required': '需先通过组织方审核',
+    'Register a separate team account to submit a different model.': '如需提交其他模型，请为该模型注册独立账号。',
+    'Submission Version': '提交版本',
+    'Automatic': '自动分配',
+    'A new number is assigned after each successful submission. Saving drafts does not consume a version.': '每次提交成功后分配新版本号；保存草稿不会占用版本号。',
+    'Model View Type': '模型视角类型',
+    'Select a view type': '请选择视角类型',
+    'Choose the view configuration this submission will contain. The ZIP manifest must declare the same evaluation.view_mode.': '请选择本次提交包含的视角配置。ZIP 中 manifest 声明的 evaluation.view_mode 必须与此一致。',
+    'Choose Your Package': '选择提交包',
+    'Before uploading, review the': '上传前，请阅读',
+    'Submission Materials notice': '《提交材料说明》',
+    'Confirmed upload progress': '已确认的上传进度',
+    'Ready': '就绪',
+    'Pause Upload': '暂停上传',
+    'Cancel Upload': '取消上传',
+    'Keep Current Package and Continue →': '保留当前提交包并继续 →',
+    'The server verifies that the view type selected in Model and Track matches manifest evaluation.view_mode, then runs the selected Track’s admission checks. Uploaded code is never executed.': '服务器会先核对“模型与赛道”中选择的视角类型是否与 manifest 的 evaluation.view_mode 一致，再执行所选赛道的入队校验。平台不会执行上传包中的代码。',
+    'Confirm these statements for the current package before submitting.': '正式提交前，请确认以下声明均适用于当前提交包。',
+    'The materials accurately reflect this model and the declared evaluation setup. Any relevant additional information is included in my submission notes.': '提交材料如实反映了已登记模型与所声明的评测设置；其他相关信息已在提交备注中说明。',
+    'I have permission to submit these artifacts and authorize the organizers to inspect them for evaluation and validation.': '我有权提交这些材料，并授权组织方为评测与校验目的检查其内容。',
+    'The package contains no API keys, passwords, access tokens, or unnecessary personal information.': '提交包不包含 API 密钥、密码、访问令牌或与评测无关的个人信息。',
+    'View Type': '视角类型',
+    'Assigned after successful submission': '评测成功后分配',
+    'Track Checks Passed': '赛道校验已通过',
+    'Not Scored': '尚未评分',
+    'No notes provided.': '未填写备注。',
+    'Start Upload': '开始上传',
+    'Save and Continue': '保存并继续',
+    '← Back': '← 返回',
+    'Every submission stays tied to its account, model, and Track. A V number is assigned only after a successful evaluation. Unsupported metrics are N/A, never fabricated zeros.': '每次提交均与对应账号、模型和赛道绑定。只有评测成功后才会分配版本号。不支持的指标标记为 N/A，不会用虚构的零分填充。',
+
+    'Account Settings': '账号设置',
+    'Manage the identity, review status, public resources, and security of this submission account.': '管理当前提交账号的身份信息、审核状态、公开资源与账号安全。',
+    'Settings': '设置',
+    'Password & Security': '密码与安全',
+    'Submission History': '提交历史',
+    'Review Status': '审核状态',
+    'Unavailable': '暂不可用',
+    'Account Identity': '账号身份',
+    'Organizer-approved details used to identify this model across submissions and public benchmark records.': '经组织方审核的身份信息，用于在各次提交与公开榜单记录中识别该模型。',
+    'Team Account': '队伍账号',
+    'Registration Email': '注册邮箱',
+    'Verified': '已验证',
+    'Pending verification': '等待验证',
+    'Displayed with this model on public benchmark records.': '将与该模型一同显示在公开榜单记录中。',
+    'Migration review required': '需完成迁移审核',
+    'The model identity is locked after organizer approval.': '组织方审核通过后，模型身份将被锁定。',
+    'Registration Review': '注册审核',
+    'Submission access follows the organizer review state.': '提交权限取决于组织方的审核状态。',
+    'Maintain the paper, code, and model-weight links associated with this registered model.': '维护与已登记模型对应的论文、代码和模型权重链接。',
+    'Resource updates enter organizer review before certification and open-source labels change on the public leaderboard.': '公开资源更新需先经组织方审核；审核通过后，公开榜单中的认证与开源标识才会更新。',
+    'Update Paper / Code / Weights →': '更新论文 / 代码 / 权重 →',
+    'Use a unique password for this account and update it whenever access changes.': '请为此账号使用独立密码，并在访问权限变更时及时更新。',
+    'Account password': '账号密码',
+    'Changing the password signs future requests with the new credential; your submission history remains unchanged.': '修改密码后，后续请求将使用新凭据进行验证；已有提交历史不受影响。',
+    'Every version remains bound to this account and model for audit.': '每个版本均与此账号和模型绑定，以便审计追溯。',
+    'Submission ID': '提交 ID',
+    'Created (UTC)': '创建时间（UTC）',
+    'Updated (UTC)': '更新时间（UTC）',
+    'Not Uploaded': '尚未上传',
+    'No Submissions Yet.': '暂无提交记录。',
+    'Your saved drafts and submitted records will appear here.': '已保存的草稿与已提交记录将显示在这里。',
+
+    'One account represents one team and remains bound to one model.': '每个账号对应一支队伍，并始终绑定一个模型。',
+    'Review note:': '审核说明：',
+    'Submission suspended:': '提交权限已暂停：',
+    'The model name is immutable. Contact organizers if the registered model identity is wrong.': '模型名称不可自行修改。如登记的模型身份有误，请联系组织方。',
+    'Open-source Status': '开源状态',
+    'Rolling Seven-Day Quota': '滚动七天额度',
+    'A formal evaluation consumes quota when it enters the queue. Drafts and failed uploads do not. Organizer-approved refunds do not count.': '正式评测进入队列时才会扣除额度。草稿和上传失败不占用额度；经组织方批准返还的额度不计入已用次数。',
+    'Total': '合计',
+    'Request changes to Paper, Code, or Weights. Current public links remain unchanged until an organizer approves the request.': '可申请更新论文、代码或权重链接。在组织方审核通过前，当前公开链接保持不变。',
+    'A Weights link must belong to this registered model or method and is published only after organizer review.': '权重链接必须对应当前登记的模型或方法，并只会在组织方审核通过后公开。',
+    'Not published': '未公开',
+    'Expired after the latest Accepted leaderboard update': '最新通过的榜单结果更新后已失效',
+    'Weights verification expired.': '权重核验已失效。',
+    'The latest Accepted submission updated the leaderboard. Submit the weights used by that accepted result; the link returns after organizer approval.': '最新通过的提交已更新榜单。请提交该结果实际使用的权重；组织方审核通过后，链接将恢复展示。',
+    'Code Repository': '代码仓库',
+    'Weights for This Registered Model': '当前登记模型的权重',
+    'Paper / Technical Report': '论文 / 技术报告',
+    'Review Notes': '审核备注',
+    'Optional · private': '可选 · 仅组织方可见',
+    'Submit Update for Review': '提交资源更新申请',
+    'No model account is linked.': '尚未关联模型账号。',
+    'Contact the organizers; this legacy account needs a non-destructive migration review.': '请联系组织方；此旧账号需先完成无损迁移审核。',
+
+    'Email Verification': '邮箱验证',
+    'This verifies the registration email and sends the bound team-and-model account to organizer review. Formal submission stays locked until approval.': '完成后，系统会验证注册邮箱，并将已绑定的队伍与模型账号送交组织方审核。审核通过前，正式提交功能保持锁定。',
+    'Verify Email ↗': '验证邮箱 ↗',
+    'Public Model Record': '公开模型档案',
+    'Verification': '认证状态',
+    'Certification requires an organizer-verified code repository or paper/technical report. “Open Source” means that both public code and public model weights have been verified.': '代码仓库、论文或技术报告中任一公开资源通过组织方核验后，模型即可获得“已认证”标识。“已开源”表示公开代码与公开模型权重均已通过核验。',
+    'No public resource link has been verified.': '暂无已通过核验的公开资源链接。',
+    'Supplemental Note': '补充说明',
+
+    'Account Security': '账号安全',
+    'Change Your Password.': '修改账号密码。',
+    'Please replace your official initial password before continuing.': '继续操作前，请先修改初始密码。',
+    'Current Password': '当前密码',
+    'New Password': '新密码',
+    'Confirm New Password': '确认新密码',
+    'Use 12–256 characters. Your current password is required. Changing it signs out all previous sessions.': '请使用 12–256 个字符，并输入当前密码进行验证。修改成功后，之前的所有登录会话都会退出。',
+    'Update Password →': '更新密码 →',
+    'Delete Draft': '删除草稿',
+    'Delete this unsubmitted draft? It will disappear from your list. Organizers retain uploaded files and a recovery record.': '确定删除这份尚未提交的草稿吗？它将从列表中移除；组织方会保留已上传文件和恢复记录。',
+
+    '. Submit the first 30 seconds of every required episode using recorded actions.': '的 ZIP。请使用已记录的动作，提交每条必需轨迹的前 30 秒预测。',
+    '. Submit every complete episode using recorded actions and preserve its full duration.': '的 ZIP。请使用已记录的动作提交每条完整轨迹，并保留全部时长。',
+    'The size limit applies to both the uploaded ZIP and its declared expanded contents. Packages may contain up to 20,000 entries. Admission rejects ZIP symlinks, encrypted entries, duplicate or unsafe paths, and wrapper directories above': '容量上限同时适用于上传的 ZIP 及其声明的解压内容。每个提交包最多包含 20,000 个条目。入队校验会拒绝 ZIP 软链接、加密条目、重复或不安全的路径，以及',
+    "Track admission checks inspect video headers and the first decoded frame, enforce the platform frame rate (30 FPS for AgiBot G2 and YAM; 15 FPS for Human Hand), and validate view counts, synchronization, and WorldOracle-Core's 30-second limit. Full evaluation and scoring begin after admission; admission alone does not establish result validity.": '赛道入队校验会读取视频头信息和首个可解码帧，核对平台帧率（AgiBot G2 和 YAM 为 30 FPS；Human Hand 为 15 FPS），并检查视角数量、同步性及 WorldOracle-Core 的 30 秒上限。通过入队校验后才会开始完整评测与评分；单独通过入队校验不代表结果已经有效。',
+    "Use N/A, with the reason and supported views. A missing or unsupported metric is not a measured zero. Never submit the homepage radar's illustrative Policy Evaluation values as experimental results.": '请标注为 N/A，并说明原因和支持的视角。缺失或不支持的指标不等于实测零分。请勿将项目主页雷达图中仅用于示意的策略评测数值作为实验结果提交。',
+    "The original ZIP and all other package files remain private. When an accepted result becomes the model's leaderboard best, only the canonical preview is public:": '原始 ZIP 和提交包中的其他文件均保持非公开。当已通过的结果成为该模型的榜单最优成绩时，只会公开规定的对比预览：',
+    'Once all Track-required metrics pass, the submission receives its successful V number and can improve the model\'s leaderboard result automatically.': '当该赛道要求的全部指标均通过后，此提交会获得成功版本号，并可根据榜单更新规则自动更新模型成绩。',
+    'Submitting another update is disabled until this request is approved or rejected.': '在当前请求通过或被拒绝前，不能再次提交资源更新。',
+    'Previous request rejected:': '上一次更新请求未通过：',
+    'Request Public Resource Update →': '申请更新公开资源 →',
+    'Integrity & Review notice': '《评测完整性与复核说明》',
+    'Submitting enters the formal queue and uses quota under the': '正式提交后，记录将进入评测队列，并按照',
+    'Code Repository ↗': '代码仓库 ↗',
+    'Model Weights ↗': '模型权重 ↗',
+    'Paper / Technical Report ↗': '论文 / 技术报告 ↗',
+    '. Accepting adds this participant account to the team.': '。接受邀请后，当前参评账号将加入该队伍。',
+    'Registration': '注册信息',
+    'Latest:': '最新状态：',
+    'Update #': '资源更新 #',
+    'is awaiting organizer review.': '正等待组织方审核。',
+    'The contact address is pending configuration. Existing applicants should contact the organizer who provides their official account; new applicants can use the access request form.': '联系邮箱尚待配置。已申请账号的参评者请联系向其发放正式账号的组织方人员；新申请者可使用权限申请表。',
+    'Do not include credentials or private video download tokens in support requests.': '在支持请求中请勿附带账号凭据或私有视频下载令牌。',
+    'submission.zip ├── manifest.json # Required; metadata and prediction index ├── README.md # Required; reproduction and alignment details ├── predictions/ # One top-head MP4 per required episode │ └── pickfruit/ep000000/top_head.mp4 ├── config/ # Recommended; inference settings and seeds └── logs/ # Recommended; generation and evaluation logs': 'submission.zip\n├── manifest.json              # 必需；元数据与预测索引\n├── README.md                  # 必需；复现与对齐说明\n├── predictions/               # 每条必需轨迹包含一个顶部视角 MP4\n│   └── pickfruit/ep000000/top_head.mp4\n├── config/                    # 建议提供；推理设置与随机种子\n└── logs/                      # 建议提供；生成与评测日志',
+    'submission.zip ├── manifest.json # Required; metadata and prediction index ├── README.md # Required; reproduction and alignment details ├── predictions/ # Three synchronized MP4 files per episode │ └── pickfruit/ep000000/ │ ├── top_head.mp4 │ ├── hand_left.mp4 │ └── hand_right.mp4 ├── config/ # Recommended; inference settings and seeds └── logs/ # Recommended; generation and evaluation logs': 'submission.zip\n├── manifest.json              # 必需；元数据与预测索引\n├── README.md                  # 必需；复现与对齐说明\n├── predictions/               # 每条轨迹包含三个同步 MP4\n│   └── pickfruit/ep000000/\n│       ├── top_head.mp4\n│       ├── hand_left.mp4\n│       └── hand_right.mp4\n├── config/                    # 建议提供；推理设置与随机种子\n└── logs/                      # 建议提供；生成与评测日志',
+    '# Run from the directory containing manifest.json, README.md and predictions/ zip -0 -r submission.zip manifest.json README.md predictions/ unzip -t submission.zip shasum -a 256 submission.zip': '# 请在包含 manifest.json、README.md 和 predictions/ 的目录中运行\nzip -0 -r submission.zip manifest.json README.md predictions/\nunzip -t submission.zip\nshasum -a 256 submission.zip'
+    , 'Real-World Pick Fruit Validation Rollout, episode ep000014': '真实世界“摘水果”验证集轨迹，轨迹编号 ep000014'
+    , 'Real-World Hang Towel Validation Rollout, episode ep000018': '真实世界“挂毛巾”验证集轨迹，轨迹编号 ep000018'
+    , 'Real-World Pour Water Validation Rollout, episode ep000039': '真实世界“倒水”验证集轨迹，轨迹编号 ep000039'
+    , 'Real-World Pull Drawer Validation Rollout, episode ep000039': '真实世界“拉抽屉”验证集轨迹，轨迹编号 ep000039'
+    , 'SINGLE_SCORE': '单视角总分'
+    , 'MULTIVIEW_SCORE': '三视角总分'
+  });
+
   const normalize = value => value.replace(/\s+/g, ' ').trim();
   const dynamicZh = [
+    [/^(AgiBot G2|YAM|Human Hand) · (30s|Policy rollout|Complete episode) · (\d+) Models$/, match => `${match[1]} · ${match[2] === '30s' ? '30 秒' : match[2] === 'Policy rollout' ? '策略执行轨迹' : '完整轨迹'} · ${match[3]} 个模型`],
+    [/^(AgiBot G2|YAM|Human Hand) · (30s|Policy rollout|Complete episode) · All models shown equally\.$/, match => `${match[1]} · ${match[2] === '30s' ? '30 秒' : match[2] === 'Policy rollout' ? '策略执行轨迹' : '完整轨迹'} · 所有模型均正常显示。`],
+    [/^(AgiBot G2|YAM|Human Hand) · (30s|Policy rollout|Complete episode) · Highlighting (.+)$/, match => `${match[1]} · ${match[2] === '30s' ? '30 秒' : match[2] === 'Policy rollout' ? '策略执行轨迹' : '完整轨迹'} · 正在高亮 ${match[3]}`],
+    [/^(AgiBot G2|YAM|Human Hand) · (30s|Policy rollout|Complete episode) · (\d+) Models · Sorted by (.+)$/, match => `${match[1]} · ${match[2] === '30s' ? '30 秒' : match[2] === 'Policy rollout' ? '策略执行轨迹' : '完整轨迹'} · ${match[3]} 个模型 · 按${translate(match[4])}排名`],
+    [/^(AgiBot G2|YAM|Human Hand) · Best Results$/, match => `${match[1]} · 最佳成绩`],
+    [/^(AgiBot G2|YAM|Human Hand) (pick fruit|hang towel|pour water|pull drawer) validation excerpt$/, match => `${match[1]}${translate(match[2].replace(/\b\w/g, char => char.toUpperCase()))}验证集片段`],
+    [/^(AgiBot G2|YAM|Human Hand) (alternate|second alternate) (pick fruit|hang towel|pour water|pull drawer) top-head validation excerpt$/, match => `${match[1]}${match[2] === 'second alternate' ? '第二备选' : '备选'}${translate(match[3].replace(/\b\w/g, char => char.toUpperCase()))}头部视角验证集片段`],
+    [/^Human Hand alternate (pick fruit|hang towel|pour water|pull drawer) validation excerpt$/, match => `Human Hand 备选${translate(match[1].replace(/\b\w/g, char => char.toUpperCase()))}验证集片段`],
+    [/^Selected (WorldOracle-Core|WorldOracle-Policy|WorldOracle-Long) episode preview$/, match => `当前选中的 ${match[1]} 样例预览`],
+    [/^(Paper|Code|Weights) resource for (.+) \(opens in a new tab\)$/, match => `${translate(match[1])}资源：${match[2]}（在新标签页中打开）`],
+    [/^Leaderboard service returned HTTP (\d+)\.$/, match => `榜单服务返回 HTTP ${match[1]} 错误。`],
+    [/^(.+) — Top 3$/, match => `${translate(match[1])} — 前三名`],
     [/^Resets (.+)$/, match => `重置时间：${match[1]}`],
     [/^Signed in as (.+) · (.+)$/, match => `当前账号：${match[1]} · ${match[2]}`],
     [/^Team #(\d+) · (.+)$/, match => `队伍 #${match[1]} · ${match[2]}`],
+    [/^(\d+) teams? ahead$/, match => `前方还有 ${match[1]} 支队伍`],
+    [/^No weekly limit · maximum (\d+) active submissions$/, match => `无每周额度上限 · 最多同时保留 ${match[1]} 个活跃提交`],
+    [/^Latest: (.+)$/, match => `最新状态：${translate(match[1])}`],
+    [/^Update #(\d+) is awaiting organizer review\.$/, match => `资源更新 #${match[1]} 正等待组织方审核。`],
+    [/^Submitted by (.+) · (.+)$/, match => `提交队伍：${match[1]} · ${match[2]}`],
+    [/^Confirm (.+)$/, match => `确认 ${match[1]}`],
     [/^Role: (.+)$/, match => `角色：${translate(match[1])}`],
     [/^(\d+) Records$/, match => `${match[1]} 条记录`],
     [/^Quota (.+)$/, match => `额度 ${match[1]}`],
@@ -1288,9 +1719,10 @@
     [/^(WorldOracle-Core|WorldOracle-Policy|WorldOracle-Long), (AgiBot G2|YAM|Human Hand)$/, match => `${translate(match[1])}，${translate(match[2])}`],
     [/^(AgiBot G2|YAM|Human Hand) · (WorldOracle-Core|WorldOracle-Long) Metric Comparison$/, match => `${translate(match[1])} · ${translate(match[2])}指标对比`],
     [/^Showing (.+) success and failure excerpts\.$/, match => `正在显示“${translate(match[1])}”的成功与失败片段。`],
-    [/^(.+) — (Success|Failure) GT Action Excerpt$/, match => `${translate(match[1])} — ${translate(match[2])} GT 动作片段`],
+    [/^(.+) — (Success|Failure) GT Action Excerpt$/, match => `${translate(match[1])} — ${translate(match[2])}真实执行片段`],
     [/^Highlight (.+)\. Click again to show all models\.$/, match => `突出显示 ${match[1]}。再次点击可显示全部模型。`],
     [/^Highlight (.+) demo radar profile$/, match => `突出显示 ${match[1]} 的演示雷达图`],
+    [/^Highlight (.+) radar profile$/, match => `突出显示 ${match[1]} 的雷达图`],
     [/^(\d+) metrics on a 0–100 scale\. Unavailable MVC or Policy is plotted at zero only for display\. Demo scores are illustrative\.$/, match => `${match[1]} 项指标，范围为 0–100。不可用的 MVC 或策略评测仅为展示而按零绘制；演示分数仅供说明。`],
     [/^(\d+) metrics on a 0–100 scale\. Unavailable MVAC is plotted at zero only for display\. Scores shown here are verified held-out test-set retest results\.$/, match => `${match[1]} 项指标，分数范围为 0–100。不可用的 MVAC 仅在图中按零绘制；此处显示的是保留测试集上的已核验重测结果。`],
     [/^(\d+) metrics on a 0–100 scale\. Unavailable MVAC is plotted at zero only for display\. Illustrative entries are explicitly labeled as Demo\.$/, match => `${match[1]} 项指标，分数范围为 0–100。不可用的 MVAC 仅在图中按零绘制；演示条目会明确标注为 Demo。`],
@@ -1348,7 +1780,9 @@
   };
   const shouldIgnore = node => {
     const element = node.parentElement;
-    return !element || Boolean(element.closest('script, style, noscript, code, pre, textarea, .user-text, [data-i18n-skip]'));
+    if (!element || element.closest('script, style, noscript, textarea, .user-text, [data-i18n-skip]')) return true;
+    const codeBlock = element.closest('code, pre');
+    return Boolean(codeBlock && !element.closest('[data-i18n-translate]'));
   };
   const applyText = node => {
     if (!node.nodeValue || shouldIgnore(node)) return;
@@ -1361,7 +1795,7 @@
   };
   const applyAttributes = element => {
     if (element.closest?.('[data-i18n-skip]')) return;
-    const names = ['placeholder', 'title', 'aria-label', 'aria-description', 'data-confirm'];
+    const names = ['placeholder', 'title', 'alt', 'aria-label', 'aria-description', 'data-confirm'];
     if (element.matches?.('meta[name="description"]')) names.push('content');
     let originals = attributeOriginals.get(element);
     if (!originals) { originals = new Map(); attributeOriginals.set(element, originals); }
@@ -1408,6 +1842,23 @@
     if (root.matches?.('[data-language-toggle]')) updateToggle(root);
     root.querySelectorAll?.('[data-language-toggle]').forEach(updateToggle);
   };
+  const updateNoticeLinks = root => {
+    const links = [];
+    if (!root) links.push(...document.querySelectorAll('a[href*="notices/"]'));
+    else if (root.nodeType === Node.ELEMENT_NODE) {
+      if (root.matches?.('a[href*="notices/"]')) links.push(root);
+      links.push(...(root.querySelectorAll?.('a[href*="notices/"]') || []));
+    }
+    links.forEach(link => {
+      if (link.matches('.notice-language-switch')) return;
+      const url = new URL(link.href, window.location.href);
+      if (url.origin !== window.location.origin || !url.pathname.includes('/submission/notices/')) return;
+      url.pathname = language === ZH
+        ? url.pathname.replace('/submission/notices/zh-CN/', '/submission/notices/').replace('/submission/notices/', '/submission/notices/zh-CN/')
+        : url.pathname.replace('/submission/notices/zh-CN/', '/submission/notices/');
+      link.href = `${url.pathname}${url.search}${url.hash}`;
+    });
+  };
   const apply = root => {
     document.documentElement.lang = language;
     document.documentElement.dataset.language = language;
@@ -1419,6 +1870,7 @@
     if (start.nodeType === Node.ELEMENT_NODE) applyAttributes(start);
     start.querySelectorAll?.('*').forEach(applyAttributes);
     updateToggles(root);
+    updateNoticeLinks(root);
   };
   const persist = value => {
     try { window.localStorage.setItem(STORAGE_KEY, value); } catch (_) {}
