@@ -263,6 +263,7 @@ function updateModelPreview(scope, model) {
   player.pause();
   if(!model){
     panel.classList.remove('is-placeholder','is-multiview');
+    panel.style.removeProperty('--preview-aspect');
     player.hidden=true;player.removeAttribute('src');player.load();
     if(scrubber){scrubber.hidden=true;scrubber.value='0';scrubber.style.setProperty('--preview-progress','0%');}
     if(source)source.hidden=true;
@@ -275,6 +276,7 @@ function updateModelPreview(scope, model) {
   title.textContent=model.model_name;
   if(!model.preview){
     panel.classList.remove('is-placeholder','is-multiview');
+    panel.style.removeProperty('--preview-aspect');
     player.hidden=true;player.removeAttribute('src');player.load();
     if(scrubber){scrubber.hidden=true;scrubber.value='0';scrubber.style.setProperty('--preview-progress','0%');}
     if(source)source.hidden=true;
@@ -284,6 +286,13 @@ function updateModelPreview(scope, model) {
   }
   panel.classList.toggle('is-placeholder',Boolean(model.preview.placeholder));
   panel.classList.toggle('is-multiview',model.preview.view_mode==='multi');
+  const previewWidth=Number(model.preview.width);
+  const previewHeight=Number(model.preview.height);
+  if(model.preview.view_mode==='multi'&&previewWidth>0&&previewHeight>0){
+    panel.style.setProperty('--preview-aspect',previewWidth+' / '+previewHeight);
+  }else{
+    panel.style.removeProperty('--preview-aspect');
+  }
   meta.textContent=(model.preview.placeholder?'Letter demo '+model.preview.letter+' · ':'')+
     model.preview.task+' · '+model.preview.episode_id+' · '+model.preview.view+
     (model.preview.placeholder?' · placeholder only':'');
