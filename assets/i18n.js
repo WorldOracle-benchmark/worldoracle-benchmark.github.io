@@ -116,7 +116,7 @@
     'The project page and three public leaderboard tracks are now available.': '项目主页与三条公开排行榜赛道现已上线。',
     'Submission portal opened': '评测提交平台开放',
     'Registration and benchmark submission are now available to participating teams.': '参评团队现可注册账号并提交评测。',
-    'WorldOracle Team published a technical paper:': 'WorldOracle 团队发布技术论文：',
+    'WorldOracle team published a technical paper:': 'WorldOracle 团队发布技术论文：',
     'WorldOracle project website launched': 'WorldOracle 项目网站上线',
     'Five baseline models added': '新增五个基线模型',
     'GE-Sim 2.0, Cosmos 3, DreamDojo, Ctrl-World and IRASim are now listed.': 'GE-Sim 2.0、Cosmos 3、DreamDojo、Ctrl-World 与 IRASim 现已列入榜单。',
