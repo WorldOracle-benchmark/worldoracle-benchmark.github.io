@@ -2271,8 +2271,12 @@ html.scroll-reveal-ready [data-scroll-reveal].is-revealed {
   text-overflow:clip;white-space:normal
 }
 .full-leaderboard-page .leaderboard-news-feed strong{
-  display:inline;color:#397de9;font:650 12px/1.5 var(--board-sans);letter-spacing:-.01em
+  display:inline;color:#252d35;font:650 12px/1.5 var(--board-sans);letter-spacing:-.01em
 }
+.full-leaderboard-page .leaderboard-news-feed strong a{
+  color:#397de9;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px
+}
+.full-leaderboard-page .leaderboard-news-feed strong a:hover{color:#175fc1}
 .full-leaderboard-page .leaderboard-news-feed strong::after{content:". ";color:#252d35}
 .full-leaderboard-page .leaderboard-news-feed p span{color:#252d35}
 .full-leaderboard-page .leaderboard-news-feed li:hover time,
