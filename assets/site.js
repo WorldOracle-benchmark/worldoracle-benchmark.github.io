@@ -168,7 +168,7 @@ const outcomeButtons = [...document.querySelectorAll('[data-outcome-task]')];
 const outcomeCards = [...document.querySelectorAll('[data-outcome-card]')];
 const outcomeStatus = document.querySelector('[data-outcome-status]');
 const outcomeReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-const outcomeAssetVersion = '20261015-validation-v3';
+const outcomeAssetVersion = '20261015-validation-v4';
 let currentOutcomeTask = 'pickfruit';
 
 function showOutcomeTask(task) {
