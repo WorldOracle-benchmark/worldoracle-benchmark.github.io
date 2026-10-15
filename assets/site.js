@@ -262,7 +262,7 @@ function updateModelPreview(scope, model) {
   }
   player.pause();
   if(!model){
-    panel.classList.remove('is-placeholder');
+    panel.classList.remove('is-placeholder','is-multiview');
     player.hidden=true;player.removeAttribute('src');player.load();
     if(scrubber){scrubber.hidden=true;scrubber.value='0';scrubber.style.setProperty('--preview-progress','0%');}
     if(source)source.hidden=true;
@@ -274,7 +274,7 @@ function updateModelPreview(scope, model) {
   }
   title.textContent=model.model_name;
   if(!model.preview){
-    panel.classList.remove('is-placeholder');
+    panel.classList.remove('is-placeholder','is-multiview');
     player.hidden=true;player.removeAttribute('src');player.load();
     if(scrubber){scrubber.hidden=true;scrubber.value='0';scrubber.style.setProperty('--preview-progress','0%');}
     if(source)source.hidden=true;
@@ -283,6 +283,7 @@ function updateModelPreview(scope, model) {
     return;
   }
   panel.classList.toggle('is-placeholder',Boolean(model.preview.placeholder));
+  panel.classList.toggle('is-multiview',model.preview.view_mode==='multi');
   meta.textContent=(model.preview.placeholder?'Letter demo '+model.preview.letter+' · ':'')+
     model.preview.task+' · '+model.preview.episode_id+' · '+model.preview.view+
     (model.preview.placeholder?' · placeholder only':'');
