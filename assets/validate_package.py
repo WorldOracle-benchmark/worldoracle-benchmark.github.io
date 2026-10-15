@@ -2,8 +2,9 @@
 """Public WorldOracle submission-package structure checker.
 
 This template validates only participant-visible archive and manifest rules. It
-does not contain benchmark GT identities, private evaluation criteria, metric
-implementations, infrastructure paths, credentials, or publication logic.
+contains the public comparison-episode identifiers required for leaderboard
+previews, but no ground-truth media, authoritative test-set manifest, private
+evaluation criteria, infrastructure paths, credentials, or publication logic.
 """
 
 import argparse
@@ -48,6 +49,20 @@ COMPARISON_EPISODES = {
 
 def reject(message):
     raise ValueError(message)
+
+
+def strict_json_object(pairs):
+    """Reject ambiguous duplicate keys at every JSON object level."""
+    value = {}
+    for key, item in pairs:
+        if key in value:
+            reject(f"manifest.json contains a duplicate key: {key}")
+        value[key] = item
+    return value
+
+
+def strict_json_constant(value):
+    reject(f"manifest.json contains a non-standard numeric value: {value}")
 
 
 def probe_video(archive, media_path, expected_fps, track, scratch):
@@ -126,8 +141,12 @@ def validate(package, inspect_media=True):
                 reject(f"{required} must be a file under 1 MiB.")
 
         try:
-            manifest = json.loads(archive.read("manifest.json"))
-        except (UnicodeDecodeError, json.JSONDecodeError) as error:
+            manifest = json.loads(
+                archive.read("manifest.json"),
+                object_pairs_hook=strict_json_object,
+                parse_constant=strict_json_constant,
+            )
+        except (UnicodeDecodeError, json.JSONDecodeError, RecursionError) as error:
             reject(f"manifest.json is not valid UTF-8 JSON: {error}")
 
         if not isinstance(manifest, dict) or manifest.get("schema_version") != SCHEMA_VERSION:
