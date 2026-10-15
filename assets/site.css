@@ -3909,3 +3909,25 @@ body.full-leaderboard-page #long-horizon .board-table {
   font-weight: 700;
   letter-spacing: -.01em;
 }
+
+/* Project resource links: reserve more room for the longer Hugging Face label
+   while keeping all three controls inside the hero column at browser zoom. */
+.hero-layout:not(.full-board-layout) .resource-links {
+  grid-template-columns: minmax(0, .84fr) minmax(0, .84fr) minmax(0, 1.32fr);
+}
+.hero-layout:not(.full-board-layout) .resource-links a,
+.hero-layout:not(.full-board-layout) .resource-links a:disabled {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+.hero-layout:not(.full-board-layout) .resource-links a small {
+  flex: 0 0 auto;
+  max-width: 100%;
+  white-space: nowrap;
+}
+@media (max-width: 420px) {
+  .hero-layout:not(.full-board-layout) .resource-links {
+    grid-template-columns: 1fr;
+  }
+}
