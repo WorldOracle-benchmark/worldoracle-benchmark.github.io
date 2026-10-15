@@ -36,6 +36,16 @@ VIEW_SETS = {
     "single": {"top_head"},
     "multi": {"top_head", "hand_left", "hand_right"},
 }
+TRACK_ARGUMENTS = {
+    "core": "main",
+    "policy": "policy",
+    "long": "long_horizon",
+}
+PLATFORM_ARGUMENTS = {
+    "agibot-g2": "agibot_g2",
+    "yam": "yam",
+    "human-hand": "human_hands",
+}
 COMPARISON_EPISODES = {
     ("agibot_g2", "main"): ("hangtowel", "ep000000"),
     ("agibot_g2", "long_horizon"): ("hangtowel", "ep000000"),
@@ -109,7 +119,7 @@ def probe_video(archive, media_path, expected_fps, track, scratch):
         local.unlink(missing_ok=True)
 
 
-def validate(package, inspect_media=True):
+def validate(package, expected_track, expected_platform, expected_view_mode, inspect_media=True):
     if not package.is_file():
         reject(f"Package not found: {package}")
     with zipfile.ZipFile(package) as archive:
@@ -162,6 +172,10 @@ def validate(package, inspect_media=True):
             reject("benchmark_track must be main, policy, or long_horizon.")
         if embodiment not in EMBODIMENT_FPS:
             reject("embodiment must be agibot_g2, yam, or human_hands.")
+        if track != expected_track:
+            reject("manifest benchmark_track does not match the --track argument.")
+        if embodiment != expected_platform:
+            reject("manifest embodiment does not match the --platform argument.")
         if track == "policy" and embodiment != "agibot_g2":
             reject("WorldOracle-Policy currently supports AgiBot G2 only.")
         if package.stat().st_size > TRACK_LIMITS[track] or expanded_bytes > TRACK_LIMITS[track]:
@@ -173,6 +187,10 @@ def validate(package, inspect_media=True):
         view_mode = evaluation.get("view_mode")
         if view_mode not in VIEW_SETS:
             reject("evaluation.view_mode must be single or multi.")
+        if view_mode != expected_view_mode:
+            reject("manifest evaluation.view_mode does not match the --view-mode argument.")
+        if embodiment == "human_hands" and view_mode == "multi":
+            reject("Human Hand supports Single-View submissions only.")
         expected_horizon = {"main": "30s", "policy": "policy", "long_horizon": "full"}[track]
         expected_source = "policy" if track == "policy" else "recorded"
         if evaluation.get("horizon") != expected_horizon:
@@ -251,11 +269,23 @@ def validate(package, inspect_media=True):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("package", type=Path, help="submission ZIP to inspect")
+    parser.add_argument("--track", required=True, choices=TRACK_ARGUMENTS,
+                        help="intended portal Track: core, policy, or long")
+    parser.add_argument("--platform", required=True, choices=PLATFORM_ARGUMENTS,
+                        help="intended portal platform")
+    parser.add_argument("--view-mode", required=True, choices=VIEW_SETS,
+                        help="intended Single-View or Multi-View submission mode")
     parser.add_argument("--structure-only", action="store_true",
                         help="skip ffprobe/ffmpeg media checks; server media admission checks still apply")
     args = parser.parse_args()
     try:
-        result = validate(args.package, inspect_media=not args.structure_only)
+        result = validate(
+            args.package,
+            TRACK_ARGUMENTS[args.track],
+            PLATFORM_ARGUMENTS[args.platform],
+            args.view_mode,
+            inspect_media=not args.structure_only,
+        )
     except (ValueError, KeyError, OSError, zipfile.BadZipFile) as error:
         parser.exit(1, f"Template validation failed: {error}\n")
     print(json.dumps(result, indent=2))
