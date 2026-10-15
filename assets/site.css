@@ -4106,3 +4106,28 @@ body.full-leaderboard-page #long-horizon .board-table {
   text-underline-offset:2px;
 }
 .full-leaderboard-page .leaderboard-news-feed li > p > strong > a:hover{color:#175fc1!important}
+
+/* Track table alignment: Core, Policy and Long share one inset and width. */
+body.full-leaderboard-page #leaderboard .board-results,
+body.full-leaderboard-page #policy-track .policy-board-results,
+body.full-leaderboard-page #long-horizon .board-results{
+  width:100%;min-width:0;box-sizing:border-box;margin:18px 0 0;
+}
+body.full-leaderboard-page #leaderboard .board-results > .board-table-scroll,
+body.full-leaderboard-page #policy-track .policy-board-results > .policy-table-scroll,
+body.full-leaderboard-page #long-horizon .board-results > .board-table-scroll{
+  width:calc(100% - 60px)!important;
+  max-width:calc(100% - 60px);
+  box-sizing:border-box;
+  margin:0 30px!important;
+}
+@media(max-width:780px){
+  body.full-leaderboard-page #leaderboard .board-results > .board-table-scroll,
+  body.full-leaderboard-page #policy-track .policy-board-results > .policy-table-scroll,
+  body.full-leaderboard-page #long-horizon .board-results > .board-table-scroll{
+    width:calc(100% - 36px)!important;
+    max-width:calc(100% - 36px);
+    margin-right:18px!important;
+    margin-left:18px!important;
+  }
+}
