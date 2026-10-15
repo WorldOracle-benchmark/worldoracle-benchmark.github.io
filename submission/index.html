@@ -44,7 +44,7 @@
           <h2>Submission Overview</h2>
           <p>Each submission account represents one team and one fixed model. Email verification and organizer approval unlock submissions to WorldOracle-Core, WorldOracle-Policy, and WorldOracle-Long. Both open-weight and closed-source models may participate; the leaderboard reports certification and public-resource status separately.</p>
           <p>WorldOracle evaluates ACWMs on human-operated trajectories and policy rollouts collected on real robots. The same framework covers AgiBot G2, YAM, and Human Hand. Select a Track and platform, then submit the required prediction videos; the Track selection determines the evaluation protocol.</p>
-          <div class="callout">Quota usage begins when a submission enters the formal evaluation queue. A Version number is assigned after every required metric passes. A higher final Single-View Score replaces the current single-view best, while a higher final Multi-View Score replaces the current three-view best. Individual metric improvements alone do not update the leaderboard.</div>
+          <div class="callout">Quota usage begins when a submission enters the formal evaluation queue. A Version number is assigned after every required metric passes. For the same model, Track, and platform, a new accepted result replaces the complete public row when either its final Single-View Score or Multi-View Score is strictly higher than the corresponding published score. An unavailable score is treated as 0, and scores from different submissions are never merged.</div>
         </section>
 
         <section id="access">
@@ -166,7 +166,8 @@ shasum -a 256 submission.zip</code></pre>
           <h2>Evaluation and Publication</h2>
           <p>My Submissions reports five public stages: Draft, Submitted, Evaluating, Review, and Accepted. Evaluating shows overall progress while keeping individual metric execution private.</p>
           <ol class="evaluation-timeline" aria-label="Evaluation stages"><li><span>Draft</span></li><li><span>Submitted</span></li><li><span>Evaluating</span></li><li><span>Review</span></li><li><span>Accepted</span></li></ol>
-          <p>Leaderboard replacement follows the final aggregate score for the submitted view mode. A higher Single-View Score replaces the single-view best; a higher Multi-View Score replaces the three-view best. Individual metric improvements alone do not update the leaderboard.</p>
+          <p>Leaderboard replacement compares both final aggregate scores for the same model, Track, and platform. A new accepted result replaces the complete public row when either its Single-View Score or Multi-View Score is strictly higher. A missing score is treated as 0; component metrics are not compared for replacement, and scores from different submissions are not merged.</p>
+          <ul><li><strong>Single-View after Single-View:</strong> replaces the row only when the new Single-View Score is higher.</li><li><strong>Single-View after Multi-View:</strong> replaces the row only when the new Single-View Score is higher; the replacing row has no Multi-View Score.</li><li><strong>Multi-View after Single-View:</strong> replaces the row because the published missing Multi-View Score is treated as 0.</li><li><strong>Multi-View after Multi-View:</strong> replaces the row when either the new Single-View Score or Multi-View Score is higher.</li></ul>
         </section>
 
         <section id="rules">
