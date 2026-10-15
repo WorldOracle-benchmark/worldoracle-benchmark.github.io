@@ -57,6 +57,50 @@ COMPARISON_EPISODES = {
 }
 
 
+class TerminalProgress:
+    """Render media-validation progress without changing the JSON stdout API."""
+
+    def __init__(self, enabled=True, stream=None, width=28):
+        self.stream = stream or sys.stderr
+        self.enabled = bool(enabled and getattr(self.stream, "isatty", lambda: False)())
+        self.width = width
+        self.total = 0
+        self.current = 0
+        self.label = ""
+        self.started = False
+
+    def begin(self, total, label):
+        self.total = max(int(total), 1)
+        self.current = 0
+        self.label = label
+        self.started = True
+        self._render()
+
+    def advance(self):
+        if not self.started:
+            return
+        self.current = min(self.current + 1, self.total)
+        self._render()
+
+    def finish(self):
+        if self.started and self.enabled:
+            self.stream.write("\n")
+            self.stream.flush()
+        self.started = False
+
+    def _render(self):
+        if not self.enabled:
+            return
+        ratio = self.current / self.total
+        filled = min(self.width, int(self.width * ratio))
+        bar = "█" * filled + "░" * (self.width - filled)
+        self.stream.write(
+            f"\r[{bar}] {ratio * 100:6.2f}% "
+            f"{self.current:>{len(str(self.total))}}/{self.total} {self.label}"
+        )
+        self.stream.flush()
+
+
 def reject(message):
     raise ValueError(message)
 
@@ -119,7 +163,8 @@ def probe_video(archive, media_path, expected_fps, track, scratch):
         local.unlink(missing_ok=True)
 
 
-def validate(package, expected_track, expected_platform, expected_view_mode, inspect_media=True):
+def validate(package, expected_track, expected_platform, expected_view_mode,
+             inspect_media=True, progress=None):
     if not package.is_file():
         reject(f"Package not found: {package}")
     with zipfile.ZipFile(package) as archive:
@@ -207,6 +252,11 @@ def validate(package, expected_track, expected_platform, expected_view_mode, ins
         episode_views = defaultdict(set)
         episode_media = defaultdict(list)
         expected_fps = EMBODIMENT_FPS[embodiment]
+        if progress:
+            progress.begin(
+                len(predictions),
+                "Validating prediction videos" if inspect_media else "Checking prediction entries",
+            )
         with tempfile.TemporaryDirectory(prefix="worldoracle-public-validator-") as temporary:
             scratch = Path(temporary)
             for prediction in predictions:
@@ -236,6 +286,8 @@ def validate(package, expected_track, expected_platform, expected_view_mode, ins
                     episode_media[identity[:2]].append(
                         probe_video(archive, media_path, expected_fps, track, scratch)
                     )
+                if progress:
+                    progress.advance()
 
         required_views = VIEW_SETS[view_mode]
         for (task, episode), views in episode_views.items():
@@ -277,7 +329,10 @@ def main():
                         help="intended Single-View or Multi-View submission mode")
     parser.add_argument("--structure-only", action="store_true",
                         help="skip ffprobe/ffmpeg media checks; server media admission checks still apply")
+    parser.add_argument("--no-progress", action="store_true",
+                        help="disable the interactive terminal progress bar")
     args = parser.parse_args()
+    progress = TerminalProgress(enabled=not args.no_progress)
     try:
         result = validate(
             args.package,
@@ -285,9 +340,12 @@ def main():
             PLATFORM_ARGUMENTS[args.platform],
             args.view_mode,
             inspect_media=not args.structure_only,
+            progress=progress,
         )
     except (ValueError, KeyError, OSError, zipfile.BadZipFile) as error:
+        progress.finish()
         parser.exit(1, f"Template validation failed: {error}\n")
+    progress.finish()
     print(json.dumps(result, indent=2))
     print("Template validation passed. The evaluation service performs additional private admission and benchmark checks after upload, including authoritative test-set coverage and full-frame alignment.")
 

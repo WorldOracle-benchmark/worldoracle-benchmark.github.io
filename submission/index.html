@@ -146,7 +146,7 @@ shasum -a 256 submission.zip</code></pre>
           <p class="eyebrow">05 · Submission wizard</p>
           <h2>Validate and Submit</h2>
           <p>Run the public structural-validation template locally before uploading:</p>
-          <div class="actions"><a class="button" href="../assets/validate_package.py?v=20261015-validator-context-v3" download="validate_package.py">Download Validation Template</a></div>
+          <div class="actions"><a class="button" href="../assets/validate_package.py?v=20261015-validator-context-v4" download="validate_package.py">Download Validation Template</a></div>
           <pre><code>python validate_package.py submission.zip --track core --platform agibot-g2 --view-mode single</code></pre>
           <p>Set --track to core, policy, or long; set --platform to agibot-g2, yam, or human-hand; and set --view-mode to single or multi. These required arguments must match both manifest.json and the portal form. Human Hand supports Single-View only.</p>
           <p>The public template checks ZIP safety, manifest fields, official task names, file references, view completeness, and the actual H.264 codec, frame rate, duration, dimensions, and first decoded frame. It requires <code>ffprobe</code> and <code>ffmpeg</code>. Authoritative test-set coverage, full-frame alignment, evaluation criteria, metric implementations, service paths, and credentials remain service-side checks. After upload, the evaluation service repeats the public checks before evaluation.</p>
