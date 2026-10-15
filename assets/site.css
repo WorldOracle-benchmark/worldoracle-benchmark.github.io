@@ -171,15 +171,15 @@ html.scroll-reveal-ready [data-scroll-reveal].is-revealed {
 .embodiment-card { overflow: hidden; border: 1px solid #d6e1df; border-radius: 8px; background: #fff; box-shadow: 0 12px 34px rgba(24,55,51,.06); }
 .embodiment-media { position: relative; aspect-ratio: 8 / 9; overflow: hidden; background: #e9efed; border-bottom: 1px solid #d6e1df; }
 .embodiment-media img, .embodiment-media video { width: 100%; height: 100%; object-fit: cover; }
-.embodiment-media.embodiment-multiview { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: minmax(0, 2fr) minmax(0, 1fr); gap: 2px; }
-.embodiment-view { position: relative; min-width: 0; min-height: 0; overflow: hidden; background: #dce7e4; }
-.embodiment-view.is-top { grid-column: 1 / -1; }
-.embodiment-view video { display: block; object-fit: contain; background: #dce7e4; }
+.embodiment-media.embodiment-composite { background: #dce7e4; }
+.embodiment-composite video { display: block; width: 100%; height: 100%; object-fit: contain; background: #dce7e4; }
 .embodiment-media.embodiment-singleview { display: grid; place-items: center; background: linear-gradient(180deg, rgba(222,235,241,.78), rgba(219,233,230,.78)); }
 .embodiment-singleview-frame { position: relative; width: 100%; aspect-ratio: 4 / 3; }
 .embodiment-singleview-frame video { display: block; width: 100%; height: 100%; object-fit: contain; background: transparent; }
 .embodiment-tag { position: absolute; right: 10px; bottom: 10px; padding: 7px 9px; color: #075e57; background: rgba(244,253,251,.92); border: 1px solid rgba(19,184,166,.38); border-radius: 4px; box-shadow: 0 4px 16px rgba(8,60,54,.12); backdrop-filter: blur(8px); font: 600 8px/1 var(--mono); letter-spacing: .07em; text-transform: uppercase; }
-.embodiment-multiview .embodiment-tag { right: 6px; bottom: 6px; left: auto; padding: 5px 7px; font-size: 6.5px; letter-spacing: .055em; }
+.embodiment-composite .embodiment-tag { right: 6px; bottom: 6px; left: auto; padding: 5px 7px; font-size: 6.5px; letter-spacing: .055em; }
+.embodiment-composite .embodiment-tag-top { bottom: calc(33.333% + 6px); }
+.embodiment-composite .embodiment-tag-left { right: calc(50% + 6px); }
 .embodiment-tag.is-observation { color: #72511d; background: rgba(255,249,236,.93); border-color: rgba(191,107,43,.36); }
 .embodiment-copy { min-height: 112px; padding: 18px 20px; }
 .embodiment-copy > span { color: var(--accent-dark); font: 600 9px/1.25 var(--mono); letter-spacing: .045em; }
