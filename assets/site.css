@@ -4122,21 +4122,49 @@ body.full-leaderboard-page #long-horizon .board-results > .board-table-scroll{
   margin:0 30px!important;
 }
 
-/* News-only masthead v49 — keep the editorial feed at its original desktop
-   width after temporarily hiding the ranking preview, and center the card. */
-.full-leaderboard-page .leaderboard-masthead.leaderboard-news.is-news-only{
-  width:70%;
-  grid-template-columns:minmax(0,1fr);
-  margin-right:auto;
-  margin-left:auto;
+/* News + reading guide v50 — the guide replaces the paused ranking preview.
+   Both columns share one natural row height; the comparison workspace now
+   begins in the former guide rail and retains its sticky scroll behavior. */
+.full-leaderboard-page .leaderboard-masthead.leaderboard-news.has-reading-guide{
+  width:100%;height:auto;grid-template-columns:minmax(0,3fr) minmax(360px,2fr);
+  align-items:stretch;margin-right:0;margin-left:0;
 }
-.full-leaderboard-page .leaderboard-masthead.leaderboard-news.is-news-only .leaderboard-news-intro{
-  width:100%;
-  box-sizing:border-box;
-  border-right:0;
+.full-leaderboard-page .leaderboard-masthead.leaderboard-news.has-reading-guide .leaderboard-news-intro{
+  width:auto;height:auto;min-height:0;box-sizing:border-box;border-right:1px solid #dce5eb;
+}
+.full-leaderboard-page .leaderboard-news-guide{
+  position:static!important;display:flex!important;min-width:0;height:100%;box-sizing:border-box;
+  flex-direction:column;padding:20px;border:0;border-radius:0;background:
+  radial-gradient(circle at 94% 2%,rgba(50,145,201,.09),transparent 34%),
+  linear-gradient(145deg,#fbfcfd,#f1f6f9);box-shadow:none;backdrop-filter:none;
+}
+.full-leaderboard-page .leaderboard-news-guide .leaderboard-rail-label{margin:0 0 16px}
+.full-leaderboard-page .leaderboard-news-guide ol{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 16px;margin:0;
+}
+.full-leaderboard-page .leaderboard-news-guide li{
+  min-width:0;grid-template-columns:30px minmax(0,1fr);padding:0;
+}
+.full-leaderboard-page .leaderboard-news-guide li::after{display:none}
+.full-leaderboard-page .leaderboard-news-guide li small{font-size:9px;line-height:1.45}
+.full-leaderboard-page .leaderboard-news-guide .leaderboard-rail-note{
+  margin-top:auto;padding:14px 16px;border-radius:14px 5px 14px 5px;
+}
+@media(max-width:1320px){
+  .full-leaderboard-page .leaderboard-shell>.leaderboard-rail{display:none}
+  .full-leaderboard-page .leaderboard-news-guide{display:flex!important;grid-template-columns:none;gap:0}
+  .full-leaderboard-page .leaderboard-news-guide ol{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .full-leaderboard-page .leaderboard-news-guide .leaderboard-rail-note{display:block;margin-top:auto}
 }
 @media(max-width:1050px){
-  .full-leaderboard-page .leaderboard-masthead.leaderboard-news.is-news-only{width:100%}
+  .full-leaderboard-page .leaderboard-masthead.leaderboard-news.has-reading-guide{grid-template-columns:1fr}
+  .full-leaderboard-page .leaderboard-masthead.leaderboard-news.has-reading-guide .leaderboard-news-intro{
+    border-right:0;border-bottom:1px solid #dce5eb;
+  }
+}
+@media(max-width:560px){
+  .full-leaderboard-page .leaderboard-news-guide{padding:18px 16px}
+  .full-leaderboard-page .leaderboard-news-guide ol{grid-template-columns:1fr}
 }
 @media(max-width:780px){
   body.full-leaderboard-page #leaderboard .board-results > .board-table-scroll,

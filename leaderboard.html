@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/site.css?v=20261015-news-centered-v1">
+  <link rel="stylesheet" href="assets/site.css?v=20261015-news-guide-v1">
   <style>.model-record-link{display:inline-block;margin:.2rem 0 0 1.8rem;font-size:.7rem;font-weight:800;color:#075fa8;text-decoration:none}</style>
   <script src="assets/i18n.js?v=20261015-news-wording-v1" defer></script>
   <script src="assets/unified-nav.js?v=20261013-i18n-v5" defer></script>
@@ -45,7 +45,7 @@
     <a href="submission/login">Sign In</a>
   </nav>
   <main id="main" class="hero-layout full-board-layout">
-    <section class="leaderboard-masthead leaderboard-news is-news-only" id="board-overview" aria-labelledby="full-leaderboard-title">
+    <section class="leaderboard-masthead leaderboard-news has-reading-guide" id="board-overview" aria-labelledby="full-leaderboard-title">
       <div class="leaderboard-news-intro">
         <div class="leaderboard-news-title-row">
           <h1 id="full-leaderboard-title">News</h1>
@@ -57,6 +57,16 @@
           <li><time datetime="2026-10-15">2026/10/15</time><p><strong>WorldOracle website launched</strong></p></li>
         </ol>
       </div>
+      <aside class="leaderboard-rail leaderboard-rail-inner leaderboard-news-guide" aria-label="How to read the leaderboard">
+        <p class="leaderboard-rail-label">Reading the board</p>
+        <ol>
+          <li><span>01</span><strong>Choose a track</strong><small>30-second, policy-rollout, or complete-episode evaluation.</small></li>
+          <li><span>02</span><strong>Choose an embodiment</strong><small>Compare models only within the same physical setting.</small></li>
+          <li><span>03</span><strong>Inspect the dimensions</strong><small>Higher is better; unavailable multi-view results remain unranked.</small></li>
+          <li><span>04</span><strong>Open the matched episode</strong><small>The same held-out episode is shown for like-for-like visual comparison.</small></li>
+        </ol>
+        <div class="leaderboard-rail-note"><span>Evaluation unit</span><strong>Paired real execution</strong><p>Predictions and references share the same initial observation and action trajectory.</p></div>
+      </aside>
       <!-- Ranking Preview is temporarily hidden while its presentation is reconsidered.
       <div class="leaderboard-news-grid" aria-label="Ranking Preview" data-leaderboard-highlights>
         <header class="leaderboard-highlights-heading">
@@ -83,17 +93,7 @@
       -->
     </section>
     <div class="leaderboard-shell">
-      <aside class="leaderboard-rail" aria-label="How to read the leaderboard">
-        <div class="leaderboard-rail-inner">
-          <p class="leaderboard-rail-label">Reading the board</p>
-          <ol>
-            <li><span>01</span><strong>Choose a track</strong><small>30-second, policy-rollout, or complete-episode evaluation.</small></li>
-            <li><span>02</span><strong>Choose an embodiment</strong><small>Compare models only within the same physical setting.</small></li>
-            <li><span>03</span><strong>Inspect the dimensions</strong><small>Higher is better; unavailable multi-view results remain unranked.</small></li>
-            <li><span>04</span><strong>Open the matched episode</strong><small>The same held-out episode is shown for like-for-like visual comparison.</small></li>
-          </ol>
-          <div class="leaderboard-rail-note"><span>Evaluation unit</span><strong>Paired real execution</strong><p>Predictions and references share the same initial observation and action trajectory.</p></div>
-        </div>
+      <aside class="leaderboard-rail" aria-label="Active track visual comparison">
         <div class="leaderboard-floating-preview" data-floating-comparison hidden aria-label="Active track visual comparison"></div>
       </aside>
       <div class="leaderboard-workspace">
