@@ -91,8 +91,10 @@ if (typeof document !== 'undefined') {
   if (form) {
     const base = new URL(form.dataset.uploadBase, location.href).href;
     const next = new URL(form.dataset.uploadNext, location.href).href;
+    const viewModeUrl = form.dataset.viewModeUrl ? new URL(form.dataset.viewModeUrl, location.href).href : '';
     const token = window.WorldOracleAccount?.token() || '';
     const input = form.querySelector('[name="package"]');
+    const viewMode = form.querySelector('[name="view_mode"]');
     const submit = form.querySelector('button[type="submit"]');
     const pause = form.querySelector('[data-upload-pause]');
     const cancel = form.querySelector('[data-upload-cancel]');
@@ -184,7 +186,13 @@ if (typeof document !== 'undefined') {
       submit.textContent = 'Preparing Upload…';
       task = (async () => {
         await ready; checkPaused();
-        if (!config) config = await api(base, {retry: true});
+        if (viewModeUrl) {
+          if (!viewMode?.value) throw new Error('Choose Single-View or Multi-View before uploading.');
+          await api(viewModeUrl, {method: 'PATCH', body: {view_mode: viewMode.value}, retry: true});
+          // Saving the view type invalidates uploads made for older metadata.
+          config = await api(base, {retry: true});
+          session = config.upload;
+        } else if (!config) config = await api(base, {retry: true});
         const file = input.files[0];
         if (!file) throw new Error('Choose the original ZIP file to start or resume.');
         if (!file.size || file.size > config.max_bytes) throw new Error(`Choose a ZIP no larger than ${displayBytes(config.max_bytes)}.`);
