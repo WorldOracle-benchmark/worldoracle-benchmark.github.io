@@ -107,11 +107,11 @@
 ├── predictions/               # Three synchronized MP4 files per episode
 │   └── pickfruit/ep000000/
 │       ├── top_head.mp4
-│       ├── left_hand.mp4
-│       └── right_hand.mp4
+│       ├── hand_left.mp4
+│       └── hand_right.mp4
 ├── config/                    # Recommended; inference settings and seeds
 └── logs/                      # Recommended; generation and evaluation logs</code></pre>
-          <p>Set <code>evaluation.view_mode</code> to <code>multi</code>. Every submitted episode must contain synchronized <code>top_head</code>, <code>left_hand</code>, and <code>right_hand</code> predictions with identical frame counts, frame rates, and durations.</p>
+          <p>Set <code>evaluation.view_mode</code> to <code>multi</code>. Every submitted episode must contain synchronized <code>top_head</code>, <code>hand_left</code>, and <code>hand_right</code> predictions with identical frame counts, frame rates, and durations.</p>
           <p>Each prediction entry must include <code>task, episode_id, view, fps, path</code>. The standard output is H.264 MP4, <code>yuv420p</code>, no audio, source resolution preserved, and the platform's native benchmark frame rate. In <code>README.md</code>, explain the action-to-frame mapping, whether the initial frame is included, the original resolution, and any unavoidable resampling.</p>
 
           <h3>Required compression profile</h3>
@@ -137,7 +137,7 @@ ffmpeg -nostdin -hide_banner -loglevel error -y \
 zip -0 -r submission.zip manifest.json README.md predictions/
 unzip -t submission.zip
 shasum -a 256 submission.zip</code></pre>
-          <p><code>-0</code> stores the already-compressed MP4 files without wasting time recompressing them. Before uploading, confirm the ZIP is below the selected Track limit and that <code>manifest.json</code> is at the ZIP root. Every Track package must include <code>pickfruit / ep000000 / top_head</code>; if the result becomes that model's leaderboard best, its complete 30-second comparison video is shown publicly. All other package files remain private.</p>
+          <p><code>-0</code> stores the already-compressed MP4 files without wasting time recompressing them. Before uploading, confirm the ZIP is below the selected Track limit and that <code>manifest.json</code> is at the ZIP root. Every Track package must include the canonical comparison episode. A single-view submission publishes its <code>top_head</code> clip; a three-view submission publishes one synchronized composite with <code>top_head</code> above, <code>hand_left</code> at bottom left, and <code>hand_right</code> at bottom right. All other package files remain private.</p>
           <p>Do not include passwords, API keys, private tokens, personal data, raw GT frames, caches, checkpoints, or unrelated experiment outputs.</p>
           <div class="callout">Uploads are resumable: the browser sends verified 16 MiB parts over up to 6 parallel lanes. Each part is checked with SHA-256, the assembled ZIP receives a full-file SHA-256, and interrupted uploads can resume by reopening the same draft and selecting the identical ZIP. Incomplete uploads expire after 48 hours.</div>
         </section>
@@ -175,7 +175,7 @@ shasum -a 256 submission.zip</code></pre>
           <details open><summary>How should unavailable metrics be reported?</summary><p>Use N/A, with the reason and supported views. A missing or unsupported metric is not a measured zero.</p></details>
           <details><summary>Are submission notes required?</summary><p>No. Use this optional field for information you want the organizers to know about this submission, up to 4,000 characters.</p></details>
           <details><summary>Can I submit repeatedly?</summary><p>Each approved account may submit up to two evaluations per Track and six evaluations total in its rolling seven-day window. Failed or incomplete attempts do not consume a V number.</p></details>
-          <details><summary>Are my files public?</summary><p>The original ZIP and all other package files remain private. Only the declared comparison video for a model's accepted leaderboard-best result may be displayed publicly beside its score.</p></details>
+          <details><summary>Are my files public?</summary><p>The original ZIP and all other package files remain private. When an accepted result becomes the model's leaderboard best, only the canonical preview is public: <code>top_head</code> for a single-view entry, or the synchronized three-view composite for a multi-view entry.</p></details>
           <details><summary>Can I upload only my aggregate scores?</summary><p>No. All three Track forms require prediction-video artifacts. Self-reported numbers alone are insufficient for evaluation.</p></details>
           <details><summary>What happens if someone bypasses checks or attempts to cheat?</summary><p>Deliberate attempts to bypass checks, scrape non-public benchmark data, manipulate the service, or cheat may place the related account, model, or team on the blacklist. Associated submissions may be removed and further access may be blocked.</p></details>
         </section>
