@@ -304,7 +304,6 @@ function updateModelPreview(scope, model) {
 }
 
 const CURATED_PUBLIC_MODELS=new Set(['cosmos 3','cosmos-3 nano','ctrl-world','dreamdojo','ge-sim 2.0','irasim','jointcontrolvideo','oscar']);
-const CURRENT_LEADERBOARD_MODELS=new Set(['cosmos 3','cosmos-3 nano','ctrl-world','dreamdojo','ge-sim 2.0','irasim']);
 const CURATED_MODEL_RESOURCES={
   'ge-sim 2.0':{paper_url:'https://arxiv.org/abs/2605.27491',github_url:'https://github.com/AgibotTech/GE-Sim-V2'},
   'cosmos 3':{paper_url:'https://arxiv.org/abs/2606.02800',github_url:'https://github.com/NVIDIA/cosmos'},
@@ -316,7 +315,7 @@ const CURATED_MODEL_RESOURCES={
 function normalizeCuratedModelStatus(model){
   const name=String(model.model_name||'').toLowerCase();
   if(CURATED_PUBLIC_MODELS.has(name))model.certified=true;
-  if(CURRENT_LEADERBOARD_MODELS.has(name))model.updated_at='2026-10-16';
+  model.updated_at='2026-10-15';
   if(CURATED_MODEL_RESOURCES[name])Object.assign(model,CURATED_MODEL_RESOURCES[name]);
   // "Open Source" has one deliberately narrow meaning on this leaderboard:
   // both a public code repository and public model weights are available.
@@ -349,11 +348,11 @@ function appendLeaderboardResources(row,model){
 }
 
 function leaderboardUpdatedLabel(model){
-  const raw=model.evaluated_at??model.updated_at??model.updated;
+  const raw=model.updated_at??model.evaluated_at??model.updated;
   if(raw===null||raw===undefined||raw==='')return '—';
-  if(typeof raw==='string'&&/^\d{4}-\d{2}-\d{2}/.test(raw))return raw.slice(0,10)+' AoE';
+  if(typeof raw==='string'&&/^\d{4}-\d{2}-\d{2}/.test(raw))return raw.slice(0,10);
   const numeric=Number(raw),date=Number.isFinite(numeric)?new Date(numeric<(1e12)?numeric*1000:numeric):new Date(raw);
-  return Number.isNaN(date.getTime())?'—':date.toISOString().slice(0,10)+' AoE';
+  return Number.isNaN(date.getTime())?'—':date.toISOString().slice(0,10);
 }
 
 function appendLeaderboardCertification(row,model){
