@@ -11,8 +11,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/site.css?v=20261015-human-hand-panel-v4">
-  <script src="assets/i18n.js?v=20261015-embodiment-multiview-v1" defer></script>
+  <link rel="stylesheet" href="assets/site.css?v=20261015-composite-threeview-v5">
+  <script src="assets/i18n.js?v=20261015-entry-weights-v1" defer></script>
   <script src="assets/unified-nav.js?v=20261013-i18n-v5" defer></script>
 </head>
 <body class="project-page">
@@ -165,48 +165,24 @@
           </div>
           <div class="embodiment-grid">
             <article class="embodiment-card">
-              <div class="embodiment-media embodiment-multiview">
-                <div class="embodiment-view is-top">
-                  <video autoplay muted loop playsinline preload="metadata" poster="assets/gt/pickfruit.jpg?v=20261011-validation-showcase-v2" aria-label="AgiBot G2 Top View">
-                    <source src="assets/gt/pickfruit.mp4?v=20261011-validation-showcase-v2" type="video/mp4">
-                  </video>
-                  <span class="embodiment-tag">Top View</span>
-                </div>
-                <div class="embodiment-view is-left">
-                  <video autoplay muted loop playsinline preload="metadata" poster="assets/embodiments/agibot-g2-left.jpg?v=20261015-embodiment-multiview-v1" aria-label="AgiBot G2 Left View">
-                    <source src="assets/embodiments/agibot-g2-left.mp4?v=20261015-embodiment-multiview-v1" type="video/mp4">
-                  </video>
-                  <span class="embodiment-tag">Left View</span>
-                </div>
-                <div class="embodiment-view is-right">
-                  <video autoplay muted loop playsinline preload="metadata" poster="assets/embodiments/agibot-g2-right.jpg?v=20261015-embodiment-multiview-v1" aria-label="AgiBot G2 Right View">
-                    <source src="assets/embodiments/agibot-g2-right.mp4?v=20261015-embodiment-multiview-v1" type="video/mp4">
-                  </video>
-                  <span class="embodiment-tag">Right View</span>
-                </div>
+              <div class="embodiment-media embodiment-composite">
+                <video autoplay muted loop playsinline preload="metadata" poster="assets/embodiments/agibot-g2-three-view.jpg?v=20261015-composite-threeview-v1" aria-label="AgiBot G2 synchronized Top, Left, and Right Views">
+                  <source src="assets/embodiments/agibot-g2-three-view.mp4?v=20261015-composite-threeview-v1" type="video/mp4">
+                </video>
+                <span class="embodiment-tag embodiment-tag-top">Top View</span>
+                <span class="embodiment-tag embodiment-tag-left">Left View</span>
+                <span class="embodiment-tag embodiment-tag-right">Right View</span>
               </div>
               <div class="embodiment-copy"><span>01 · DUAL-ARM ROBOT</span><h4>AgiBot G2</h4><p>Top View · Left View · Right View</p></div>
             </article>
             <article class="embodiment-card">
-              <div class="embodiment-media embodiment-multiview">
-                <div class="embodiment-view is-top">
-                  <video autoplay muted loop playsinline preload="metadata" poster="assets/embodiments/yam.jpg" aria-label="YAM Top View">
-                    <source src="assets/embodiments/yam.mp4" type="video/mp4">
-                  </video>
-                  <span class="embodiment-tag">Top View</span>
-                </div>
-                <div class="embodiment-view is-left">
-                  <video autoplay muted loop playsinline preload="metadata" poster="assets/embodiments/yam-left.jpg?v=20261015-embodiment-multiview-v1" aria-label="YAM Left View">
-                    <source src="assets/embodiments/yam-left.mp4?v=20261015-embodiment-multiview-v1" type="video/mp4">
-                  </video>
-                  <span class="embodiment-tag">Left View</span>
-                </div>
-                <div class="embodiment-view is-right">
-                  <video autoplay muted loop playsinline preload="metadata" poster="assets/embodiments/yam-right.jpg?v=20261015-embodiment-multiview-v1" aria-label="YAM Right View">
-                    <source src="assets/embodiments/yam-right.mp4?v=20261015-embodiment-multiview-v1" type="video/mp4">
-                  </video>
-                  <span class="embodiment-tag">Right View</span>
-                </div>
+              <div class="embodiment-media embodiment-composite">
+                <video autoplay muted loop playsinline preload="metadata" poster="assets/embodiments/yam-three-view.jpg?v=20261015-composite-threeview-v1" aria-label="YAM synchronized Top, Left, and Right Views">
+                  <source src="assets/embodiments/yam-three-view.mp4?v=20261015-composite-threeview-v1" type="video/mp4">
+                </video>
+                <span class="embodiment-tag embodiment-tag-top">Top View</span>
+                <span class="embodiment-tag embodiment-tag-left">Left View</span>
+                <span class="embodiment-tag embodiment-tag-right">Right View</span>
               </div>
               <div class="embodiment-copy"><span>02 · BIMANUAL PLATFORM</span><h4>YAM</h4><p>Top View · Left View · Right View</p></div>
             </article>
@@ -325,6 +301,6 @@
 
   <script type="application/json" id="leaderboard-layout-demos">[]</script>
   <script type="application/json" id="leaderboard-data">[]</script>
-  <script src="assets/site.js?v=20261015-resources-no-mock-v1"></script>
+  <script src="assets/site.js?v=20261015-entry-weights-v1"></script>
 </body>
 </html>

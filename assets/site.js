@@ -295,12 +295,12 @@ function updateModelPreview(scope, model) {
 const CURATED_PUBLIC_MODELS=new Set(['cosmos 3','cosmos-3 nano','ctrl-world','dreamdojo','ge-sim 2.0','irasim','jointcontrolvideo','oscar']);
 const CURRENT_LEADERBOARD_MODELS=new Set(['cosmos 3','cosmos-3 nano','ctrl-world','dreamdojo','ge-sim 2.0','irasim']);
 const CURATED_MODEL_RESOURCES={
-  'ge-sim 2.0':{paper_url:'https://arxiv.org/abs/2605.27491',github_url:'https://github.com/AgibotTech/GE-Sim-V2',huggingface_url:'https://huggingface.co/agibot-world/Genie-Envisioner-Sim-v2.0'},
-  'cosmos 3':{paper_url:'https://arxiv.org/abs/2606.02800',github_url:'https://github.com/NVIDIA/cosmos',huggingface_url:'https://huggingface.co/collections/nvidia/cosmos3'},
-  'cosmos-3 nano':{paper_url:'https://arxiv.org/abs/2606.02800',github_url:'https://github.com/NVIDIA/cosmos',huggingface_url:'https://huggingface.co/collections/nvidia/cosmos3'},
-  'dreamdojo':{paper_url:'https://arxiv.org/abs/2602.06949',github_url:'https://github.com/NVIDIA/DreamDojo',huggingface_url:'https://huggingface.co/nvidia/DreamDojo'},
-  'ctrl-world':{paper_url:'https://arxiv.org/abs/2510.10125',github_url:'https://github.com/Robert-gyj/Ctrl-World',huggingface_url:'https://huggingface.co/yjguo/Ctrl-World'},
-  'irasim':{paper_url:'https://arxiv.org/abs/2406.14540v1',github_url:'https://github.com/bytedance/IRASim',huggingface_url:'https://huggingface.co/datasets/fangqi/IRASim'}
+  'ge-sim 2.0':{paper_url:'https://arxiv.org/abs/2605.27491',github_url:'https://github.com/AgibotTech/GE-Sim-V2'},
+  'cosmos 3':{paper_url:'https://arxiv.org/abs/2606.02800',github_url:'https://github.com/NVIDIA/cosmos'},
+  'cosmos-3 nano':{paper_url:'https://arxiv.org/abs/2606.02800',github_url:'https://github.com/NVIDIA/cosmos'},
+  'dreamdojo':{paper_url:'https://arxiv.org/abs/2602.06949',github_url:'https://github.com/NVIDIA/DreamDojo'},
+  'ctrl-world':{paper_url:'https://arxiv.org/abs/2510.10125',github_url:'https://github.com/Robert-gyj/Ctrl-World'},
+  'irasim':{paper_url:'https://arxiv.org/abs/2406.14540v1',github_url:'https://github.com/bytedance/IRASim'}
 };
 function normalizeCuratedModelStatus(model){
   const name=String(model.model_name||'').toLowerCase();
