@@ -949,13 +949,16 @@ function initializeLeaderboardHighlights(entries){
  const previousButton=carousel.querySelector('[data-highlight-prev]');
  const nextButton=carousel.querySelector('[data-highlight-next]');
  if(!track)return;
- const configurations=[
+ const allConfigurations=[
   ['30s','agibot_g2','WorldOracle-Core','AgiBot G2','main'],
   ['30s','yam','WorldOracle-Core','YAM','main'],
+  ['30s','human_hands','WorldOracle-Core','Human Hand','main'],
   ['policy','agibot_g2','WorldOracle-Policy','AgiBot G2','policy'],
   ['full','agibot_g2','WorldOracle-Long','AgiBot G2','long'],
-  ['full','yam','WorldOracle-Long','YAM','long']
+  ['full','yam','WorldOracle-Long','YAM','long'],
+  ['full','human_hands','WorldOracle-Long','Human Hand','long']
  ];
+ let configurations=allConfigurations;
  const make=(tag,className,text)=>{const node=document.createElement(tag);if(className)node.className=className;if(text!==undefined)node.textContent=text;return node;};
  let metric='single';
  let active=0;
@@ -1043,6 +1046,10 @@ function initializeLeaderboardHighlights(entries){
  };
  metricButtons.forEach(button=>button.addEventListener('click',()=>{
   metric=button.dataset.highlightMetric==='multi'?'multi':'single';
+  configurations=metric==='multi'
+   ?allConfigurations.filter(([,platform])=>platform!=='human_hands')
+   :allConfigurations;
+  active%=configurations.length;
   metricButtons.forEach(item=>item.setAttribute('aria-pressed',String(item===button)));
   slideMetricTo(button);
   render();
