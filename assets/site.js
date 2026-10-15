@@ -51,32 +51,6 @@ function initializeScrollReveal() {
 
 initializeScrollReveal();
 
-const resourceButtons = [...document.querySelectorAll('[data-resource-button]')];
-const resourceFeedback = document.querySelector('[data-resource-feedback]');
-let resourceFeedbackTimer;
-
-resourceButtons.forEach((button) => {
-  button.setAttribute('aria-pressed', 'false');
-  button.addEventListener('click', () => {
-    const label = button.dataset.resourceLabel || button.textContent.trim();
-    resourceButtons.forEach((item) => {
-      const selected = item === button;
-      item.classList.toggle('is-selected', selected);
-      item.setAttribute('aria-pressed', String(selected));
-    });
-    if (resourceFeedback) {
-      resourceFeedback.textContent = `${label} is coming soon.`;
-      resourceFeedback.classList.add('is-visible');
-    }
-    window.clearTimeout(resourceFeedbackTimer);
-    resourceFeedbackTimer = window.setTimeout(() => {
-      button.classList.remove('is-selected');
-      button.setAttribute('aria-pressed', 'false');
-      resourceFeedback?.classList.remove('is-visible');
-    }, 2600);
-  });
-});
-
 document.addEventListener('click', (event) => {
   const link = event.target.closest('a[href]');
   if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
