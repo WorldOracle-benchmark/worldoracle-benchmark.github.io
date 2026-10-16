@@ -412,6 +412,13 @@ h1 span{color:var(--accent)}.lead{color:#5e7182}p code{background:#eaf4fb}pre{bo
 .notice-language-switch strong{color:#075fa8;font-weight:800}.notice-language-switch span[aria-hidden="true"]{color:#a5b6c2}.notice-language-switch:hover{color:#075fa8;text-decoration:none}
 .notice-document .policy-note{margin-top:32px;padding:14px 16px;border-left:3px solid #0bb9df;color:#5a7588;background:#f0f8fc;font-size:11px;line-height:1.7}.notice-document .actions{margin-top:28px}
 @media(max-width:760px){.notice-hub{grid-template-columns:1fr;gap:16px;margin-top:28px}.notice-nav{position:static;display:flex;overflow-x:auto;gap:4px;padding:10px}.notice-nav .eyebrow{display:none}.notice-nav a{flex:0 0 auto;white-space:nowrap}.notice-document{padding:26px 22px}.participant-links{gap:5px 10px}}
+
+/* Temporary English-only presentation. */
+.language-toggle,
+.mobile-language-toggle,
+.notice-language-switch{
+  display:none!important;
+}
 /* Submission platform picker: same restrained control language as Rank by on the leaderboard. */
 .platform-select-native{position:absolute!important;width:1px!important;height:1px!important;margin:-1px!important;padding:0!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;white-space:nowrap!important;border:0!important}
 .platform-select-control{position:relative;width:100%;font-family:var(--sans)}

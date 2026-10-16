@@ -1256,6 +1256,13 @@ html.scroll-reveal-ready [data-scroll-reveal].is-revealed {
   }
 }
 
+/* Temporary English-only presentation. Keep the controls in markup so the
+   existing i18n implementation can be restored without rebuilding layouts. */
+.language-toggle,
+.mobile-language-toggle{
+  display:none!important;
+}
+
 /* WorldOracle logo palette — navy, electric blue, cyan and signal green. */
 .site-header{
   color:var(--ink);

@@ -8,6 +8,10 @@
   const COOKIE_KEY = 'worldoracle-language-v2';
   const ZH = 'zh-CN';
   const EN = 'en';
+  // Temporary presentation flag. Keep all translations and switching logic
+  // available, but render the public interface in English while the language
+  // controls are hidden. Set this back to true when the Chinese layout returns.
+  const LANGUAGE_SWITCH_ENABLED = false;
   const textOriginals = new WeakMap();
   const attributeOriginals = new WeakMap();
 
@@ -1758,6 +1762,7 @@
   ];
   const languageCookie = () => document.cookie.split('; ').find(item => item.startsWith(COOKIE_KEY + '='))?.split('=').slice(1).join('=');
   const readLanguage = () => {
+    if (!LANGUAGE_SWITCH_ENABLED) return EN;
     let value = languageCookie();
     try { value = value || window.localStorage.getItem(STORAGE_KEY); } catch (_) { /* Storage can be disabled. */ }
     return value === ZH ? ZH : EN;
