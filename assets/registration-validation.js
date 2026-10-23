@@ -61,8 +61,9 @@
         return `Provide valid HTTP/HTTPS links for the ${urlLabels[name]}.`;
       }
     }
-    if (name === 'supplemental' && String(value || '').length > 4000) {
-      return 'Review notes must be 4,000 characters or fewer.';
+    if (name === 'supplemental') {
+      if (!text) return "Provide review notes to support the organizer's assessment.";
+      if (text.length > 4000) return 'Review notes must be 4,000 characters or fewer.';
     }
     if (name === 'terms' && !options.checked) {
       return 'Confirm the registration terms to continue.';
