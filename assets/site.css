@@ -1688,7 +1688,6 @@ html.scroll-reveal-ready [data-scroll-reveal].is-revealed {
 .full-leaderboard-page tr.is-unranked th button,
 .full-leaderboard-page tr.is-unranked .board-resource-list a,
 .hero-layout:not(.full-board-layout) tr.is-unranked .board-model-name{color:#7f8990!important}
-.full-leaderboard-page tr.is-unranked th button i{background:#a8b0b6!important}
 .full-leaderboard-page tr.is-unranked:hover>th,
 .full-leaderboard-page tr.is-unranked:hover>td{background:#eef0f1!important}
 .full-leaderboard-page .board-aoe-note{color:#7b8790;font-family:var(--board-sans);font-size:9px;font-weight:500;letter-spacing:.015em;text-transform:none}
