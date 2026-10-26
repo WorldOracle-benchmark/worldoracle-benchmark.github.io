@@ -314,8 +314,10 @@ const CURATED_MODEL_RESOURCES={
 };
 function normalizeCuratedModelStatus(model){
   const name=String(model.model_name||'').toLowerCase();
-  if(CURATED_PUBLIC_MODELS.has(name))model.certified=true;
-  model.updated_at='2026-10-15';
+  if(CURATED_PUBLIC_MODELS.has(name)){
+    model.certified=true;
+    model.updated_at??='2026-10-15';
+  }
   if(CURATED_MODEL_RESOURCES[name])Object.assign(model,CURATED_MODEL_RESOURCES[name]);
   // "Open Source" has one deliberately narrow meaning on this leaderboard:
   // both a public code repository and public model weights are available.
@@ -578,7 +580,7 @@ function initializeBoard(board, entries) {
     const trackName=regime==='full'?'WorldOracle-Long':'WorldOracle-Core';
     updateComparisonHeading(board,trackName,platforms[platform],selectedModel);
     updateModelPreview(board,selectedModel);
-    board.querySelector('[data-board-status]').textContent = platforms[platform]+' · '+regimes[regime]+' · '+(selectedModel?'Highlighting '+selectedModel.model_name:'All models shown equally.');
+    board.querySelector('[data-board-status]').textContent = platforms[platform]+' · '+regimes[regime]+' · '+(selectedModel?'Highlighting '+selectedModel.model_name:'All visible models shown.');
   }
   function chart() {
     svg.replaceChildren();
@@ -655,13 +657,17 @@ function initializeBoard(board, entries) {
     body.replaceChildren();
     const scrollWindow=board.querySelector('.board-table-scroll');
     if (scrollWindow) { scrollWindow.scrollTop=0; scrollWindow.scrollLeft=0; }
-    const sortNumbers=current.map(model=>tableValues(model)[sortColumn.index]).filter(value=>value!==null).map(value=>Number(value.toFixed(2)));
+    const sortNumbers=current.filter(model=>model.certified)
+      .map(model=>tableValues(model)[sortColumn.index]).filter(value=>value!==null)
+      .map(value=>Number(value.toFixed(2)));
     current.forEach((model,i)=>{
       const row=document.createElement('tr');row.dataset.modelRow=String(model.id);row.style.setProperty('--series-color',model.color);
+      row.dataset.ranked=String(Boolean(model.certified));
+      row.classList.toggle('is-unranked',!model.certified);
       const sortValue=tableValues(model)[sortColumn.index];
-      const displayRank=sortValue===null?null:1+sortNumbers.filter(value=>value>Number(sortValue.toFixed(2))).length;
+      const displayRank=!model.certified||sortValue===null?null:1+sortNumbers.filter(value=>value>Number(sortValue.toFixed(2))).length;
       if(displayRank)row.classList.toggle('rank-'+displayRank,true);
-      const rank=cell('td','');const badge=cell('span',displayRank===null?'—':String(displayRank).padStart(2,'0'));badge.setAttribute('class','board-rank');rank.append(badge);if(fullLayout)appendRankTrophy(rank,displayRank);row.append(rank);
+      const rank=cell('td','');const badge=cell('span',displayRank===null?'-':String(displayRank).padStart(2,'0'));badge.setAttribute('class','board-rank');rank.append(badge);if(fullLayout)appendRankTrophy(rank,displayRank);row.append(rank);
       const th=document.createElement('th');th.scope='row';
       let button=null;
       if(fullLayout){
@@ -713,8 +719,10 @@ function initializeBoard(board, entries) {
     // Competition ranks at displayed precision: ties share rank, nulls never rank.
     const columnLabels=['Single-View Score','Multi-View Score','Physical State Correctness','Key Interaction Area Fidelity','Interaction Spatial Alignment','Multi-View Action Coherence'];
     for (let axis=0;axis<columnLabels.length;axis++) {
-      const numeric=current.map(m=>tableValues(m)[axis]).filter(v=>v!==null).map(v=>Number(v.toFixed(2)));
+      const numeric=current.filter(m=>m.certified).map(m=>tableValues(m)[axis])
+        .filter(v=>v!==null).map(v=>Number(v.toFixed(2)));
       current.forEach((model,i)=>{
+        if(!model.certified)return;
         const value=tableValues(model)[axis];
         if(value===null)return;
         const rank=1+numeric.filter(v=>v>Number(value.toFixed(2))).length;
@@ -735,7 +743,7 @@ function initializeBoard(board, entries) {
     const disclaimer=board.querySelector('[data-board-disclaimer]');
     if(disclaimer)disclaimer.textContent = current.some(m=>m.demo)
       ? 'Demo scores are illustrative, not benchmark measurements. Platform availability follows existing result artifacts; view labels describe evaluated outputs, not every capability of a model.'
-      : current.length ? 'Verified held-out test-set retest results. Unavailable metrics are shown as dashes in the table and plotted at zero on the radar only.'
+      : current.length ? 'Held-out test-set retest results. Non-certified models are shown in score order but are unranked and expire seven days after their latest improved published result for this Track and platform. Unavailable metrics are shown as dashes in the table and plotted at zero on the radar only.'
       : 'No verified model-result artifacts have been confirmed for this selection. Models are not included solely because the paper lists a planned experiment.';
     const humanHandNote=board.querySelector('[data-human-hand-note]');
     if(humanHandNote)humanHandNote.hidden=platform!=='human_hands';
@@ -830,12 +838,14 @@ function initializePolicy(models){
     (publicStatus==='all'||(publicStatus==='public')===Boolean(model.model_public)))
    .sort((a,b)=>{const av=a[sortMetric],bv=b[sortMetric];if(av===null&&bv!==null)return 1;if(bv===null&&av!==null)return -1;return(bv??-Infinity)-(av??-Infinity)||b.single_score-a.single_score||a.model_name.localeCompare(b.model_name);});
   rows.replaceChildren();
-  const rankValues=visible.map(model=>model[sortMetric]).filter(value=>value!==null).map(value=>Number(value.toFixed(2)));
+  const rankValues=visible.filter(model=>model.certified).map(model=>model[sortMetric])
+   .filter(value=>value!==null).map(value=>Number(value.toFixed(2)));
   visible.forEach(m=>{
    const modelIndex=models.indexOf(m),row=document.createElement('tr');row.dataset.policyIndex=String(modelIndex);
+   row.dataset.ranked=String(Boolean(m.certified));row.classList.toggle('is-unranked',!m.certified);
    row.classList.add('is-interactive');row.tabIndex=0;row.setAttribute('aria-label','Highlight '+m.model_name+' radar profile');
-   const value=m[sortMetric],rank=value===null?null:1+rankValues.filter(other=>other>Number(value.toFixed(2))).length;
-   const rankCell=document.createElement('td'),badge=document.createElement('span');badge.className='board-rank';badge.textContent=rank===null?'—':String(rank).padStart(2,'0');rankCell.append(badge);appendRankTrophy(rankCell,rank);row.append(rankCell);
+   const value=m[sortMetric],rank=!m.certified||value===null?null:1+rankValues.filter(other=>other>Number(value.toFixed(2))).length;
+   const rankCell=document.createElement('td'),badge=document.createElement('span');badge.className='board-rank';badge.textContent=rank===null?'-':String(rank).padStart(2,'0');rankCell.append(badge);appendRankTrophy(rankCell,rank);row.append(rankCell);
    if(rank)row.classList.add('rank-'+rank);
    const th=document.createElement('th');th.scope='row';
    const button=document.createElement('button');button.type='button';button.setAttribute('aria-pressed','false');button.setAttribute('aria-label','Highlight '+m.model_name+' radar profile');
@@ -848,8 +858,8 @@ function initializePolicy(models){
    ['single_score','multiview_score','po','kro','ia','mvc'].forEach(k=>{
     const td=document.createElement('td');td.textContent=m[k]===null?'-':m[k].toFixed(2);
     if(m[k]===null){td.classList.add('metric-unavailable');td.setAttribute('aria-label','Not evaluated');}
-    if(m[k]!==null){
-     const place=1+visible.filter(other=>other[k]!==null&&Number(other[k].toFixed(2))>Number(m[k].toFixed(2))).length;
+    if(m.certified&&m[k]!==null){
+     const place=1+visible.filter(other=>other.certified&&other[k]!==null&&Number(other[k].toFixed(2))>Number(m[k].toFixed(2))).length;
      if(place<=3){td.classList.add('metric-place-'+place);td.dataset.metricPlace=String(place);td.title=['','Gold · 1st','Silver · 2nd','Bronze · 3rd'][place]+' — '+k.toUpperCase()+(m.demo?' (Demo)':'');const trophy=document.createElement('span');trophy.className='metric-trophy';trophy.setAttribute('aria-hidden','true');td.append(trophy);}
     }
     row.append(td);
@@ -1009,7 +1019,7 @@ function initializeLeaderboardHighlights(entries){
  const render=()=>{
   track.replaceChildren();
   const slides=configurations.map(([regime,platform,trackName,platformLabel,tone])=>{
-   const ranked=entries.filter(entry=>entry.regime===regime&&entry.platform===platform&&Number.isFinite(score(entry,metric)))
+   const ranked=entries.filter(entry=>entry.certified&&entry.regime===regime&&entry.platform===platform&&Number.isFinite(score(entry,metric)))
     .sort((a,b)=>score(b,metric)-score(a,metric)||a.model_name.localeCompare(b.model_name)).slice(0,3);
    const slide=make('article','leaderboard-highlight-slide is-'+tone);
    const label=regime==='policy'?trackName+' — Top 3':trackName+' — '+platformLabel+' — Top 3';
