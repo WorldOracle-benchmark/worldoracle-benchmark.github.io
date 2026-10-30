@@ -937,6 +937,64 @@ async function loadPublicLeaderboard(){
  }finally{window.clearTimeout(timeout);}
 }
 
+function normalizePublicNews(entry){
+ if(!entry||typeof entry!=='object'||typeof entry.id!=='string'||
+    !['custom','model'].includes(entry.kind)||typeof entry.published_at!=='number'||
+    !Number.isFinite(entry.published_at)||entry.published_at<=0)return null;
+ const normalized={id:entry.id,kind:entry.kind,published_at:entry.published_at};
+ if(entry.kind==='custom'){
+  if(typeof entry.content!=='string'||!entry.content.trim()||entry.content.length>2000)return null;
+  normalized.content=entry.content.trim();
+ }else{
+  if(typeof entry.title!=='string'||typeof entry.body!=='string'||
+     !entry.title.trim()||!entry.body.trim()||entry.title.length>300||entry.body.length>2000)return null;
+  normalized.title=entry.title.trim();normalized.body=entry.body.trim();
+ }
+ return normalized;
+}
+
+function renderPublicNewsItem(entry){
+ const item=document.createElement('li');item.dataset.dynamicNewsId=entry.id;
+ item.dataset.newsTimestamp=String(entry.published_at);
+ const date=new Date(entry.published_at*1000);
+ const timeElement=document.createElement('time');
+ timeElement.dateTime=date.toISOString();
+ timeElement.textContent=[date.getUTCFullYear(),String(date.getUTCMonth()+1).padStart(2,'0'),String(date.getUTCDate()).padStart(2,'0')].join('/');
+ const copy=document.createElement('p');
+ const title=document.createElement('strong');
+ title.textContent=entry.kind==='custom'?entry.content:entry.title;
+ copy.append(title);
+ if(entry.kind==='model'){
+  const body=document.createElement('span');body.textContent=entry.body;copy.append(body);
+ }
+ item.append(timeElement,copy);return item;
+}
+
+async function initializePublicNews(){
+ const feed=document.querySelector('.leaderboard-news-feed');
+ if(!feed||!publicApiBase)return;
+ try{
+  const response=await fetch(publicApiBase+'/api/v1/news',{method:'GET',mode:'cors',credentials:'omit',cache:'no-cache',headers:{Accept:'application/json'}});
+  if(!response.ok)throw new Error('News service returned HTTP '+response.status);
+  const payload=await response.json();
+  if(payload?.api_version!=='v1'||payload?.schema_version!=='public-news-1'||!Array.isArray(payload.entries))throw new Error('News service schema mismatch');
+  const entries=payload.entries.map(normalizePublicNews);
+  if(entries.some(entry=>entry===null))throw new Error('News service returned an invalid entry');
+  const items=[...feed.children];
+  items.forEach((item,index)=>{
+   const date=item.querySelector('time')?.dateTime;
+   item.dataset.newsTimestamp=String(Number.isFinite(Date.parse(date))?Date.parse(date)/1000:-index);
+   item.classList.remove('is-current');
+  });
+  entries.forEach(entry=>items.push(renderPublicNewsItem(entry)));
+  items.sort((a,b)=>Number(b.dataset.newsTimestamp)-Number(a.dataset.newsTimestamp));
+  if(items[0])items[0].classList.add('is-current');
+  feed.replaceChildren(...items);
+ }catch(error){
+  console.warn('WorldOracle News API unavailable; using the static release News.',error);
+ }
+}
+
 function policyModels(entries){
  return entries.filter(model=>model.platform==='agibot_g2'&&model.regime==='policy').map(model=>({
   id:model.id,model_name:model.model_name,color:model.color,demo:model.demo,preview:model.preview,
@@ -1125,6 +1183,7 @@ function initializeFloatingComparison(){
  sync();
 }
 
+initializePublicNews();
 initializePublicLeaderboards();
 
 /* Keep compact leaderboard rows self-describing when the wide table changes
