@@ -947,7 +947,7 @@ function normalizePublicNews(entry){
   normalized.content=entry.content.trim();
  }else{
   if(typeof entry.title!=='string'||typeof entry.body!=='string'||
-     !entry.title.trim()||!entry.body.trim()||entry.title.length>300||entry.body.length>2000)return null;
+     !entry.body.trim()||entry.title.length>300||entry.body.length>2000)return null;
   normalized.title=entry.title.trim();normalized.body=entry.body.trim();
  }
  return normalized;
@@ -962,9 +962,9 @@ function renderPublicNewsItem(entry){
  timeElement.textContent=[date.getUTCFullYear(),String(date.getUTCMonth()+1).padStart(2,'0'),String(date.getUTCDate()).padStart(2,'0')].join('/');
  const copy=document.createElement('p');
  const title=document.createElement('strong');
- title.textContent=entry.kind==='custom'?entry.content:entry.title;
+ title.textContent=entry.kind==='custom'?entry.content:(entry.title||entry.body);
  copy.append(title);
- if(entry.kind==='model'){
+ if(entry.kind==='model'&&entry.title){
   const body=document.createElement('span');body.textContent=entry.body;copy.append(body);
  }
  item.append(timeElement,copy);return item;
