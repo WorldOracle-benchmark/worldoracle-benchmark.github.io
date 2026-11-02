@@ -1856,13 +1856,13 @@ html.scroll-reveal-ready [data-scroll-reveal].is-revealed {
 .full-leaderboard-page #long-horizon .board-table .col-score{width:6.25%}
 .full-leaderboard-page #leaderboard .board-table .col-certification,
 .full-leaderboard-page #policy-track .policy-table .col-certification,
-.full-leaderboard-page #long-horizon .board-table .col-certification{width:9%}
+.full-leaderboard-page #long-horizon .board-table .col-certification{width:11%}
 .full-leaderboard-page #leaderboard .board-table .col-resources,
 .full-leaderboard-page #policy-track .policy-table .col-resources,
-.full-leaderboard-page #long-horizon .board-table .col-resources{width:10%}
+.full-leaderboard-page #long-horizon .board-table .col-resources{width:9%}
 .full-leaderboard-page #leaderboard .board-table .col-updated,
 .full-leaderboard-page #policy-track .policy-table .col-updated,
-.full-leaderboard-page #long-horizon .board-table .col-updated{width:11.5%}
+.full-leaderboard-page #long-horizon .board-table .col-updated{width:10.5%}
 .full-leaderboard-page #policy-track .policy-table th:first-child{width:auto}
 .full-leaderboard-page #leaderboard .board-table-scroll,
 .full-leaderboard-page #policy-track .policy-table-scroll,
@@ -3882,8 +3882,8 @@ body.full-leaderboard-page #long-horizon .board-table {
 .full-leaderboard-page .col-view { width: 5%; }
 .full-leaderboard-page .col-contributor { width: 13%; }
 .full-leaderboard-page .col-score { width: 5.5%; }
-.full-leaderboard-page .col-certification { width: 10%; }
-.full-leaderboard-page .col-resources { width: 13%; }
+.full-leaderboard-page .col-certification { width: 11%; }
+.full-leaderboard-page .col-resources { width: 12%; }
 .full-leaderboard-page .col-updated { width: 9%; }
 .full-leaderboard-page .board-table th,
 .full-leaderboard-page .board-table td,
@@ -3892,6 +3892,10 @@ body.full-leaderboard-page #long-horizon .board-table {
   min-width: 0 !important;
   padding-inline: clamp(4px, .55vw, 10px);
   overflow-wrap: anywhere;
+}
+.full-leaderboard-page .board-column-head th:nth-child(11) {
+  white-space: nowrap;
+  overflow-wrap: normal;
 }
 .full-leaderboard-page .board-resource-list {
   display: flex;

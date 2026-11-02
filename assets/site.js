@@ -303,7 +303,7 @@ function updateModelPreview(scope, model) {
   player.play().catch(()=>{});
 }
 
-const CURATED_PUBLIC_MODELS=new Set(['cosmos 3','cosmos-3 nano','ctrl-world','dreamdojo','ge-sim 2.0','irasim','jointcontrolvideo','oscar']);
+const CURATED_PUBLIC_MODELS=new Set(['cosmos 3','cosmos-3 nano','ctrl-world','dreamdojo','ge-sim 2.0','irasim','jointcontrolvideo','opendw','oscar']);
 const CURATED_MODEL_RESOURCES={
   'ge-sim 2.0':{paper_url:'https://arxiv.org/abs/2605.27491',github_url:'https://github.com/AgibotTech/GE-Sim-V2'},
   'cosmos 3':{paper_url:'https://arxiv.org/abs/2606.02800',github_url:'https://github.com/NVIDIA/cosmos'},
@@ -319,10 +319,11 @@ function normalizeCuratedModelStatus(model){
     model.updated_at??='2026-10-15';
   }
   if(CURATED_MODEL_RESOURCES[name])Object.assign(model,CURATED_MODEL_RESOURCES[name]);
-  // "Open Source" has one deliberately narrow meaning on this leaderboard:
-  // both a public code repository and public model weights are available.
-  // Papers and a stale backend publication flag never satisfy this filter.
-  model.model_public=Boolean(publicResourceUrl(model.github_url)&&publicResourceUrl(model.huggingface_url));
+  // Open Source is an organizer-reviewed label. Public training code qualifies,
+  // as does public inference code paired with the exact leaderboard weights.
+  // Preserve the API decision for participant models; curated baselines are
+  // organizer-confirmed here for the embedded/offline snapshot as well.
+  model.model_public=CURATED_PUBLIC_MODELS.has(name)||Boolean(model.model_public);
   return model;
 }
 
@@ -344,7 +345,7 @@ function appendLeaderboardResources(row,model){
     resources.forEach(([label,url])=>{const link=document.createElement('a');link.href=url;link.target='_blank';link.rel='noopener noreferrer';link.textContent=label;link.setAttribute('aria-label',label+' resource for '+model.model_name+' (opens in a new tab)');list.append(link);});
     cell.append(list);
   }else if(model.model_public){
-    const status=document.createElement('span');status.className='board-resource-status';status.textContent='Open Source';status.title='Public code and model weights are available; individual links are not included in this record.';cell.append(status);
+    const status=document.createElement('span');status.className='board-resource-status';status.textContent='Open Source';status.title='Organizer-confirmed public training code, or public inference code with matching leaderboard weights, is available; individual links are not included in this record.';cell.append(status);
   }else cell.textContent='—';
   row.append(cell);
 }
