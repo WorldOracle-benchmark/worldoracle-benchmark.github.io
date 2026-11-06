@@ -4203,6 +4203,30 @@ body.full-leaderboard-page #long-horizon .board-results > .board-table-scroll{
   .full-leaderboard-page .leaderboard-news-guide{padding:18px 16px}
   .full-leaderboard-page .leaderboard-news-guide ol{grid-template-columns:1fr}
 }
+
+/* Scroll-bounded News v52 — release history must scroll inside the left
+   column instead of increasing the shared row and leaving the guide empty. */
+@media(min-width:1051px){
+  .full-leaderboard-page .leaderboard-masthead.leaderboard-news.has-reading-guide{
+    height:440px;max-height:440px;
+  }
+  .full-leaderboard-page .leaderboard-masthead.leaderboard-news.has-reading-guide .leaderboard-news-intro{
+    height:100%;overflow:hidden;
+  }
+  .full-leaderboard-page .leaderboard-news-guide{
+    height:100%;overflow:hidden;
+  }
+}
+@media(max-width:1050px){
+  .full-leaderboard-page .leaderboard-masthead.leaderboard-news.has-reading-guide .leaderboard-news-intro{
+    height:320px;overflow:hidden;
+  }
+}
+@media(max-width:560px){
+  .full-leaderboard-page .leaderboard-masthead.leaderboard-news.has-reading-guide .leaderboard-news-intro{
+    height:300px;
+  }
+}
 @media(max-width:780px){
   body.full-leaderboard-page #leaderboard .board-results > .board-table-scroll,
   body.full-leaderboard-page #policy-track .policy-board-results > .policy-table-scroll,
