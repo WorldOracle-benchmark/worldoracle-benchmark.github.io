@@ -5,6 +5,27 @@ const sectionLinks = [...document.querySelectorAll('[data-section-link]')];
 const trackedSections = [...new Set(sectionLinks.map((link) => link.hash.slice(1)))]
   .map((id) => document.getElementById(id))
   .filter(Boolean);
+const worldOracleAssetBase = new URL('.', document.currentScript?.src || document.baseURI);
+const MODEL_LOGO_ASSETS = new Map(Object.entries({
+  'ge-sim 2.0':'agibot.png','opendw':'dexmal.png','bwm':'tongji.png','gigaworld-1':'giga.png',
+  'cosmos 3':'nvidia.png','dreamdojo':'nvidia.png','ctrl-world':'standford.png','irasim':'hkust.png',
+  'abot-physworld':'alibaba.png','vid2world':'tsinghua.png','tj-world':'tianjin.png',
+  'jointcontrolvideo':'ethz.png','oscar':'pku.png'
+}));
+
+function modelLogoUrl(model){
+  const candidate=typeof model?.logo_url==='string'?model.logo_url.trim():'';
+  if(candidate){try{return new URL(candidate,publicApiBase?publicApiBase+'/':document.baseURI).href;}catch(_){}}
+  const asset=MODEL_LOGO_ASSETS.get(String(model?.model_name||'').trim().toLowerCase());
+  return asset?new URL('model-logos/'+asset,worldOracleAssetBase).href:'';
+}
+
+function modelLogo(model){
+  const url=modelLogoUrl(model);if(!url)return null;
+  const image=document.createElement('img');image.className='board-model-logo';image.src=url;
+  image.alt='';image.loading='lazy';image.decoding='async';
+  image.addEventListener('error',()=>image.remove(),{once:true});return image;
+}
 
 const navigationReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -676,9 +697,11 @@ function initializeBoard(board, entries) {
         button.setAttribute('aria-pressed','false');button.setAttribute('aria-label','Highlight '+model.model_name+'. Click again to show all models.');
         const dot=document.createElement('i');dot.style.background=model.color;
         const label=cell('span',model.model_name);
-        button.append(dot,label);th.append(button);
+        const logo=modelLogo(model);button.append(dot);if(logo)button.append(logo);button.append(label);th.append(button);
       }else{
-        const label=cell('span',model.model_name);label.classList.add('board-model-name');th.append(label);
+        const identity=cell('span','');identity.classList.add('board-model-identity');
+        const logo=modelLogo(model);if(logo)identity.append(logo);
+        const label=cell('span',model.model_name);label.classList.add('board-model-name');identity.append(label);th.append(identity);
       }
       row.append(th);
       if(hasView){const viewCell=cell('td',model.view_mode==='multi'?'MV':'SV');viewCell.classList.add('board-view');viewCell.title=model.view_mode==='multi'?'Multi-View':'Single-View';row.append(viewCell);}
@@ -853,7 +876,7 @@ function initializePolicy(models){
    const swatch=document.createElement('i');swatch.style.background=m.color;
    const label=document.createElement('span');label.textContent=m.model_name;
    const toggleRow=()=>focus(modelIndex);
-   button.append(swatch,label);button.addEventListener('click',toggleRow);th.append(button);row.append(th);
+   const logo=modelLogo(m);button.append(swatch);if(logo)button.append(logo);button.append(label);button.addEventListener('click',toggleRow);th.append(button);row.append(th);
    const viewCell=document.createElement('td');viewCell.className='board-view';viewCell.textContent=m.view_mode==='multi'||m.multi_view?'MV':'SV';viewCell.title=viewCell.textContent==='MV'?'Multi-View':'Single-View';row.append(viewCell);
    const contributorCell=document.createElement('td');contributorCell.className='board-contributor';contributorCell.textContent=contributor(m);row.append(contributorCell);
    ['single_score','multiview_score','po','kro','ia','mvc'].forEach(k=>{
@@ -909,6 +932,7 @@ function normalizePublicEntry(entry){
  normalized.model_name=entry.model_name.slice(0,160);
  normalized.color=/^#[0-9a-f]{6}$/i.test(entry.color||'')?entry.color:'#53756c';
  normalized.certified=Boolean(entry.certified);normalized.model_public=Boolean(entry.model_public);
+ normalized.logo_url=typeof entry.logo_url==='string'?entry.logo_url.slice(0,1000):'';
  normalized.demo=Boolean(entry.demo);normalized.policy_participated=Boolean(entry.policy_participated);
  if(entry.preview&&typeof entry.preview==='object'&&typeof entry.preview.url==='string'){
   try{normalized.preview={...entry.preview,url:new URL(entry.preview.url,publicApiBase+'/').href};}
@@ -1000,6 +1024,7 @@ function policyModels(entries){
  return entries.filter(model=>model.platform==='agibot_g2'&&model.regime==='policy').map(model=>({
   id:model.id,model_name:model.model_name,color:model.color,demo:model.demo,preview:model.preview,
   certified:model.certified,model_public:model.model_public,organization:model.organization||'',team_name:model.team_name||'',contributor:model.contributor||'',
+  logo_url:model.logo_url||'',
   public_profile:model.public_profile||null,multi_view:model.view_mode==='multi',view_mode:model.view_mode,
   github_url:model.github_url||'',huggingface_url:model.huggingface_url||'',paper_url:model.paper_url||'',
   evaluated_at:model.evaluated_at??null,updated_at:model.updated_at??null,updated:model.updated??null,

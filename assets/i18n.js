@@ -198,6 +198,7 @@
     'The table reports Physical State Correctness (PSC), Key Interaction Area Fidelity (KIAF), Interaction Spatial Alignment (ISA), and Multi-View Action Coherence (MVAC, where supported). Single-View Score is the mean of PSC, KIAF and ISA. Multi-View Score adds MVAC with equal weight. A dash means unsupported or not evaluated.': '表格展示物理状态正确性（PSC）、关键交互区域保真度（KIAF）、交互空间对齐（ISA）和多视角动作一致性（MVAC，模型支持时）。单视角分数为 PSC、KIAF 和 ISA 的平均值，多视角分数再等权加入 MVAC。“-”表示不支持或未评测。',
     'Certification Standard:': '认证标准：',
     'A model is considered certified if public materials describing the model are available.': '若该模型具有可公开查阅的说明材料，则视为认证模型。',
+    'A model is considered certified when it has an organizer-approved institution logo and at least one verified public model resource.': '模型具备组织方批准的机构 Logo，并至少有一项通过核验的公开模型资料时，视为认证模型。',
     'Open-source Standard:': '开源标准：',
     'A model is considered open source if it publicly releases either its training code, or both its inference code and the model weights corresponding to the reported leaderboard result.': '若模型公开了训练代码，或同时公开了推理代码及其上榜结果所对应的模型权重，则视为开源模型。',
     'Human Hand supports Single-View evaluation only. Multi-View Score and MVAC are not available.': 'Human Hand 仅支持单视角评测，不提供多视角分数与 MVAC。',
@@ -920,6 +921,10 @@
     , 'This must be the public weights used by the exact model or method registered for this account—not a base model, dependency, or unrelated checkpoint. Organizers verify the link before publication.': '该链接必须是本账号所登记模型或方法在本次参评中实际使用的公开权重，不能是基础模型、依赖模型或无关 checkpoint。链接经官方审核后才会公开。'
     , 'A Weights link must point to the weights used by the exact model or method registered by this account and is published only after organizer review.': 'Weights 链接必须对应本账号所登记模型或方法在本次参评中使用的权重，并经官方审核后才会公开。'
     , 'Request changes to Paper, Code, or Weights. Existing public links remain unchanged until approval. A Weights link must belong to this registered model or method and is published only after organizer review.': '可申请更新论文、代码或权重；审核通过前，现有公开链接保持不变。Weights 链接必须属于本账号登记的模型或方法，并经官方审核后才会公开。'
+    , 'Request changes to the institution Logo, Paper, Code, or Weights. Existing public resources remain unchanged until approval.': '可申请更新机构 Logo、论文、代码或权重；审核通过前，现有公开资料保持不变。'
+    , 'Certified status requires an approved institution logo and at least one verified model resource.': '模型获得“已认证”状态须具备已批准的机构 Logo，并至少有一项通过核验的模型资料。'
+    , 'Institution Logo': '机构 Logo'
+    , 'PNG, JPEG, or WebP; up to 5 MB. A replacement is published only after organizer approval.': '支持 PNG、JPEG 或 WebP，文件不超过 5 MB；替换 Logo 仅在组织方审核通过后发布。'
     , 'A Weights link must belong to this registered model or method and is published only after organizer review.': 'Weights 链接必须属于本账号登记的模型或方法，并经官方审核后才会公开。'
     , 'Expired after the latest Accepted leaderboard update': '最近一次 Accepted 成绩更新榜单后已失效'
     , 'Weights verification expired.': 'Weights 验证已失效。'

@@ -236,6 +236,7 @@
 .resource-update-panel .page-heading h2{margin:0 0 7px;font-size:22px}
 .resource-update-panel .page-heading .muted{margin:0;font-size:12px;line-height:1.75}
 .resource-update-panel .summary{margin-top:0}
+.profile-model-logo{display:block;width:64px;height:64px;object-fit:contain;border:1px solid #dce6e1;border-radius:12px;background:#fff;padding:5px}
 .resource-update-panel [data-resource-toggle]{
   margin-top:26px;
 }
