@@ -198,7 +198,7 @@
     'The table reports Physical State Correctness (PSC), Key Interaction Area Fidelity (KIAF), Interaction Spatial Alignment (ISA), and Multi-View Action Coherence (MVAC, where supported). Single-View Score is the mean of PSC, KIAF and ISA. Multi-View Score adds MVAC with equal weight. A dash means unsupported or not evaluated.': '表格展示物理状态正确性（PSC）、关键交互区域保真度（KIAF）、交互空间对齐（ISA）和多视角动作一致性（MVAC，模型支持时）。单视角分数为 PSC、KIAF 和 ISA 的平均值，多视角分数再等权加入 MVAC。“-”表示不支持或未评测。',
     'Certification Standard:': '认证标准：',
     'A model is considered certified if public materials describing the model are available.': '若该模型具有可公开查阅的说明材料，则视为认证模型。',
-    'A model is considered certified when it has an organizer-approved institution logo and at least one verified public model resource.': '模型具备组织方批准的机构 Logo，并至少有一项通过核验的公开模型资料时，视为认证模型。',
+    'A model is considered certified when it has an organizer-approved institution logo, submitted through Profile → Public Resources, and at least one verified public model resource.': '模型具备通过 Profile → Public Resources 提交且经组织方批准的机构 Logo，并至少有一项通过核验的公开模型资料时，视为认证模型。',
     'Open-source Standard:': '开源标准：',
     'A model is considered open source if it publicly releases either its training code, or both its inference code and the model weights corresponding to the reported leaderboard result.': '若模型公开了训练代码，或同时公开了推理代码及其上榜结果所对应的模型权重，则视为开源模型。',
     'Human Hand supports Single-View evaluation only. Multi-View Score and MVAC are not available.': 'Human Hand 仅支持单视角评测，不提供多视角分数与 MVAC。',
