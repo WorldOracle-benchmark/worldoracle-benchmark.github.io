@@ -545,7 +545,7 @@ html.scroll-reveal-ready [data-scroll-reveal].is-revealed {
 .board-table td:nth-child(3){color:#24745a;font-weight:800;font-size:14px}
 .board-table th button{display:flex;align-items:center;gap:8px;background:none;border:0;color:#355749;text-align:left;cursor:pointer;font:600 12px var(--sans);padding:0;min-height:28px;width:100%}
 .board-table th button i{width:7px;height:7px;flex-shrink:0;border-radius:50%}
-.board-model-logo{width:24px;height:24px;flex:0 0 24px;object-fit:contain;border-radius:5px;background:#fff}
+.board-model-logo{width:20px;height:20px;flex:0 0 20px;object-fit:contain;border-radius:4px;background:#fff}
 .board-model-identity{display:flex;align-items:center;gap:8px;min-width:0}
 .board-table th button small{display:block;color:#8da296;font-size:9px;font-weight:400;margin-top:5px}
 .board-table tr.is-muted{opacity:.3}.board-table tr.is-selected{background:#eff8f3;box-shadow:inset 3px 0 var(--series-color)}
