@@ -12,11 +12,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../../assets/portal.css?v=20261015-weights-expiry-v1-20261016-wechat-v1">
-  <script src="../../../assets/i18n.js?v=20261016-zh-editorial-v4" defer></script>
+  <script src="../../../assets/i18n.js?v=20261124-registration-logo-v1" defer></script>
   <script src="../../../assets/unified-nav.js?v=20261013-i18n-v5" defer></script>
   <script src="../../../assets/portal.js?v=20261014-track-names-v1" defer></script>
-  <script src="../../../assets/registration-validation.js?v=20261023-review-notes-required-v1" defer></script>
-  <script src="../../../assets/registration-api.js?v=20261013-team-check-v1" defer></script>
+  <script src="../../../assets/registration-validation.js?v=20261124-registration-logo-v1" defer></script>
+  <script src="../../../assets/registration-api.js?v=20261124-registration-logo-v1" defer></script>
 </head>
 <body class="auth-centered-page">
   <a class="skip" href="#main">Skip to Content</a>
@@ -49,7 +49,8 @@
         <label class="registration-field">Confirm Password <span class="required-mark" aria-hidden="true">*</span><span class="sr-only"> required</span><input type="password" name="confirm" autocomplete="new-password" minlength="12" maxlength="256" required aria-describedby="confirm-help confirm-error"><small class="field-help" id="confirm-help">Enter the same password again.</small><small class="field-error" id="confirm-error" data-field-error="confirm" hidden></small></label>
       </div>
       <h3>Public Model Resources <span class="optional-label">Optional</span></h3>
-      <p class="muted small">Certified status requires an organizer-approved institution logo and at least one verified public model resource. After account approval, submit or replace the logo through Profile → Public Resources. Open-source status requires both public Code and Weights. Add a valid Code Repository URL to reveal Model Weights. A Weights link must point to the weights used by the exact model or method registered by this account.</p>
+      <p class="muted small">Certified status requires an organizer-approved institution logo and at least one verified public model resource. Upload the institution logo here during registration, or submit or replace it after account approval through Profile → Public Resources. Open-source status requires both public Code and Weights. Add a valid Code Repository URL to reveal Model Weights. A Weights link must point to the weights used by the exact model or method registered by this account.</p>
+      <label class="registration-field">Institution Logo <span class="optional-label">Optional</span><input type="file" name="logo" accept="image/png,image/jpeg,image/webp" data-max-bytes="5242880" aria-describedby="logo-help logo-error"><small class="field-help" id="logo-help">PNG, JPEG, or WebP; up to 5 MB. Published only after organizer approval.</small><small class="field-error" id="logo-error" data-field-error="logo" hidden></small></label>
       <label class="registration-field">GitHub / Code Repository <span class="optional-label">Optional</span><input type="url" name="github_url" maxlength="500" placeholder="https://code.example.org/organization/model" aria-describedby="github-help github-error"><small class="field-help" id="github-help">Any public HTTP/HTTPS code repository URL is accepted.</small><small class="field-error" id="github-error" data-field-error="github_url" hidden></small></label>
       <div class="progressive-resource-field" data-weights-field aria-hidden="true"><div class="progressive-resource-field-inner"><label class="registration-field">Weights for This Registered Model <span class="optional-label">Optional</span><input type="url" name="huggingface_url" maxlength="500" placeholder="https://weights.example.org/organization/model" aria-describedby="huggingface-help huggingface-error" disabled><small class="field-help weights-policy-warning" id="huggingface-help">This must be the public weights used by the exact model or method registered for this account—not a base model, dependency, or unrelated checkpoint. Organizers verify the link before publication.</small><small class="field-error" id="huggingface-error" data-field-error="huggingface_url" hidden></small></label></div></div>
       <label class="registration-field">Paper / Technical Report <span class="optional-label">Optional</span><input type="url" name="paper_url" maxlength="500" placeholder="A public link is acceptable." aria-describedby="paper-error"><small class="field-error" id="paper-error" data-field-error="paper_url" hidden></small></label>

@@ -64,7 +64,7 @@
         const errors = { ...(payload.field_errors || {}) };
         let message = payload.message || 'Registration could not be completed. Please try again.';
         if (response.status === 413) {
-          errors.logo = 'The uploaded logo is too large. Upload an image no larger than 1 MiB.';
+          errors.logo = 'The uploaded logo is too large. Upload an image no larger than 5 MB.';
           message = '';
         } else if (response.status === 429) {
           message = 'Too many registration attempts. Please try again later.';

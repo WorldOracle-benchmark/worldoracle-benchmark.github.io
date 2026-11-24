@@ -50,6 +50,17 @@
     if (name === 'team_auth_password' && !String(value || '')) {
       return 'Enter the original team account password.';
     }
+    if (name === 'logo' && options.file) {
+      const file = options.file;
+      const extension = String(file.name || '').split('.').pop().toLowerCase();
+      const allowedExtensions = new Set(['png', 'jpg', 'jpeg', 'webp']);
+      const allowedTypes = new Set(['image/png', 'image/jpeg', 'image/webp']);
+      if (!allowedExtensions.has(extension) || (file.type && !allowedTypes.has(file.type))) {
+        return 'Upload the institution logo as PNG, JPEG, or WebP.';
+      }
+      const maximum = Number(options.maxBytes) || 5 * 1024 * 1024;
+      if (file.size > maximum) return 'The institution logo must be 5 MB or smaller.';
+    }
     if (name === 'password' && (String(value || '').length < 12 || String(value || '').length > 256)) {
       return 'Use a matching password of 12–256 characters.';
     }
